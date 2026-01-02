@@ -1,0 +1,181 @@
+---
+import GalleryGrid from './GalleryGrid';
+import SocialLink from './SocialLink';
+---
+
+<section id="sobre-nos" class="py-16" style="background-color: #FFF8F2;">
+  <div class="container mx-auto px-4">
+    <!-- Separador com ícone de rota -->
+    <div class="flex justify-center mb-12">
+      <img
+        src="/route.svg"
+        alt="Rota"
+        class="w-8 h-auto"
+      />
+    </div>
+
+    <!-- Título Principal Centralizado -->
+    <div class="max-w-4xl mx-auto text-center mb-16">
+      <h2 class="heading-primary mb-4">Quem Somos: Expedição pelo Litoral do Brasil de Kombi Home com Renan e Millena</h2>
+    </div>
+
+    <!-- Seção Principal: Introdução + Imagem -->
+    <div class="max-w-7xl mx-auto mb-20">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <!-- Imagem -->
+        <div class="relative">
+          <img
+            src="/IMG_9299.jpeg"
+            alt="Renan e Millena com a Kombi"
+            class="w-full h-auto rounded-2xl shadow-xl object-cover"
+            style="max-height: 500px;"
+          />
+        </div>
+        
+        <!-- Texto -->
+        <div>
+          <p class="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
+            Bem-vindos ao Naturerota! Somos Renan e Millena, um Casal Viajante que transformou o sonho de liberdade na realidade do Van Life Brasil.
+          </p>
+          
+          <p class="text-lg text-gray-700 leading-relaxed">
+            A bordo da nossa <strong>Kombi Catarina</strong> — uma clássica VW Kombi adaptada como Tiny Home — exploramos o mundo levando nossa casa e nossa companheira de quatro patas, a Ayla Husky, para onde a estrada nos levar.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção 1: A Expedição Atual (Imagem à direita) -->
+    <div class="max-w-7xl mx-auto mb-20">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <!-- Texto -->
+        <div class="order-2 md:order-1">
+          <h3 class="text-3xl md:text-4xl font-serif mb-6" style="color: #123A2B;">A Expedição Atual: Do Sul ao Nordeste</h3>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Neste exato momento, estamos vivendo uma grande aventura de <strong>Viagem de Carro</strong>: percorrer todo o litoral brasileiro. Saímos do estado do <strong>Paraná</strong> e estamos subindo rumo ao <strong>Maranhão</strong>, desbravando praias selvagens, vilarejos e as belezas da costa nacional, tudo isso vivendo a experiência real de Morar na Kombi.
+          </p>
+        </div>
+        
+        <!-- Imagem -->
+        <div class="relative order-1 md:order-2">
+          <img
+            src="/IMG_6289.jpeg"
+            alt="Expedição pelo litoral"
+            class="w-full h-auto rounded-2xl shadow-xl object-cover"
+            style="max-height: 400px;"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção 2: Nossa História na Estrada (Imagem à esquerda) -->
+    <div class="max-w-7xl mx-auto mb-20">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <!-- Imagem -->
+        <div class="relative">
+          <img
+            src="/IMG_5297.jpeg"
+            alt="Patagônia e Ushuaia"
+            class="w-full h-auto rounded-2xl shadow-xl object-cover"
+            style="max-height: 400px;"
+          />
+        </div>
+        
+        <!-- Texto -->
+        <div>
+          <h3 class="text-3xl md:text-4xl font-serif mb-6" style="color: #123A2B;">Nossa História na Estrada</h3>
+          <p class="text-lg text-gray-700 leading-relaxed mb-4">
+            Antes de encarar o litoral, nossa Vida na Estrada já acumulou milhares de quilômetros e histórias inesquecíveis:
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed mb-3">
+            <strong>Fim do Mundo de Motorhome:</strong> Uma jornada épica até a <strong>Patagônia Argentina</strong> e <strong>Ushuaia</strong>, onde provamos a resistência da nossa VW Bus entre geleiras e montanhas.
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            <strong>Centro-Oeste Brasileiro:</strong> Mergulhamos nas águas cristalinas de <strong>Bonito (MS)</strong>, mostrando que o ecoturismo e o campismo andam juntos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção 3: O Que Compartilhamos (Imagem à direita) -->
+    <div class="max-w-7xl mx-auto mb-20">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <!-- Texto -->
+        <div class="order-2 md:order-1">
+          <h3 class="text-3xl md:text-4xl font-serif mb-6" style="color: #123A2B;">O Que Compartilhamos</h3>
+          <p class="text-lg text-gray-700 leading-relaxed mb-4">
+            Aqui no site e no nosso canal, você encontra tudo sobre o universo <strong>Kombi Motorhome</strong>:
+          </p>
+          <ul class="space-y-3 text-lg text-gray-700">
+            <li class="flex items-start">
+              <svg class="w-6 h-6 mr-3 mt-1 flex-shrink-0" style="color: #123A2B;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>A rotina sem filtros de viver em 4m².</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 mr-3 mt-1 flex-shrink-0" style="color: #123A2B;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Dicas de construção e manutenção para quem ama Van Life.</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 mr-3 mt-1 flex-shrink-0" style="color: #123A2B;" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span>Roteiros detalhados das nossas paradas e campings.</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Imagem -->
+        <div class="relative order-1 md:order-2">
+          <img
+            src="/IMG_6460.jpeg"
+            alt="Vida na estrada"
+            class="w-full h-auto rounded-2xl shadow-xl object-cover"
+            style="max-height: 400px;"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Galeria de Fotos Interativa -->
+    <div class="max-w-7xl mx-auto">
+      <h2 class="heading-primary text-center mb-6">
+        Se você ama viagem e aventuras, acompanhe a gente no YouTube e no Instagram.
+      </h2>
+      
+      <!-- Botões de Redes Sociais -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-12">
+        <SocialLink 
+          client:load
+          platform="youtube"
+          url="https://www.youtube.com/@naturerota"
+          className="btn-secondary inline-flex items-center gap-3"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C20.505 2.545 12 2.545 12 2.545s-8.505 0-9.377 1.505A3.017 3.017 0 0 0 .502 6.186C0 7.07 0 12 0 12s0 4.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c.871.505 9.376.505 9.376.505s8.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 16.93 24 12 24 12s0-4.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          Inscreva-se
+        </SocialLink>
+        
+        <SocialLink
+          client:load
+          platform="instagram"
+          url="https://instagram.com/naturerota"
+          className="btn-secondary inline-flex items-center gap-3"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          Seguir
+        </SocialLink>
+      </div>
+      
+      <GalleryGrid client:load />
+    </div>
+  </div>
+</section>
+
+

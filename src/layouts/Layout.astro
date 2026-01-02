@@ -1,0 +1,154 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import NavbarDemo from '../components/ui/NavbarDemo.tsx';
+import SocialLink from '../components/SocialLink';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'video' | 'product';
+  url?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  youtubeVideoId?: string;
+  videoUrl?: string;
+  productData?: {
+    name?: string;
+    description?: string;
+    price?: string;
+    currency?: string;
+    availability?: string;
+    image?: string;
+  };
+}
+
+const {
+  title,
+  description,
+  image,
+  type,
+  url,
+  publishedTime,
+  modifiedTime,
+  author,
+  youtubeVideoId,
+  videoUrl,
+  productData,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      url={url}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+      youtubeVideoId={youtubeVideoId}
+      videoUrl={videoUrl}
+      productData={productData}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen text-gray-900 antialiased" style="background-color: #FFF8F2;">
+    <NavbarDemo client:load />
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-gray-200 mt-auto bg-gray-50">
+      <div class="container mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <h3 class="font-bold font-sans text-gray-900 mb-4">Navegação</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/" class="text-gray-600 hover:text-gray-900">Home</a>
+              </li>
+              <li>
+                <a href="/blog" class="text-gray-600 hover:text-gray-900">Blog</a>
+              </li>
+              <li>
+                <a href="/#sobre-nos" class="text-gray-600 hover:text-gray-900">Quem Somos</a>
+              </li>
+              <li>
+                <a href="/#guias" class="text-gray-600 hover:text-gray-900">Produtos</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold font-sans text-gray-900 mb-4">Redes Sociais</h3>
+            <ul class="space-y-2">
+              <li>
+                <SocialLink client:load platform="instagram" url="https://instagram.com/naturerota" className="text-gray-600 hover:text-gray-900">
+                  Instagram
+                </SocialLink>
+              </li>
+              <li>
+                <SocialLink client:load platform="youtube" url="https://www.youtube.com/@naturerota" className="text-gray-600 hover:text-gray-900">
+                  YouTube
+                </SocialLink>
+              </li>
+              <li>
+                <a href="https://www.tiktok.com/@naturerota" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900">
+                  TikTok
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/profile.php?id=61573134423986" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900">
+                  Facebook
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold font-sans text-gray-900 mb-4">Legal</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="/politica-de-privacidade" class="text-gray-600 hover:text-gray-900">
+                  Política de Privacidade
+                </a>
+              </li>
+              <li>
+                <a href="/termos-de-uso" class="text-gray-600 hover:text-gray-900">
+                  Termos de Uso
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold font-sans text-gray-900 mb-4">Contato</h3>
+            <p class="text-gray-600 text-sm mb-3">
+              Entre em contato conosco através das nossas redes sociais ou por e-mail:
+            </p>
+            <p class="text-gray-700 text-sm">
+              <a href="mailto:naturerota@gmail.com" class="text-[#123A2B] hover:underline font-medium">
+                naturerota@gmail.com
+              </a>
+            </p>
+          </div>
+        </div>
+        <div class="border-t border-gray-200 pt-8">
+          <p class="text-center text-gray-600 text-sm">
+            © {new Date().getFullYear()} Naturerota. Todos os direitos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+

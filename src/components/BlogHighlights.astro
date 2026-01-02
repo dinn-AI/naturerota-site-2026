@@ -1,0 +1,145 @@
+---
+import { sanityClient, urlFor } from '../lib/sanity';
+
+interface BlogPost {
+  title: string;
+  mainImage: {
+    asset: {
+      _ref: string;
+    };
+    alt?: string;
+  };
+  slug: {
+    current: string;
+  };
+  publishedAt: string;
+}
+
+// Buscar os 3 últimos posts publicados no Sanity
+const posts: BlogPost[] = await sanityClient.fetch(
+  `*[_type == "post"] | order(publishedAt desc)[0...3] {
+    title,
+    mainImage,
+    slug,
+    publishedAt
+  }`
+);
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleDateString('pt-BR', { month: 'short' });
+  const year = date.getFullYear();
+  return `${day} ${month}. ${year}`;
+}
+
+// Função para obter a URL da imagem ou usar placeholder
+function getImageUrl(post: BlogPost): string {
+  if (post.mainImage?.asset) {
+    return urlFor(post.mainImage).width(800).height(600).url();
+  }
+  // Placeholder caso não tenha imagem
+  return '/IMG_5297.jpeg'; // Usando uma imagem existente como fallback
+}
+---
+
+<section class="py-16" style="background-color: #FFF8F2;">
+  <div class="container mx-auto px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header com título e navegação -->
+      <div class="flex items-center justify-between mb-8 relative">
+        <div>
+          <h2 class="heading-primary">
+            Últimos assuntos
+          </h2>
+        </div>
+        <div class="hidden md:flex items-center gap-2">
+          <img
+            src="/Roadtrip.svg"
+            alt="Roadtrip"
+            class="h-8 w-auto"
+          />
+        </div>
+      </div>
+      
+      <!-- Grid de posts com layout assimétrico -->
+      {posts.length >= 3 ? (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+        <!-- Post 1 - Top Left -->
+        <article class="relative rounded-xl overflow-hidden group cursor-pointer">
+          <a href={`/blog/${posts[0].slug.current}`} class="block">
+            <div class="relative h-80 md:h-96">
+              <img
+                src={getImageUrl(posts[0])}
+                alt={posts[0].mainImage?.alt || posts[0].title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <p class="text-sm mb-2 opacity-90">{formatDate(posts[0].publishedAt)}</p>
+                <h3 class="text-2xl font-bold font-sans">{posts[0].title}</h3>
+              </div>
+            </div>
+          </a>
+        </article>
+        
+        <!-- Post 2 - Middle (maior) -->
+        <article class="relative rounded-xl overflow-hidden group cursor-pointer md:row-span-2">
+          <a href={`/blog/${posts[1].slug.current}`} class="block h-full">
+            <div class="relative h-full min-h-[600px]">
+              <img
+                src={getImageUrl(posts[1])}
+                alt={posts[1].mainImage?.alt || posts[1].title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <p class="text-sm mb-2 opacity-90">{formatDate(posts[1].publishedAt)}</p>
+                <h3 class="text-2xl font-bold font-sans">{posts[1].title}</h3>
+              </div>
+            </div>
+          </a>
+        </article>
+        
+        <!-- Quote Card -->
+        <div class="bg-white rounded-xl p-8 shadow-lg flex flex-col justify-center md:row-span-1">
+          <div class="text-6xl font-serif text-[#123A2B] mb-4 leading-none">"</div>
+          <blockquote class="text-gray-700 text-lg leading-relaxed italic mb-6">
+            We explored the best of Ushuaia, Argentina and all without the usual travel stress. Truly a trip of a lifetime!
+          </blockquote>
+          <a
+            href="/blog"
+            class="btn-secondary"
+          >
+            Ver todos
+          </a>
+        </div>
+        
+        <!-- Post 3 - Bottom Right -->
+        <article class="relative rounded-xl overflow-hidden group cursor-pointer md:col-start-1 md:row-start-2">
+          <a href={`/blog/${posts[2].slug.current}`} class="block">
+            <div class="relative h-80 md:h-96">
+              <img
+                src={getImageUrl(posts[2])}
+                alt={posts[2].mainImage?.alt || posts[2].title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <p class="text-sm mb-2 opacity-90">{formatDate(posts[2].publishedAt)}</p>
+                <h3 class="text-2xl font-bold font-sans">{posts[2].title}</h3>
+              </div>
+            </div>
+          </a>
+        </article>
+      </div>
+      ) : (
+        <!-- Mensagem caso não haja posts suficientes -->
+        <div class="text-center py-12">
+          <p class="text-gray-600 text-lg">Nenhum post publicado ainda. Acesse o <a href="http://localhost:3333" class="text-[#123A2B] underline" target="_blank">Sanity Studio</a> para criar conteúdo.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+

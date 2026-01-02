@@ -1,0 +1,37 @@
+---
+import SocialLink from './SocialLink';
+import PlaylistsCarousel from './PlaylistsCarousel';
+---
+
+<section class="py-16 overflow-visible" style="background-color: #FFF8F2;">
+  <div class="container mx-auto px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h2 class="heading-primary mb-6">
+          Acompanhe nossa rotina
+        </h2>
+        <p class="text-xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
+          Convidamos você a acompanhar nossa rotina no YouTube com vídeos novos toda semana!
+        </p>
+        <SocialLink
+          client:load
+          platform="youtube"
+          url="https://www.youtube.com/@naturerota"
+          className="btn-primary shadow-lg hover:shadow-xl"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C20.505 2.545 12 2.545 12 2.545s-8.505 0-9.377 1.505A3.017 3.017 0 0 0 .502 6.186C0 7.07 0 12 0 12s0 4.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c.871.505 9.376.505 9.376.505s8.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 16.93 24 12 24 12s0-4.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          Inscreva-se no Canal
+        </SocialLink>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrossel de Playlists - Largura total -->
+  <div class="w-full overflow-visible">
+    <PlaylistsCarousel client:load />
+  </div>
+</section>
+

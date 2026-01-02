@@ -1,0 +1,265 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Dados dos posts (em produção, viriam de um CMS ou API)
+const featuredPost = {
+  category: "Van Life",
+  title: "Transformando uma Kombi em Casa: Nossa Jornada de 6 Meses",
+  image: "/Header_BG.jpg",
+  slug: "transformando-kombi-em-casa"
+};
+
+const otherFeaturedPosts = [
+  {
+    title: "20 Dias pela Patagônia: Roteiro Completo de Carro",
+    image: "/20_dias_patagonia.jpeg",
+    slug: "20-dias-patagonia-roteiro"
+  },
+  {
+    title: "Como Ganhar Dinheiro Viajando: 7 Formas Testadas",
+    image: "/IMG_5789.jpeg",
+    slug: "ganhar-dinheiro-viajando"
+  },
+  {
+    title: "Vida na Estrada com Pets: Guia Completo com a Ayla",
+    image: "/IMG_9299.jpeg",
+    slug: "vida-na-estrada-com-pets"
+  },
+  {
+    title: "Bonito MS: 4 Dias de Aventura nas Águas Cristalinas",
+    image: "/4_dias_Bonito_MS.jpeg",
+    slug: "bonito-ms-4-dias"
+  }
+];
+
+const recentPosts = [
+  {
+    title: "Equipamentos Essenciais para Van Life no Brasil",
+    description: "Descubra os equipamentos indispensáveis para viver na estrada com conforto e segurança. Lista completa testada em mais de 30.000 km rodados.",
+    image: "/IMG_5561.jpeg",
+    author: "Renan Cavalheiro",
+    readTime: "8 min",
+    date: "15 Dez 2025",
+    category: "Equipamentos",
+    slug: "equipamentos-essenciais-van-life"
+  },
+  {
+    title: "Melhores Destinos para Motorhome no Sul do Brasil",
+    description: "Explore os melhores destinos do Sul do Brasil para quem viaja de motorhome. Praias, serras e campings incríveis que visitamos.",
+    image: "/IMG_5789.jpeg",
+    author: "Millena Silva",
+    readTime: "10 min",
+    date: "10 Dez 2025",
+    category: "Destinos",
+    slug: "melhores-destinos-sul-brasil"
+  },
+  {
+    title: "Custo Real de Viver Viajando de Kombi",
+    description: "Planilha detalhada com todos os custos da vida na estrada: combustível, alimentação, manutenção e muito mais.",
+    image: "/IMG_9299.jpeg",
+    author: "Renan Cavalheiro",
+    readTime: "12 min",
+    date: "5 Dez 2025",
+    category: "Finanças",
+    slug: "custo-real-viver-viajando"
+  },
+  {
+    title: "Bonito MS: 4 Dias de Aventura nas Águas Cristalinas",
+    description: "Roteiro completo de 4 dias em Bonito, com dicas de passeios, valores e hospedagem.",
+    image: "/4_dias_Bonito_MS.jpeg",
+    author: "Renan Cavalheiro",
+    readTime: "11 min",
+    date: "1 Dez 2025",
+    category: "Destinos",
+    slug: "bonito-ms-4-dias"
+  },
+  {
+    title: "Construindo um Motorhome: Passo a Passo Completo",
+    description: "Documentamos cada etapa da transformação da Kombi Catarina em nossa casa móvel.",
+    image: "/kombi_noturna.jpeg",
+    author: "Renan Cavalheiro",
+    readTime: "20 min",
+    date: "28 Nov 2025",
+    category: "Construção",
+    slug: "construindo-motorhome"
+  },
+  {
+    title: "Escolher Viver Viajando: Nossa História",
+    description: "Como largamos tudo para viver a vida na estrada e por que foi a melhor decisão que tomamos.",
+    image: "/IMG_5561.jpeg",
+    author: "Millena Silva",
+    readTime: "7 min",
+    date: "22 Nov 2025",
+    category: "Lifestyle",
+    slug: "escolher-viver-viajando"
+  }
+];
+---
+
+<Layout 
+  title="Blog - Naturerota | Van Life Brasil e Viagens de Motorhome"
+  description="Acompanhe nossos artigos sobre vida na estrada, construção de Kombi motorhome, roteiros de viagem e dicas práticas de Van Life no Brasil."
+>
+  <section class="py-8 md:py-16" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-7xl mx-auto">
+        <!-- Hero Section com Featured Post e Sidebar -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 lg:items-stretch">
+          <!-- Featured Post (8 colunas - maior) -->
+          <div class="lg:col-span-8">
+            <a href={`/blog/${featuredPost.slug}`} class="group block h-full">
+              <article class="relative h-[350px] md:h-[420px] lg:h-full rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
+                <img 
+                  src={featuredPost.image} 
+                  alt={featuredPost.title}
+                  class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10">
+                  <span class="inline-block px-3 md:px-4 py-1 md:py-1.5 bg-white rounded-full text-xs font-bold mb-3 md:mb-4 tracking-wide" style="color: #123A2B;">
+                    {featuredPost.category.toUpperCase()}
+                  </span>
+                  <h1 class="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-serif font-bold text-white leading-tight max-w-2xl">
+                    {featuredPost.title}
+                  </h1>
+                </div>
+              </article>
+            </a>
+          </div>
+
+          <!-- Other Featured Posts Sidebar (4 colunas - menor) -->
+          <div class="lg:col-span-4 flex flex-col h-full">
+            <div class="mb-5">
+              <h2 class="text-lg md:text-xl font-sans font-bold text-gray-900">
+                Outros destaques
+              </h2>
+            </div>
+            <div class="flex flex-col justify-between space-y-4 flex-1">
+              {otherFeaturedPosts.map((post) => (
+                <a href={`/blog/${post.slug}`} class="group block">
+                  <article class="flex gap-3 items-start">
+                    <div class="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden bg-gray-200">
+                      <img 
+                        src={post.image} 
+                        alt={post.title}
+                        class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <h3 class="text-xs md:text-sm font-sans font-semibold text-gray-900 group-hover:text-[#123A2B] transition-colors leading-snug line-clamp-3">
+                        {post.title}
+                      </h3>
+                    </div>
+                  </article>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Posts Section -->
+        <div class="mb-16">
+          <div class="mb-8">
+            <h2 class="text-3xl md:text-4xl font-serif font-semibold" style="color: #123A2B;">
+              Artigos Recentes
+            </h2>
+          </div>
+
+          <!-- Posts Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {recentPosts.map((post) => (
+              <a href={`/blog/${post.slug}`} class="group">
+                <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                  <!-- Imagem -->
+                  <div class="relative h-44 md:h-48 overflow-hidden">
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <span class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold" style="color: #123A2B;">
+                      {post.category}
+                    </span>
+                  </div>
+
+                  <!-- Conteúdo -->
+                  <div class="p-5">
+                    <h3 class="text-lg font-serif font-semibold text-gray-900 mb-2 group-hover:text-[#123A2B] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
+                      {post.description}
+                    </p>
+
+                    <!-- Meta Info -->
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                      <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-br from-[#123A2B] to-[#A4D0AF] flex items-center justify-center text-white text-xs font-bold">
+                          {post.author.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <span class="text-xs text-gray-700 font-medium">
+                          {post.author}
+                        </span>
+                      </div>
+                      <span class="text-xs text-gray-500">
+                        {post.readTime}
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              </a>
+            ))}
+          </div>
+
+          <!-- Load More Button -->
+          <div class="flex justify-center mt-12">
+            <button 
+              class="btn-secondary text-base md:text-lg px-8 py-3.5"
+              onclick="alert('Carregando mais 6 artigos...')"
+            >
+              Ver Mais Artigos
+            </button>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-16">
+          <button 
+            class="px-3 py-2 rounded-lg border border-gray-300 text-gray-400 cursor-not-allowed"
+            disabled
+            aria-label="Página anterior"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button class="px-4 py-2 rounded-lg bg-[#123A2B] text-white font-sans font-semibold hover:bg-[#0d2820] transition-colors">
+            1
+          </button>
+          <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors font-sans">
+            2
+          </button>
+          <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors font-sans">
+            3
+          </button>
+          <span class="px-2 text-gray-400">...</span>
+          <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors font-sans">
+            10
+          </button>
+          
+          <button 
+            class="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+            aria-label="Próxima página"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
