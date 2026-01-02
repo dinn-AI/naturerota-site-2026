@@ -15,9 +15,9 @@ interface BlogPost {
   publishedAt: string;
 }
 
-// Buscar os 3 últimos posts publicados no Sanity
+// Buscar os 4 últimos posts publicados no Sanity
 const posts: BlogPost[] = await sanityClient.fetch(
-  `*[_type == "post"] | order(publishedAt desc)[0...3] {
+  `*[_type == "post"] | order(publishedAt desc)[0...4] {
     title,
     mainImage,
     slug,
@@ -62,31 +62,31 @@ function getImageUrl(post: BlogPost): string {
         </div>
       </div>
       
-      <!-- Grid de posts com layout assimétrico -->
-      {posts.length >= 3 ? (
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+      <!-- Grid de posts com layout assimétrico - Altura total: 600px -->
+      {posts.length >= 4 ? (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative max-h-[600px]">
         <!-- Post 1 - Top Left -->
         <article class="relative rounded-xl overflow-hidden group cursor-pointer">
           <a href={`/blog/${posts[0].slug.current}`} class="block">
-            <div class="relative h-80 md:h-96">
+            <div class="relative h-64 md:h-[285px]">
               <img
                 src={getImageUrl(posts[0])}
                 alt={posts[0].mainImage?.alt || posts[0].title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <p class="text-sm mb-2 opacity-90">{formatDate(posts[0].publishedAt)}</p>
-                <h3 class="text-2xl font-bold font-sans">{posts[0].title}</h3>
+              <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+                <p class="text-xs mb-1 opacity-90">{formatDate(posts[0].publishedAt)}</p>
+                <h3 class="text-lg font-bold font-sans line-clamp-2">{posts[0].title}</h3>
               </div>
             </div>
           </a>
         </article>
         
-        <!-- Post 2 - Middle (maior) -->
+        <!-- Post 2 - Middle (maior, 2 linhas) -->
         <article class="relative rounded-xl overflow-hidden group cursor-pointer md:row-span-2">
           <a href={`/blog/${posts[1].slug.current}`} class="block h-full">
-            <div class="relative h-full min-h-[600px]">
+            <div class="relative h-64 md:h-[600px]">
               <img
                 src={getImageUrl(posts[1])}
                 alt={posts[1].mainImage?.alt || posts[1].title}
@@ -95,46 +95,69 @@ function getImageUrl(post: BlogPost): string {
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
                 <p class="text-sm mb-2 opacity-90">{formatDate(posts[1].publishedAt)}</p>
-                <h3 class="text-2xl font-bold font-sans">{posts[1].title}</h3>
+                <h3 class="text-2xl font-bold font-sans line-clamp-3">{posts[1].title}</h3>
               </div>
             </div>
           </a>
         </article>
         
-        <!-- Quote Card -->
-        <div class="bg-white rounded-xl p-8 shadow-lg flex flex-col justify-center md:row-span-1">
-          <div class="text-6xl font-serif text-[#123A2B] mb-4 leading-none">"</div>
-          <blockquote class="text-gray-700 text-lg leading-relaxed italic mb-6">
-            We explored the best of Ushuaia, Argentina and all without the usual travel stress. Truly a trip of a lifetime!
-          </blockquote>
-          <a
-            href="/blog"
-            class="btn-secondary"
-          >
-            Ver todos
-          </a>
-        </div>
-        
-        <!-- Post 3 - Bottom Right -->
-        <article class="relative rounded-xl overflow-hidden group cursor-pointer md:col-start-1 md:row-start-2">
+        <!-- Post 3 - Top Right -->
+        <article class="relative rounded-xl overflow-hidden group cursor-pointer">
           <a href={`/blog/${posts[2].slug.current}`} class="block">
-            <div class="relative h-80 md:h-96">
+            <div class="relative h-64 md:h-[285px]">
               <img
                 src={getImageUrl(posts[2])}
                 alt={posts[2].mainImage?.alt || posts[2].title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <p class="text-sm mb-2 opacity-90">{formatDate(posts[2].publishedAt)}</p>
-                <h3 class="text-2xl font-bold font-sans">{posts[2].title}</h3>
+              <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+                <p class="text-xs mb-1 opacity-90">{formatDate(posts[2].publishedAt)}</p>
+                <h3 class="text-lg font-bold font-sans line-clamp-2">{posts[2].title}</h3>
+              </div>
+            </div>
+          </a>
+        </article>
+        
+        <!-- Quote Card - Bottom Right -->
+        <div class="bg-white rounded-xl p-6 shadow-lg flex flex-col justify-center md:h-[285px]">
+          <blockquote class="text-gray-700 text-base leading-relaxed mb-5">
+            Dicas práticas, roteiros, custos reais e a verdade sobre morar em uma Kombi Motorhome. O guia completo para sua liberdade com Renan, Millena e Ayla.
+          </blockquote>
+          <a
+            href="/blog"
+            class="btn-secondary text-sm px-6 py-2.5"
+          >
+            Ver todos
+          </a>
+        </div>
+        
+        <!-- Post 4 - Bottom Left -->
+        <article class="relative rounded-xl overflow-hidden group cursor-pointer md:col-start-1 md:row-start-2">
+          <a href={`/blog/${posts[3].slug.current}`} class="block">
+            <div class="relative h-64 md:h-[285px]">
+              <img
+                src={getImageUrl(posts[3])}
+                alt={posts[3].mainImage?.alt || posts[3].title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+                <p class="text-xs mb-1 opacity-90">{formatDate(posts[3].publishedAt)}</p>
+                <h3 class="text-lg font-bold font-sans line-clamp-2">{posts[3].title}</h3>
               </div>
             </div>
           </a>
         </article>
       </div>
+      ) : posts.length > 0 ? (
+        <!-- Layout alternativo para menos de 4 posts -->
+        <div class="text-center py-12">
+          <p class="text-gray-600 text-lg mb-6">Temos {posts.length} {posts.length === 1 ? 'artigo publicado' : 'artigos publicados'}. Em breve teremos mais conteúdo!</p>
+          <a href="/blog" class="btn-primary">Ver {posts.length === 1 ? 'artigo' : 'artigos'}</a>
+        </div>
       ) : (
-        <!-- Mensagem caso não haja posts suficientes -->
+        <!-- Mensagem caso não haja posts -->
         <div class="text-center py-12">
           <p class="text-gray-600 text-lg">Nenhum post publicado ainda. Acesse o <a href="http://localhost:3333" class="text-[#123A2B] underline" target="_blank">Sanity Studio</a> para criar conteúdo.</p>
         </div>

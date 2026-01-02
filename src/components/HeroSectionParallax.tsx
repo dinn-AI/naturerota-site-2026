@@ -46,7 +46,7 @@ export default function HeroSectionParallax() {
             </p>
           </div>
           <a
-            href="#sobre-nos"
+            href="/#sobre-nos"
             className="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center"
             aria-label="Conheça quem somos"
           >

@@ -1,99 +1,86 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../lib/sanity';
 
-// Dados dos posts (em produção, viriam de um CMS ou API)
-const featuredPost = {
+// Buscar todos os posts do Sanity ordenados por data de publicação
+const allPosts = await sanityClient.fetch(
+  `*[_type == "post"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    mainImage,
+    excerpt,
+    publishedAt,
+    author->{
+      name,
+      image
+    }
+  }`
+);
+
+// Função para obter URL da imagem ou fallback
+function getImageUrl(post: any): string {
+  if (post.mainImage?.asset) {
+    return urlFor(post.mainImage).width(800).height(600).url();
+  }
+  return '/IMG_5297.jpeg'; // Imagem fallback
+}
+
+// Função para obter URL da foto do autor
+function getAuthorImageUrl(author: any): string | null {
+  if (author?.image?.asset) {
+    return urlFor(author.image).width(100).height(100).url();
+  }
+  return null;
+}
+
+// Função para formatar data em pt-BR
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleDateString('pt-BR', { month: 'short' });
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+}
+
+// Função para estimar tempo de leitura
+function estimateReadTime(text: string): string {
+  const wordsPerMinute = 200;
+  const words = text?.length || 500; // Estimativa baseada em caracteres
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min`;
+}
+
+// Post em destaque (mais recente)
+const featuredPost = allPosts[0] ? {
   category: "Van Life",
-  title: "Transformando uma Kombi em Casa: Nossa Jornada de 6 Meses",
-  image: "/Header_BG.jpg",
-  slug: "transformando-kombi-em-casa"
-};
+  title: allPosts[0].title,
+  image: getImageUrl(allPosts[0]),
+  slug: allPosts[0].slug.current
+} : null;
 
-const otherFeaturedPosts = [
-  {
-    title: "20 Dias pela Patagônia: Roteiro Completo de Carro",
-    image: "/20_dias_patagonia.jpeg",
-    slug: "20-dias-patagonia-roteiro"
-  },
-  {
-    title: "Como Ganhar Dinheiro Viajando: 7 Formas Testadas",
-    image: "/IMG_5789.jpeg",
-    slug: "ganhar-dinheiro-viajando"
-  },
-  {
-    title: "Vida na Estrada com Pets: Guia Completo com a Ayla",
-    image: "/IMG_9299.jpeg",
-    slug: "vida-na-estrada-com-pets"
-  },
-  {
-    title: "Bonito MS: 4 Dias de Aventura nas Águas Cristalinas",
-    image: "/4_dias_Bonito_MS.jpeg",
-    slug: "bonito-ms-4-dias"
-  }
-];
+// Próximos 4 posts em destaque
+const otherFeaturedPosts = allPosts.slice(1, 5).map((post: any) => ({
+  title: post.title,
+  image: getImageUrl(post),
+  slug: post.slug.current
+}));
 
-const recentPosts = [
-  {
-    title: "Equipamentos Essenciais para Van Life no Brasil",
-    description: "Descubra os equipamentos indispensáveis para viver na estrada com conforto e segurança. Lista completa testada em mais de 30.000 km rodados.",
-    image: "/IMG_5561.jpeg",
-    author: "Renan Cavalheiro",
-    readTime: "8 min",
-    date: "15 Dez 2025",
-    category: "Equipamentos",
-    slug: "equipamentos-essenciais-van-life"
-  },
-  {
-    title: "Melhores Destinos para Motorhome no Sul do Brasil",
-    description: "Explore os melhores destinos do Sul do Brasil para quem viaja de motorhome. Praias, serras e campings incríveis que visitamos.",
-    image: "/IMG_5789.jpeg",
-    author: "Millena Silva",
-    readTime: "10 min",
-    date: "10 Dez 2025",
-    category: "Destinos",
-    slug: "melhores-destinos-sul-brasil"
-  },
-  {
-    title: "Custo Real de Viver Viajando de Kombi",
-    description: "Planilha detalhada com todos os custos da vida na estrada: combustível, alimentação, manutenção e muito mais.",
-    image: "/IMG_9299.jpeg",
-    author: "Renan Cavalheiro",
-    readTime: "12 min",
-    date: "5 Dez 2025",
-    category: "Finanças",
-    slug: "custo-real-viver-viajando"
-  },
-  {
-    title: "Bonito MS: 4 Dias de Aventura nas Águas Cristalinas",
-    description: "Roteiro completo de 4 dias em Bonito, com dicas de passeios, valores e hospedagem.",
-    image: "/4_dias_Bonito_MS.jpeg",
-    author: "Renan Cavalheiro",
-    readTime: "11 min",
-    date: "1 Dez 2025",
-    category: "Destinos",
-    slug: "bonito-ms-4-dias"
-  },
-  {
-    title: "Construindo um Motorhome: Passo a Passo Completo",
-    description: "Documentamos cada etapa da transformação da Kombi Catarina em nossa casa móvel.",
-    image: "/kombi_noturna.jpeg",
-    author: "Renan Cavalheiro",
-    readTime: "20 min",
-    date: "28 Nov 2025",
-    category: "Construção",
-    slug: "construindo-motorhome"
-  },
-  {
-    title: "Escolher Viver Viajando: Nossa História",
-    description: "Como largamos tudo para viver a vida na estrada e por que foi a melhor decisão que tomamos.",
-    image: "/IMG_5561.jpeg",
-    author: "Millena Silva",
-    readTime: "7 min",
-    date: "22 Nov 2025",
-    category: "Lifestyle",
-    slug: "escolher-viver-viajando"
-  }
-];
+// Posts recentes (todos os demais)
+const recentPosts = allPosts.slice(5).map((post: any) => ({
+  title: post.title,
+  description: post.excerpt || 'Leia este artigo incrível sobre nossa vida na estrada.',
+  image: getImageUrl(post),
+  author: post.author?.name || 'Renan Cavalheiro',
+  authorImage: getAuthorImageUrl(post.author),
+  readTime: estimateReadTime(post.excerpt),
+  date: formatDate(post.publishedAt),
+  category: "Van Life",
+  slug: post.slug.current
+}));
+
+// Se não houver posts suficientes, mostrar mensagem
+const hasPosts = allPosts.length > 0;
 ---
 
 <Layout 
@@ -103,7 +90,23 @@ const recentPosts = [
   <section class="py-8 md:py-16" style="background-color: #FFF8F2;">
     <div class="container mx-auto px-4">
       <div class="max-w-7xl mx-auto">
+        
+        {!hasPosts ? (
+          <div class="text-center py-20">
+            <h2 class="text-3xl font-serif font-semibold text-gray-900 mb-4">
+              Nenhum post publicado ainda
+            </h2>
+            <p class="text-gray-600 text-lg mb-8">
+              Em breve teremos conteúdo incrível sobre Van Life e viagens!
+            </p>
+            <a href="/" class="btn-primary">
+              Voltar para Home
+            </a>
+          </div>
+        ) : (
+          <>
         <!-- Hero Section com Featured Post e Sidebar -->
+        {featuredPost && (
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-16 lg:items-stretch">
           <!-- Featured Post (8 colunas - maior) -->
           <div class="lg:col-span-8">
@@ -128,6 +131,7 @@ const recentPosts = [
           </div>
 
           <!-- Other Featured Posts Sidebar (4 colunas - menor) -->
+          {otherFeaturedPosts.length > 0 && (
           <div class="lg:col-span-4 flex flex-col h-full">
             <div class="mb-5">
               <h2 class="text-lg md:text-xl font-sans font-bold text-gray-900">
@@ -135,7 +139,7 @@ const recentPosts = [
               </h2>
             </div>
             <div class="flex flex-col justify-between space-y-4 flex-1">
-              {otherFeaturedPosts.map((post) => (
+              {otherFeaturedPosts.map((post: any) => (
                 <a href={`/blog/${post.slug}`} class="group block">
                   <article class="flex gap-3 items-start">
                     <div class="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden bg-gray-200">
@@ -155,9 +159,12 @@ const recentPosts = [
               ))}
             </div>
           </div>
+          )}
         </div>
+        )}
 
         <!-- Recent Posts Section -->
+        {recentPosts.length > 0 && (
         <div class="mb-16">
           <div class="mb-8">
             <h2 class="text-3xl md:text-4xl font-serif font-semibold" style="color: #123A2B;">
@@ -167,7 +174,7 @@ const recentPosts = [
 
           <!-- Posts Grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {recentPosts.map((post) => (
+            {recentPosts.map((post: any) => (
               <a href={`/blog/${post.slug}`} class="group">
                 <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                   <!-- Imagem -->
@@ -194,9 +201,17 @@ const recentPosts = [
                     <!-- Meta Info -->
                     <div class="flex items-center justify-between pt-3 border-t border-gray-100">
                       <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-full bg-gradient-to-br from-[#123A2B] to-[#A4D0AF] flex items-center justify-center text-white text-xs font-bold">
-                          {post.author.split(' ').map(n => n[0]).join('')}
-                        </div>
+                        {post.authorImage ? (
+                          <img 
+                            src={post.authorImage} 
+                            alt={post.author}
+                            class="w-7 h-7 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-[#123A2B] to-[#A4D0AF] flex items-center justify-center text-white text-xs font-bold">
+                            {post.author.split(' ').map((n: string) => n[0]).join('')}
+                          </div>
+                        )}
                         <span class="text-xs text-gray-700 font-medium">
                           {post.author}
                         </span>
@@ -210,53 +225,20 @@ const recentPosts = [
               </a>
             ))}
           </div>
-
-          <!-- Load More Button -->
-          <div class="flex justify-center mt-12">
-            <button 
-              class="btn-secondary text-base md:text-lg px-8 py-3.5"
-              onclick="alert('Carregando mais 6 artigos...')"
-            >
-              Ver Mais Artigos
-            </button>
-          </div>
         </div>
+        )}
 
-        <!-- Pagination -->
-        <div class="flex flex-wrap items-center justify-center gap-2 mb-16">
-          <button 
-            class="px-3 py-2 rounded-lg border border-gray-300 text-gray-400 cursor-not-allowed"
-            disabled
-            aria-label="Página anterior"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          
-          <button class="px-4 py-2 rounded-lg bg-[#123A2B] text-white font-sans font-semibold hover:bg-[#0d2820] transition-colors">
-            1
-          </button>
-          <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors font-sans">
-            2
-          </button>
-          <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors font-sans">
-            3
-          </button>
-          <span class="px-2 text-gray-400">...</span>
-          <button class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors font-sans">
-            10
-          </button>
-          
-          <button 
-            class="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
-            aria-label="Próxima página"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+        {allPosts.length > 6 && (
+        <!-- Estatísticas do Blog -->
+        <div class="text-center py-8">
+          <p class="text-gray-600 text-lg">
+            Mostrando {allPosts.length} {allPosts.length === 1 ? 'artigo' : 'artigos'} sobre Van Life e Viagens
+          </p>
         </div>
+        )}
+
+        </>
+        )}
 
       </div>
     </div>
