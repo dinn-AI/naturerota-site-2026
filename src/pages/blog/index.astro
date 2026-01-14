@@ -34,6 +34,20 @@ function getAuthorImageUrl(author: any): string | null {
   return null;
 }
 
+// Função para garantir que sempre há um nome de autor
+function getAuthorName(author: any): string {
+  return author?.name || 'Renan Cavalheiro';
+}
+
+// Função para obter as iniciais do autor (para fallback visual)
+function getAuthorInitials(authorName: string): string {
+  return authorName
+    .split(' ')
+    .map((n: string) => n[0])
+    .join('')
+    .toUpperCase();
+}
+
 // Função para formatar data em pt-BR
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -67,17 +81,21 @@ const otherFeaturedPosts = allPosts.slice(1, 5).map((post: any) => ({
 }));
 
 // Posts recentes (todos os demais)
-const recentPosts = allPosts.slice(5).map((post: any) => ({
-  title: post.title,
-  description: post.excerpt || 'Leia este artigo incrível sobre nossa vida na estrada.',
-  image: getImageUrl(post),
-  author: post.author?.name || 'Renan Cavalheiro',
-  authorImage: getAuthorImageUrl(post.author),
-  readTime: estimateReadTime(post.excerpt),
-  date: formatDate(post.publishedAt),
-  category: "Van Life",
-  slug: post.slug.current
-}));
+const recentPosts = allPosts.slice(5).map((post: any) => {
+  const authorName = getAuthorName(post.author);
+  return {
+    title: post.title,
+    description: post.excerpt || 'Leia este artigo incrível sobre nossa vida na estrada.',
+    image: getImageUrl(post),
+    author: authorName,
+    authorImage: getAuthorImageUrl(post.author),
+    authorInitials: getAuthorInitials(authorName),
+    readTime: estimateReadTime(post.excerpt),
+    date: formatDate(post.publishedAt),
+    category: "Van Life",
+    slug: post.slug.current
+  };
+});
 
 // Se não houver posts suficientes, mostrar mensagem
 const hasPosts = allPosts.length > 0;
@@ -209,7 +227,7 @@ const hasPosts = allPosts.length > 0;
                           />
                         ) : (
                           <div class="w-7 h-7 rounded-full bg-gradient-to-br from-[#123A2B] to-[#A4D0AF] flex items-center justify-center text-white text-xs font-bold">
-                            {post.author.split(' ').map((n: string) => n[0]).join('')}
+                            {post.authorInitials}
                           </div>
                         )}
                         <span class="text-xs text-gray-700 font-medium">
