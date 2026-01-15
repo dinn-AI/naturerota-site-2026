@@ -1,11 +1,27 @@
 import { createClient } from '@sanity/client';
+import dotenv from 'dotenv';
+
+// Carregar variáveis de ambiente
+dotenv.config();
+
+const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.PUBLIC_SANITY_DATASET || 'production';
+const token = process.env.SANITY_API_TOKEN;
+
+if (!projectId || !token) {
+  console.error('❌ Variáveis de ambiente não configuradas!');
+  console.error('Certifique-se de ter um arquivo .env com:');
+  console.error('  PUBLIC_SANITY_PROJECT_ID=seu_project_id');
+  console.error('  SANITY_API_TOKEN=seu_token');
+  process.exit(1);
+}
 
 const client = createClient({
-  projectId: '12wgha1o',
-  dataset: 'production',
+  projectId,
+  dataset,
   apiVersion: '2024-01-01',
   useCdn: false,
-  token: 'skvEsE1mT84ixh2mbhLsPsmGNbi1LOuMyArsup0wtBMJIZSYmCynSbyyOolAFRQUf4MmgwP9egDUzrpUXyxQqNGFKVBvhWakZH4L23iZtvYVrGlLcmYJxAvYEVOyYPY6H9ZGe5C4zQbnYwwp2Cva2rgLI5eWeYGXYkbj8cdUoYXnvEI4hGmh',
+  token,
 });
 
 console.log('🔍 Verificando posts publicados no Sanity...\n');

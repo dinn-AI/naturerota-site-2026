@@ -5,7 +5,7 @@
 - ✅ Site desenvolvido e funcionando
 - ✅ Deploy na Vercel: https://naturerota.vercel.app/
 - ✅ Código no GitHub: https://github.com/dinn-AI/naturerota-site-2026
-- ✅ Sanity CMS configurado (Project ID: 12wgha1o)
+- ✅ Sanity CMS configurado
 - ✅ Domínio registrado: naturerota.com.br
 - ⏳ **Aguardando 2h para configurar DNS no Registro.br**
 
@@ -52,7 +52,7 @@ Ou teste online:
 
 **Quando:** Após DNS propagar
 
-1. Acesse: https://www.sanity.io/manage/project/12wgha1o/settings/api
+1. Acesse: `https://www.sanity.io/manage/project/[SEU_PROJECT_ID]/settings/api`
 2. Vá em **"CORS Origins"**
 3. Clique em **"Add CORS origin"**
 4. Adicione os domínios:
@@ -85,7 +85,7 @@ https://naturerota.vercel.app
 
 #### **Opção A - Via Painel Sanity.io (Mais Fácil):**
 
-1. Acesse: https://www.sanity.io/manage/project/12wgha1o
+1. Acesse: `https://www.sanity.io/manage/project/[SEU_PROJECT_ID]`
 2. No menu lateral, clique em **"Studios"**
 3. Clique em **"Deploy Studio"**
 4. Escolha hostname: `naturerota` ou `naturerota-studio`
@@ -136,9 +136,11 @@ Se não aparecer:
 ## 🔐 Credenciais e Tokens
 
 ### **Sanity CMS:**
-- **Project ID:** `12wgha1o`
+- **Project ID:** Veja no arquivo `.env` → `PUBLIC_SANITY_PROJECT_ID`
 - **Dataset:** `production`
-- **API Token:** `skvEsE1mT84ixh2mbhLsPsmGNbi1LOuMyArsup0wtBMJIZSYmCynSbyyOolAFRQUf4MmgwP9egDUzrpUXyxQqNGFKVBvhWakZH4L23iZtvYVrGlLcmYJxAvYEVOyYPY6H9ZGe5C4zQbnYwwp2Cva2rgLI5eWeYGXYkbj8cdUoYXnvEI4hGmh`
+- **API Token:** Veja no arquivo `.env` → `SANITY_API_TOKEN`
+
+> **⚠️ IMPORTANTE:** Nunca compartilhe seu API Token publicamente!
 
 ### **GitHub:**
 - **Repositório:** https://github.com/dinn-AI/naturerota-site-2026
@@ -155,7 +157,7 @@ Se não aparecer:
 ### **Gerenciamento:**
 - Painel Registro.br: https://registro.br/
 - Painel Vercel: https://vercel.com/dashboard
-- Painel Sanity: https://www.sanity.io/manage/project/12wgha1o
+- Painel Sanity: `https://www.sanity.io/manage/project/[SEU_PROJECT_ID]`
 
 ### **Documentação:**
 - Sanity Schemas: https://www.sanity.io/docs/schema-types
@@ -194,7 +196,7 @@ Se não aparecer:
 - Verifique data de publicação (não pode ser futura)
 
 ### **Erro de CORS:**
-- Adicione o domínio em: https://www.sanity.io/manage/project/12wgha1o/settings/api
+- Adicione o domínio em: `https://www.sanity.io/manage/project/[SEU_PROJECT_ID]/settings/api`
 - Marque "Allow credentials"
 - Aguarde 1 minuto para propagar
 

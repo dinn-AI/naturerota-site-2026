@@ -1,0 +1,92 @@
+---
+const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || '';
+const studioUrl = `https://www.sanity.io/manage/project/${projectId}/desk`;
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex" />
+  <title>Naturerota Blog - Admin</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f6f6f6;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #123A2B;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-block;
+      background: #123A2B;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #0f2e22;
+    }
+    .links {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+    }
+    .links a {
+      display: block;
+      color: #666;
+      text-decoration: none;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .links a:hover {
+      color: #123A2B;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Admin - Naturerota Blog</h1>
+    <p>
+      Para gerenciar o conteúdo do blog, acesse o Sanity Studio na web.
+      Lá você pode criar e editar posts, adicionar imagens e gerenciar autores.
+    </p>
+    
+    <a href={studioUrl} class="btn" target="_blank" rel="noopener noreferrer">
+      Acessar Sanity Studio
+    </a>
+
+    <div class="links">
+      <a href="/">← Voltar para Homepage</a>
+      <a href="/blog">Ver Blog</a>
+    </div>
+  </div>
+
+  <script define:vars={{ studioUrl }}>
+    // Auto-redireciona após 3 segundos se preferir
+    // setTimeout(() => {
+    //   window.location.href = studioUrl;
+    // }, 3000);
+  </script>
+</body>
+</html>

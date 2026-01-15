@@ -15,11 +15,13 @@ Após conectar o repositório na Vercel, adicione as seguintes variáveis de amb
 ### **Variáveis Obrigatórias:**
 
 ```
-PUBLIC_SANITY_PROJECT_ID=12wgha1o
+PUBLIC_SANITY_PROJECT_ID=[SEU_PROJECT_ID]
 PUBLIC_SANITY_DATASET=production
 PUBLIC_SANITY_API_VERSION=2024-01-01
-SANITY_API_TOKEN=seu_token_aqui
+SANITY_API_TOKEN=[SEU_TOKEN_AQUI]
 ```
+
+> **Nota:** Substitua os valores entre `[]` pelos seus dados reais.
 
 ### **Como Adicionar:**
 
@@ -52,7 +54,7 @@ A Vercel detectará automaticamente que é um projeto Astro, mas caso precise co
 
 Para obter o `SANITY_API_TOKEN`:
 
-1. Acesse: https://www.sanity.io/manage/project/12wgha1o/settings/api
+1. Acesse: `https://www.sanity.io/manage/project/[SEU_PROJECT_ID]/settings/api`
 2. Clique em **"Add API token"**
 3. Configure:
    - **Label:** `Vercel Production`
@@ -134,7 +136,7 @@ Para usar seu domínio (naturerota.com.br):
 Após o deploy, configure o Sanity Studio:
 
 1. Adicione o domínio da Vercel nas CORS do Sanity:
-   https://www.sanity.io/manage/project/12wgha1o/settings/api
+   `https://www.sanity.io/manage/project/[SEU_PROJECT_ID]/settings/api`
 2. Em **CORS Origins**, adicione:
    - `https://seu-dominio.vercel.app`
    - `https://naturerota.com.br` (se configurado)
