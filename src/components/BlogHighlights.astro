@@ -43,7 +43,7 @@ function getImageUrl(post: BlogPost): string {
 }
 ---
 
-<section class="py-16" style="background-color: #FFF8F2;">
+<section class="py-16 relative z-10" style="background-color: #FFF8F2;">
   <div class="container mx-auto px-4">
     <div class="max-w-7xl mx-auto">
       <!-- Header com título e navegação -->
@@ -64,7 +64,7 @@ function getImageUrl(post: BlogPost): string {
       
       <!-- Grid de posts com layout assimétrico - Altura total: 600px -->
       {posts.length >= 4 ? (
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative max-h-[600px]">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative md:max-h-[600px]">
         <!-- Post 1 - Top Left -->
         <article class="relative rounded-xl overflow-hidden group cursor-pointer">
           <a href={`/blog/${posts[0].slug.current}`} class="block">

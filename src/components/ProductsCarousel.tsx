@@ -3,7 +3,7 @@
 import React from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 
-const ProductContent = ({ title, description, features }: { title: string; description: string; features: string[] }) => {
+const ProductContent = ({ title, description, features, checkoutUrl }: { title: string; description: string; features: string[]; checkoutUrl?: string }) => {
   return (
     <div className="bg-[#FFF8F2] p-8 md:p-14 rounded-3xl mb-4">
       <p className="text-gray-700 text-base md:text-xl font-sans max-w-3xl mx-auto leading-relaxed mb-6">
@@ -12,7 +12,7 @@ const ProductContent = ({ title, description, features }: { title: string; descr
       <div className="space-y-3">
         {features.map((feature, idx) => (
           <div key={idx} className="flex items-start">
-            <svg className="w-6 h-6 mr-3 mt-1 flex-shrink-0" style={{ color: '#123A2B' }} fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-6 h-6 mr-3 mt-1 shrink-0" style={{ color: '#123A2B' }} fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
             </svg>
             <span className="text-gray-700 text-base md:text-lg">{feature}</span>
@@ -20,9 +20,20 @@ const ProductContent = ({ title, description, features }: { title: string; descr
         ))}
       </div>
       <div className="mt-8 text-center">
-        <button className="btn-primary">
-          Quero Este Guia
-        </button>
+        {checkoutUrl ? (
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary inline-block"
+          >
+            Quero Este Guia
+          </a>
+        ) : (
+          <p className="text-gray-600 text-base md:text-lg font-medium">
+            Disponível em breve...
+          </p>
+        )}
       </div>
     </div>
   );
@@ -44,6 +55,7 @@ const productsData = [
           "Dicas de economia e orçamento realista",
           "Lugares escondidos que não estão nos guias tradicionais"
         ]}
+        checkoutUrl="https://pay.hotmart.com/U98520938Y"
       />
     ),
   },
@@ -62,6 +74,7 @@ const productsData = [
           "Onde comer bem gastando pouco",
           "Campings e hospedagens testados por nós"
         ]}
+        checkoutUrl="https://pay.hotmart.com/T98534013N"
       />
     ),
   },

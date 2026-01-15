@@ -11,7 +11,7 @@ export default function HeroSectionParallax() {
       <div
         className="absolute z-0"
         style={{
-          backgroundImage: "url('/Header_BG.jpg')",
+          backgroundImage: "url('/IMG_3835.JPG')",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",

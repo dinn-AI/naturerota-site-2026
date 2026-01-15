@@ -67,21 +67,29 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     }
   };
 
+  const isMobile = () => {
+    return window && window.innerWidth < 768;
+  };
+
   const scrollLeftBtn = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      const cardWidth = isMobile() ? 192 : 288; // (md:w-72)
+      const gap = isMobile() ? 4 : 8;
+      carouselRef.current.scrollBy({ left: -(cardWidth + gap), behavior: "smooth" });
     }
   };
 
   const scrollRightBtn = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      const cardWidth = isMobile() ? 192 : 288; // (md:w-72)
+      const gap = isMobile() ? 4 : 8;
+      carouselRef.current.scrollBy({ left: cardWidth + gap, behavior: "smooth" });
     }
   };
 
   const handleCardClose = (index: number) => {
     if (carouselRef.current) {
-      const cardWidth = isMobile() ? 230 : 384; // (md:w-96)
+      const cardWidth = isMobile() ? 192 : 288; // (md:w-72)
       const gap = isMobile() ? 4 : 8;
       const scrollPosition = (cardWidth + gap) * (index + 1);
       carouselRef.current.scrollTo({
@@ -90,10 +98,6 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
       });
       setCurrentIndex(index);
     }
-  };
-
-  const isMobile = () => {
-    return window && window.innerWidth < 768;
   };
 
   // Drag to scroll handlers
@@ -170,10 +174,10 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     <CarouselContext.Provider
       value={{ onCardClose: handleCardClose, currentIndex, isDragging: hasDragged }}
     >
-      <div className="relative w-full overflow-visible">
+      <div className="relative w-full overflow-hidden">
         <div
           className={cn(
-            "flex w-full overflow-x-scroll overscroll-x-auto py-10 [scrollbar-width:none] md:py-20 select-none overflow-y-visible",
+            "flex w-full overflow-x-scroll overscroll-x-auto py-10 [scrollbar-width:none] md:py-20 select-none overflow-y-hidden",
             !isDragging && "scroll-smooth"
           )}
           style={{ cursor: 'grab' }}
@@ -189,7 +193,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
         >
           <div
             className={cn(
-              "flex flex-row justify-start gap-4 pl-4",
+              "flex flex-row justify-start gap-6 pl-4 pr-4",
             )}
           >
             {items.map((item, index) => (
@@ -209,14 +213,33 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                   },
                 }}
                 key={"card" + index}
-                className="rounded-3xl last:pr-[5%] md:last:pr-[33%]"
+                className="relative shrink-0 rounded-3xl last:pr-[5%] md:last:pr-[33%]"
+                style={{ zIndex: items.length - index }}
               >
                 {item}
               </motion.div>
             ))}
           </div>
         </div>
-        <div className="mr-10 flex justify-end gap-2">
+        {/* Setas de navegação - Desktop: centralizadas verticalmente e nas laterais */}
+        <div className="hidden md:flex absolute inset-y-0 left-0 right-0 pointer-events-none z-40">
+          <button
+            className="absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed pointer-events-auto transition-all"
+            onClick={scrollLeftBtn}
+            disabled={!canScrollLeft}
+          >
+            <IconArrowNarrowLeft className="h-6 w-6 text-gray-700" />
+          </button>
+          <button
+            className="absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed pointer-events-auto transition-all"
+            onClick={scrollRightBtn}
+            disabled={!canScrollRight}
+          >
+            <IconArrowNarrowRight className="h-6 w-6 text-gray-700" />
+          </button>
+        </div>
+        {/* Setas de navegação - Mobile: mantém posição original */}
+        <div className="md:hidden mr-10 flex justify-end gap-2">
           <button
             className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
             onClick={scrollLeftBtn}
@@ -323,7 +346,7 @@ export const Card = ({
               exit={{ opacity: 0 }}
               ref={containerRef}
               layoutId={layout ? `card-${card.title}` : undefined}
-              className="relative z-[10000] mx-auto my-10 h-fit max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10"
+              className="relative z-[10000] mx-auto my-10 h-fit w-[90%] md:w-[80%] lg:max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10"
             >
               <button
                 className="sticky top-4 right-0 ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-black"
@@ -351,12 +374,12 @@ export const Card = ({
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={handleCardClick}
-        className="relative z-10 flex h-80 w-56 flex-col items-start justify-between overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96"
+        className="relative flex h-64 w-48 flex-col items-start justify-between overflow-hidden rounded-3xl bg-gray-100 md:h-96 md:w-72"
       >
         {!card.hideOverlay && (
           <>
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-            <div className="relative z-40 p-4 md:p-8 w-full">
+            <div className="pointer-events-none absolute inset-0 z-30 h-full w-full bg-gradient-to-b from-black/50 via-transparent to-transparent rounded-3xl" />
+            <div className="relative z-40 p-4 md:p-8 w-full overflow-hidden">
               <motion.p
                 layoutId={layout ? `category-${card.category}` : undefined}
                 className="text-left font-sans text-sm font-medium text-white md:text-base"
@@ -365,14 +388,14 @@ export const Card = ({
               </motion.p>
               <motion.p
                 layoutId={layout ? `title-${card.title}` : undefined}
-                className="mt-2 max-w-xs text-left font-serif text-lg font-semibold [text-wrap:balance] text-white md:text-3xl"
+                className="mt-2 w-full text-left font-serif text-lg font-semibold text-white md:text-3xl line-clamp-3 md:line-clamp-4"
               >
                 {card.title}
               </motion.p>
             </div>
             
             {card.buttonLink && card.buttonPlatform && (
-              <div className="relative z-40 p-4 md:p-8 w-full">
+              <div className="relative z-40 p-4 md:p-8 w-full overflow-hidden">
                 <span className="inline-flex items-center justify-center gap-2 md:gap-3 text-white border-2 border-white px-4 md:px-8 py-2.5 md:py-3.5 rounded-full font-sans font-bold text-sm md:text-lg uppercase tracking-wide transition-all duration-300 ease-in-out hover:bg-white/25 pointer-events-none whitespace-nowrap">
                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
@@ -387,7 +410,7 @@ export const Card = ({
         <BlurImage
           src={card.src}
           alt={card.title}
-          className="absolute inset-0 z-10 object-cover"
+          className="absolute inset-0 z-10 object-cover rounded-3xl"
         />
       </motion.button>
     </>
