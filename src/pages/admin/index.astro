@@ -52,12 +52,12 @@
       iframe.style.border = 'none';
       container.appendChild(iframe);
     } else {
-      // Em produção, tenta carregar o Studio deployado
+      // Em produção, carrega o Studio deployado diretamente
       const studioUrl = 'https://naturerota-blog.sanity.studio';
       
-      // Primeiro, mostra loading
+      // Mostra loading enquanto carrega
       container.innerHTML = `
-        <div style="
+        <div id="loading" style="
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -75,7 +75,7 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
           "></div>
-          <p style="margin-top: 20px;">Carregando Studio...</p>
+          <p style="margin-top: 20px;">Carregando Sanity Studio...</p>
         </div>
         <style>
           @keyframes spin {
@@ -84,55 +84,60 @@
         </style>
       `;
       
-      // Tenta carregar o Studio
-      fetch(studioUrl, { method: 'HEAD' })
-        .then(() => {
-          // Studio existe, carrega via iframe
-          container.innerHTML = '';
-          const iframe = document.createElement('iframe');
-          iframe.src = studioUrl;
-          iframe.style.width = '100%';
-          iframe.style.height = '100vh';
-          iframe.style.border = 'none';
-          container.appendChild(iframe);
-        })
-        .catch(() => {
-          // Studio não existe ainda, mostra instruções
-          container.innerHTML = `
-            <div style="
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-              height: 100vh;
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-              background: #123A2B;
-              color: white;
-              padding: 20px;
-              text-align: center;
+      // Carrega o iframe
+      const iframe = document.createElement('iframe');
+      iframe.src = studioUrl;
+      iframe.style.width = '100%';
+      iframe.style.height = '100vh';
+      iframe.style.border = 'none';
+      iframe.style.display = 'none'; // Esconde até carregar
+      
+      // Quando o iframe carregar, remove o loading
+      iframe.onload = function() {
+        const loading = document.getElementById('loading');
+        if (loading) loading.remove();
+        iframe.style.display = 'block';
+      };
+      
+      // Se houver erro, mostra mensagem
+      iframe.onerror = function() {
+        container.innerHTML = `
+          <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #123A2B;
+            color: white;
+            padding: 20px;
+            text-align: center;
+          ">
+            <h1 style="margin-bottom: 20px;">⚠️ Erro ao Carregar Studio</h1>
+            <p style="max-width: 600px; margin-bottom: 30px; line-height: 1.6;">
+              Não foi possível carregar o Sanity Studio.<br>
+              Acesse diretamente:
+            </p>
+            <a href="${studioUrl}" target="_blank" style="
+              background: #A4D0AF;
+              color: #123A2B;
+              padding: 12px 24px;
+              border-radius: 8px;
+              text-decoration: none;
+              font-weight: 600;
+              margin: 20px 0;
             ">
-              <h1 style="margin-bottom: 20px;">🔧 Deploy Necessário</h1>
-              <p style="max-width: 600px; margin-bottom: 30px; line-height: 1.6;">
-                O Sanity Studio ainda não foi deployado para produção.<br>
-                Para gerenciar conteúdo em produção, execute no seu computador:
-              </p>
-              <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; max-width: 700px;">
-                <code style="display: block; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 4px; margin: 10px 0; text-align: left; font-size: 14px;">
-                  bash deploy-studio-prod.sh
-                </code>
-              </div>
-              <p style="margin-top: 30px; color: #A4D0AF;">
-                Ou acesse temporariamente:<br>
-                <a href="https://www.sanity.io/manage" target="_blank" style="color: #A4D0AF; text-decoration: underline;">
-                  Sanity Dashboard
-                </a>
-              </p>
-              <p style="margin-top: 20px;">
-                <a href="/" style="color: #A4D0AF; text-decoration: underline;">← Voltar para o site</a>
-              </p>
-            </div>
-          `;
-        });
+              Abrir Studio em Nova Aba
+            </a>
+            <p style="margin-top: 20px;">
+              <a href="/" style="color: #A4D0AF; text-decoration: underline;">← Voltar para o site</a>
+            </p>
+          </div>
+        `;
+      };
+      
+      container.appendChild(iframe);
     }
   </script>
 </body>
