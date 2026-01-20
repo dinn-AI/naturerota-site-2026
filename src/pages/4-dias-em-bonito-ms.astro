@@ -1,0 +1,315 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const checkoutUrl = "https://pay.hotmart.com/T98534013N";
+---
+
+<Layout
+  title="Bonito em 4 Dias | Roteiro Premium de Carro"
+  description="Roteiro de 4 dias em Bonito (MS) com conforto, hospedagem e passeios imperdíveis. Viaje de carro, economize e viva uma experiência sem perrengue."
+  type="product"
+>
+  <!-- Hero -->
+  <section class="relative overflow-visible" style="background-color: #CA7B50;">
+    <div class="relative container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-white/90 text-sm md:text-base font-sans mb-3 tracking-wide">
+          ROTEIRO PREMIUM • CONFORTO • CARRO
+        </p>
+        <h1 class="text-white font-serif font-semibold text-3xl md:text-5xl leading-tight">
+          Bonito em 4 Dias: O Roteiro de Carro para Quem Quer Conforto, Aventura e Zero Perrengue
+        </h1>
+        <p class="mt-6 text-white/90 text-lg md:text-xl leading-relaxed">
+          Descubra como transformamos um feriado prolongado na viagem de aniversário de casamento perfeita. Esqueça o acampamento dessa vez: nós ficamos em hotel, comemos bem e mostramos como você pode fazer o mesmo, economizando milhares de reais apenas por escolher ir de carro.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary inline-flex items-center justify-center text-center"
+          >
+            QUERO MEU ROTEIRO PREMIUM POR R$ 19,90
+          </a>
+          <a href="#conteudo" class="btn-secondary inline-flex items-center justify-center text-center">
+            Ver o que tem dentro
+          </a>
+        </div>
+
+        <!-- Mockup do ebook (metade no hero, metade sobre a próxima seção) -->
+        <div class="mt-12 flex justify-center -mb-44 md:-mb-56 relative z-10">
+          <img
+            src="/Ebook_bonito/Books.png"
+            alt="Mockup do roteiro Bonito em 4 dias"
+            class="w-full max-w-xl md:max-w-2xl h-auto drop-shadow-2xl"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 1: Quebrando o padrão "roots" -->
+  <section class="pt-40 pb-16 md:pt-56" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+        <div>
+          <h2 class="heading-primary mb-6">
+            &ldquo;Ué, cadê a barraca? Cadê o perrengue?&rdquo;
+          </h2>
+          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+            <p>
+              Se você acompanha a gente, sabe que nossa vida é na estrada, muitas vezes dormindo em postos e economizando o máximo possível. Mas... <strong>era nosso aniversário de casamento.</strong>
+            </p>
+            <p>
+              Dessa vez, a gente queria algo diferente. Queria cama macia, café da manhã de hotel, jantar romântico e passeios inesquecíveis.
+            </p>
+            <p>
+              Muita gente deixa de conhecer <strong>Bonito (MS)</strong> porque acredita em dois mitos:
+            </p>
+            <p class="text-base">
+              1. <em>&ldquo;É uma viagem só para milionários.&rdquo;</em><br />
+              2. <em>&ldquo;Preciso de 10 dias de férias e passagem aérea cara.&rdquo;</em>
+            </p>
+            <p>
+              Nós provamos o contrário. Pegamos nosso carro, rodamos até o paraíso das águas cristalinas e vivemos 4 dias de <strong>luxo acessível</strong>. E o melhor: gastando muito menos do que quem compra pacotes com aéreo incluso.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+          <p class="text-sm font-sans text-gray-600 mb-4">
+            Neste roteiro
+          </p>
+          <div class="aspect-video rounded-xl overflow-hidden bg-gray-100">
+            <iframe
+              class="w-full h-full"
+              src="https://www.youtube-nocookie.com/embed/GNdOaR9fW9M?rel=0"
+              title="Bonito em 4 dias - roteiro premium"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 2: O que é esse guia -->
+  <section id="conteudo" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 class="heading-primary mb-6">
+              O que é esse guia?
+            </h2>
+            <p class="text-lg text-gray-700 leading-relaxed mb-10">
+              Não é só um PDF. É o atalho para o seu melhor feriado.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">A rota de carro</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  O trajeto seguro e as condições das estradas para chegar em Bonito dirigindo.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">Hospedagem com conforto</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  Onde ficamos, quanto custou e hotéis que valem cada centavo sem pagar diárias de celebridade.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">Passeios imperdíveis</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  Seleção dos “must-go” em 4 dias, incluindo flutuações e cachoeiras fotogênicas.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">Roteiro gastronômico</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  Onde comer bem sem cair em armadilhas de turista.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6 md:col-span-2">
+                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">Planilha de custos</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  A prova real de como ir de carro viabilizou o nosso “luxo”.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:sticky lg:top-24">
+            <img
+              src="/Ebook_bonito/Book.png"
+              alt="Guia Bonito em 4 dias aberto"
+              class="w-full max-w-md lg:max-w-none mx-auto rounded-2xl shadow-lg object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 3: Quebra de objeções -->
+  <section class="py-16" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="heading-primary mb-10">Quebra de objeções</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <img
+              src="/Ebook_bonito/Rectangle%2027.jpg"
+              alt="Estradas e paisagens no caminho"
+              class="w-full h-40 object-cover rounded-xl mb-5"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="font-sans font-semibold text-gray-900 mb-3">
+              &ldquo;Bonito não é longe para ir de carro?&rdquo;
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              A viagem de carro faz parte da experiência Naturerota e dá liberdade para ir aos passeios sem depender de transfer.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <img
+              src="/Ebook_bonito/Rectangle%2027-1.jpg"
+              alt="Passeios imperdíveis em Bonito"
+              class="w-full h-40 object-cover rounded-xl mb-5"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="font-sans font-semibold text-gray-900 mb-3">
+              &ldquo;Só tenho 4 dias, vale a pena?&rdquo;
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Com um roteiro bem planejado, dá para fazer flutuação, grutas, cachoeiras e ainda curtir a piscina do hotel.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <img
+              src="/Ebook_bonito/Rectangle%2027-2.jpg"
+              alt="Conforto e boa experiência em Bonito"
+              class="w-full h-40 object-cover rounded-xl mb-5"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="font-sans font-semibold text-gray-900 mb-3">
+              &ldquo;É muito caro?&rdquo;
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Mostramos onde vale investir e onde economizar. O guia se paga com a economia de não pegar transfer privativo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 4: Para quem é este guia -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="heading-primary mb-8">Para quem é este guia?</h2>
+        <ul class="space-y-3 text-lg text-gray-700">
+          <li>Para casais que querem comemorar datas especiais e buscam um roteiro romântico e aventureiro.</li>
+          <li>Para quem tem carro e ama a liberdade da estrada.</li>
+          <li>Para quem trabalha muito e quer aproveitar ao máximo um feriado prolongado.</li>
+          <li>Para quem quer conforto sem ir à falência.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 5: Oferta especial -->
+  <section id="oferta" class="py-16" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="heading-primary mb-6">Oferta especial</h2>
+          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+            <p>
+              Você poderia pagar R$ 500,00 numa consultoria de viagem ou gastar horas pesquisando sem saber se as informações estão atualizadas.
+            </p>
+            <p>
+              Preparamos esse material por um valor simbólico. Menos que um petisco no barzinho.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-gray-200 p-8 md:p-10 shadow-sm bg-white">
+          <div class="flex justify-center mb-6">
+            <img
+              src="/Ebook_bonito/Capa.png"
+              alt="Guia Bonito em 4 dias"
+              class="w-full max-w-[260px] h-auto drop-shadow-xl"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p class="text-xl md:text-2xl font-serif font-semibold mb-1" style="color:#123A2B;">
+            O Guia “Bonito em 4 Dias: Edição Especial Conforto”
+          </p>
+          <p class="text-3xl md:text-4xl font-serif font-semibold mt-4" style="color:#123A2B;">
+            Apenas R$ 19,90
+          </p>
+          <p class="text-gray-600 mt-2">(pagamento único, acesso vitalício)</p>
+
+          <div class="mt-8 flex flex-col gap-3">
+            <a
+              href={checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary inline-flex items-center justify-center text-center"
+            >
+              QUERO GARANTIR MEU FERIADO PERFEITO
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 6: Quem somos -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div class="relative">
+          <img
+            src="/Ebook_bonito/Rectangle%2028.jpg"
+            alt="Renan e Millena em Bonito"
+            class="w-full rounded-2xl shadow-lg object-cover"
+            style="max-height: 520px;"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div>
+          <h2 class="heading-primary mb-6">Quem somos</h2>
+          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+            <p>
+              <strong>Renan e Millena</strong>
+            </p>
+            <p>
+              Você nos conhece pelas aventuras de Kombi e Barraca no canal <strong>Naturerota</strong>. Somos especialistas em cair na estrada. Mas também somos um casal que merece (e sabe curtir) o conforto.
+            </p>
+            <p>
+              Unimos nossa expertise de logística de viagem com o desejo de celebrar a vida em grande estilo. Esse guia é o resultado dessa mistura: <strong>a alma aventureira com o conforto de hotel</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+

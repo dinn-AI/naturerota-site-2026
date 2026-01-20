@@ -67,6 +67,9 @@ const productsData = [
     title: "4 Dias em Bonito MS",
     src: "/products_cover/Roteiro_de_4_dias_em_Bonito_MS_Brasil.jpg",
     hideOverlay: true,
+    disableModal: true,
+    buttonLink: "/4-dias-em-bonito-ms",
+    buttonPlatform: "internal" as const,
     content: (
       <ProductContent
         title="4 Dias em Bonito MS"
