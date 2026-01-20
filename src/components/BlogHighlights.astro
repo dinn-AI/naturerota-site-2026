@@ -16,14 +16,20 @@ interface BlogPost {
 }
 
 // Buscar os 4 últimos posts publicados no Sanity
-const posts: BlogPost[] = await sanityClient.fetch(
-  `*[_type == "post"] | order(publishedAt desc)[0...4] {
-    title,
-    mainImage,
-    slug,
-    publishedAt
-  }`
-);
+let posts: BlogPost[] = [];
+try {
+  posts = await sanityClient.fetch(
+    `*[_type == "post"] | order(publishedAt desc)[0...4] {
+      title,
+      mainImage,
+      slug,
+      publishedAt
+    }`
+  );
+} catch (err) {
+  // Se o Sanity estiver indisponível/mal configurado, não derruba a página
+  posts = [];
+}
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);

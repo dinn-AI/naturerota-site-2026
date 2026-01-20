@@ -4,51 +4,61 @@ import { sanityClient, urlFor } from '../../lib/sanity';
 
 // Gerar rotas estáticas para todos os posts
 export async function getStaticPaths() {
-  const posts = await sanityClient.fetch(
-    `*[_type == "post"] {
-      "slug": slug.current
-    }`
-  );
-  
-  return posts.map((post: any) => ({
-    params: { slug: post.slug },
-  }));
+  try {
+    const posts = await sanityClient.fetch(
+      `*[_type == "post"] {
+        "slug": slug.current
+      }`
+    );
+
+    return posts.map((post: any) => ({
+      params: { slug: post.slug },
+    }));
+  } catch (err) {
+    // Se o Sanity estiver indisponível/mal configurado, evita quebrar o build
+    return [];
+  }
 }
 
 // Buscar o post pelo slug
 const { slug } = Astro.params;
 
-const post = await sanityClient.fetch(
-  `*[_type == "post" && slug.current == $slug][0] {
-    _id,
-    title,
-    slug,
-    mainImage,
-    excerpt,
-    body,
-    publishedAt,
-    author->{
-      name,
-      image,
-      bio
-    },
-    "relatedPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
+let post: any = null;
+try {
+  post = await sanityClient.fetch(
+    `*[_type == "post" && slug.current == $slug][0] {
       _id,
       title,
       slug,
       mainImage,
+      excerpt,
+      body,
       publishedAt,
       author->{
-        name
+        name,
+        image,
+        bio
+      },
+      "relatedPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
+        _id,
+        title,
+        slug,
+        mainImage,
+        publishedAt,
+        author->{
+          name
+        }
       }
-    }
-  }`,
-  { slug }
-);
+    }`,
+    { slug }
+  );
+} catch (err) {
+  post = null;
+}
 
 // Se não encontrar o post, retornar 404
 if (!post) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 
 // Função para obter URL da imagem

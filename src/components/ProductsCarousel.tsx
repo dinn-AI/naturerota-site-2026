@@ -45,6 +45,9 @@ const productsData = [
     title: "20 Dias pela Patagônia de Carro",
     src: "/products_cover/20_dias_pela_patagonia_de_CARRO.jpg",
     hideOverlay: true,
+    disableModal: true,
+    buttonLink: "/20-dias-pela-patagonia",
+    buttonPlatform: "internal" as const,
     content: (
       <ProductContent
         title="20 Dias pela Patagônia de Carro"

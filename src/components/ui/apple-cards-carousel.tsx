@@ -26,7 +26,7 @@ type Card = {
   category: string;
   content: React.ReactNode;
   buttonLink?: string;
-  buttonPlatform?: "youtube" | "instagram";
+  buttonPlatform?: "youtube" | "instagram" | "internal";
   buttonText?: string;
   disableModal?: boolean;
   hideOverlay?: boolean;
@@ -308,8 +308,13 @@ export const Card = ({
       return;
     }
 
-    if (card.disableModal && card.buttonLink && card.buttonPlatform) {
+    if (card.disableModal && card.buttonLink) {
       // Se modal está desabilitado e há link, abrir diretamente
+      if (card.buttonPlatform === "internal") {
+        window.location.href = card.buttonLink;
+        return;
+      }
+
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile && card.buttonPlatform === "youtube") {
         e.preventDefault();
@@ -319,10 +324,11 @@ export const Card = ({
           setTimeout(() => {
             window.location.href = card.buttonLink!;
           }, 1500);
+          return;
         }
-      } else {
-        window.open(card.buttonLink, "_blank", "noopener,noreferrer");
       }
+
+      window.open(card.buttonLink, "_blank", "noopener,noreferrer");
     } else {
       // Comportamento padrão: abrir modal
       handleOpen();

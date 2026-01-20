@@ -3,20 +3,26 @@ import Layout from '../../layouts/Layout.astro';
 import { sanityClient, urlFor } from '../../lib/sanity';
 
 // Buscar todos os posts do Sanity ordenados por data de publicação
-const allPosts = await sanityClient.fetch(
-  `*[_type == "post"] | order(publishedAt desc) {
-    _id,
-    title,
-    slug,
-    mainImage,
-    excerpt,
-    publishedAt,
-    author->{
-      name,
-      image
-    }
-  }`
-);
+let allPosts: any[] = [];
+try {
+  allPosts = await sanityClient.fetch(
+    `*[_type == "post"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      mainImage,
+      excerpt,
+      publishedAt,
+      author->{
+        name,
+        image
+      }
+    }`
+  );
+} catch (err) {
+  // Se o Sanity estiver indisponível/mal configurado, não derruba a página
+  allPosts = [];
+}
 
 // Função para obter URL da imagem ou fallback
 function getImageUrl(post: any): string {
