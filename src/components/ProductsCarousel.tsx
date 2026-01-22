@@ -268,12 +268,12 @@ const productsData = [
 
 export default function ProductsCarousel() {
   const cards = productsData.map((card, index) => (
-    <Card key={card.src} card={card} index={index} />
+    <Card key={card.src} card={card} index={index} variant="product" />
   ));
 
   return (
     <div className="w-full h-full">
-      <Carousel items={cards} />
+      <Carousel items={cards} variant="product" infinite />
     </div>
   );
 }

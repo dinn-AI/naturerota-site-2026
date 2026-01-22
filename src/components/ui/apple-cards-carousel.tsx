@@ -19,6 +19,8 @@ import { createPortal } from "react-dom";
 interface CarouselProps {
   items: JSX.Element[];
   initialScroll?: number;
+  variant?: "default" | "playlist" | "product";
+  infinite?: boolean;
 }
 
 type Card = {
@@ -26,6 +28,7 @@ type Card = {
   title: string;
   category: string;
   content: React.ReactNode;
+  videoSrc?: string;
   buttonLink?: string;
   buttonPlatform?: "youtube" | "instagram" | "internal";
   buttonText?: string;
@@ -43,7 +46,12 @@ export const CarouselContext = createContext<{
   isDragging: false,
 });
 
-export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
+export const Carousel = ({
+  items,
+  initialScroll = 0,
+  variant = "default",
+  infinite = false,
+}: CarouselProps) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
@@ -52,16 +60,48 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
+  const [activeRenderedIndex, setActiveRenderedIndex] = useState(0);
+  const [setWidth, setSetWidth] = useState(0);
+  const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const snapTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const renderedItems = infinite ? [...items, ...items, ...items] : items;
+  const itemsPerSet = items.length;
 
   useEffect(() => {
-    if (carouselRef.current) {
+    if (!carouselRef.current) {
+      return;
+    }
+
+    if (!infinite) {
       carouselRef.current.scrollLeft = initialScroll;
       checkScrollability();
+      return;
     }
-  }, [initialScroll]);
+
+    const raf = requestAnimationFrame(() => {
+      const first = itemRefs.current[0];
+      const middle = itemRefs.current[itemsPerSet];
+      if (!first || !middle) {
+        return;
+      }
+      const width = middle.offsetLeft - first.offsetLeft;
+      setSetWidth(width);
+      carouselRef.current!.scrollLeft = width + initialScroll;
+      setActiveRenderedIndex(itemsPerSet);
+      setCurrentIndex(0);
+      checkScrollability();
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [initialScroll, infinite, itemsPerSet]);
 
   const checkScrollability = () => {
     if (carouselRef.current) {
+      if (infinite) {
+        setCanScrollLeft(true);
+        setCanScrollRight(true);
+        return;
+      }
       const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
@@ -72,32 +112,130 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     return window && window.innerWidth < 768;
   };
 
+  const getStepWidth = () => {
+    const first = itemRefs.current[0];
+    const second = itemRefs.current[1];
+    if (first && second) {
+      return second.offsetLeft - first.offsetLeft;
+    }
+    return isMobile() ? 220 : 360;
+  };
+
   const scrollLeftBtn = () => {
     if (carouselRef.current) {
-      const cardWidth = isMobile() ? 192 : 288; // (md:w-72)
-      const gap = isMobile() ? 4 : 8;
-      carouselRef.current.scrollBy({ left: -(cardWidth + gap), behavior: "smooth" });
+      if (variant === "product") {
+        const nextIndex = Math.max(activeRenderedIndex - 1, 0);
+        scrollToRenderedIndex(nextIndex);
+        return;
+      }
+      const step = getStepWidth();
+      carouselRef.current.scrollBy({ left: -step, behavior: "smooth" });
     }
   };
 
   const scrollRightBtn = () => {
     if (carouselRef.current) {
-      const cardWidth = isMobile() ? 192 : 288; // (md:w-72)
-      const gap = isMobile() ? 4 : 8;
-      carouselRef.current.scrollBy({ left: cardWidth + gap, behavior: "smooth" });
+      if (variant === "product") {
+        const nextIndex = Math.min(activeRenderedIndex + 1, renderedItems.length - 1);
+        scrollToRenderedIndex(nextIndex);
+        return;
+      }
+      const step = getStepWidth();
+      carouselRef.current.scrollBy({ left: step, behavior: "smooth" });
     }
   };
 
   const handleCardClose = (index: number) => {
     if (carouselRef.current) {
-      const cardWidth = isMobile() ? 192 : 288; // (md:w-72)
-      const gap = isMobile() ? 4 : 8;
-      const scrollPosition = (cardWidth + gap) * (index + 1);
+      const step = getStepWidth();
+      const scrollPosition = step * (index + 1);
       carouselRef.current.scrollTo({
         left: scrollPosition,
         behavior: "smooth",
       });
       setCurrentIndex(index);
+    }
+  };
+
+  const updateActiveIndex = () => {
+    if (!carouselRef.current || itemRefs.current.length === 0) {
+      return;
+    }
+    const containerCenter =
+      carouselRef.current.scrollLeft + carouselRef.current.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    itemRefs.current.forEach((item, idx) => {
+      if (!item) return;
+      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const distance = Math.abs(containerCenter - itemCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = idx;
+      }
+    });
+
+    setActiveRenderedIndex(closestIndex);
+    if (itemsPerSet > 0) {
+      setCurrentIndex(closestIndex % itemsPerSet);
+    }
+  };
+
+  const getClosestIndex = () => {
+    if (!carouselRef.current || itemRefs.current.length === 0) {
+      return 0;
+    }
+    const containerCenter =
+      carouselRef.current.scrollLeft + carouselRef.current.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    itemRefs.current.forEach((item, idx) => {
+      if (!item) return;
+      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const distance = Math.abs(containerCenter - itemCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = idx;
+      }
+    });
+
+    return closestIndex;
+  };
+
+  const scrollToRenderedIndex = (index: number) => {
+    if (!carouselRef.current) {
+      return;
+    }
+    const item = itemRefs.current[index];
+    if (!item) {
+      return;
+    }
+    const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+    const target =
+      itemCenter - carouselRef.current.clientWidth / 2;
+    carouselRef.current.scrollTo({ left: target, behavior: "smooth" });
+  };
+
+  const snapToClosest = () => {
+    if (variant !== "product") {
+      return;
+    }
+    const closestIndex = getClosestIndex();
+    scrollToRenderedIndex(closestIndex);
+  };
+
+  const handleInfiniteLoop = () => {
+    if (!carouselRef.current || !infinite || setWidth === 0) {
+      return;
+    }
+    const min = setWidth * 0.5;
+    const max = setWidth * 1.5;
+    if (carouselRef.current.scrollLeft < min) {
+      carouselRef.current.scrollLeft += setWidth;
+    } else if (carouselRef.current.scrollLeft > max) {
+      carouselRef.current.scrollLeft -= setWidth;
     }
   };
 
@@ -178,26 +316,46 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
       <div className="relative w-full overflow-hidden">
         <div
           className={cn(
-            "flex w-full overflow-x-scroll overscroll-x-auto py-10 [scrollbar-width:none] md:py-20 select-none overflow-y-hidden",
+            "flex w-full overflow-x-scroll overscroll-x-auto pt-10 pb-40 [scrollbar-width:none] md:pt-20 md:pb-40 select-none overflow-y-hidden",
             !isDragging && "scroll-smooth"
           )}
-          style={{ cursor: 'grab' }}
+          style={{
+            cursor: "grab",
+          }}
           ref={carouselRef}
-          onScroll={checkScrollability}
+          onScroll={() => {
+            checkScrollability();
+            updateActiveIndex();
+            handleInfiniteLoop();
+            if (variant === "product") {
+              if (snapTimeoutRef.current) {
+                clearTimeout(snapTimeoutRef.current);
+              }
+              snapTimeoutRef.current = setTimeout(snapToClosest, 120);
+            }
+          }}
           onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
+          onMouseUp={() => {
+            handleMouseUp();
+            snapToClosest();
+          }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          onTouchEnd={() => {
+            handleTouchEnd();
+            snapToClosest();
+          }}
         >
           <div
             className={cn(
-              "flex flex-row justify-start gap-6 pl-4 pr-4",
+              "flex flex-row justify-start gap-[24px] pl-4 pr-4",
             )}
           >
-            {items.map((item, index) => (
+            {renderedItems.map((item, index) => {
+              const isActive = index === activeRenderedIndex;
+              return (
               <motion.div
                 initial={{
                   opacity: 0,
@@ -214,29 +372,64 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                   },
                 }}
                 key={"card" + index}
-                className="relative shrink-0 rounded-3xl last:pr-[5%] md:last:pr-[33%]"
-                style={{ zIndex: items.length - index }}
+                className={cn(
+                  "relative shrink-0 rounded-3xl transition-all duration-300",
+                  !infinite && "last:pr-[5%] md:last:pr-[33%]",
+                  variant === "playlist" &&
+                    (isActive ? "scale-100 opacity-100" : "scale-[0.9] opacity-70"),
+                  variant === "product" &&
+                    (isActive
+                      ? "scale-110 opacity-100 shadow-[0_24px_60px_rgba(0,0,0,0.55)]"
+                      : "scale-[0.92] opacity-80 shadow-[0_24px_60px_rgba(0,0,0,0.35)]")
+                )}
+                style={{ zIndex: renderedItems.length - index }}
+                ref={(el) => {
+                  itemRefs.current[index] = el;
+                }}
               >
                 {item}
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
         {/* Setas de navegação - Desktop: centralizadas verticalmente e nas laterais */}
         <div className="hidden md:flex absolute inset-y-0 left-0 right-0 pointer-events-none z-40">
           <button
-            className="absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed pointer-events-auto transition-all"
+            className={cn(
+              "absolute left-4 top-1/2 -translate-y-1/2 pointer-events-auto transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+              variant === "product"
+                ? "text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                : "flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-50"
+            )}
             onClick={scrollLeftBtn}
             disabled={!canScrollLeft}
+            type="button"
           >
-            <IconArrowNarrowLeft className="h-6 w-6 text-gray-700" />
+            <IconArrowNarrowLeft
+              className={cn(
+                "h-12 w-12",
+                variant === "product" ? "text-white/60" : "h-6 w-6 text-gray-700"
+              )}
+            />
           </button>
           <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed pointer-events-auto transition-all"
+            className={cn(
+              "absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+              variant === "product"
+                ? "text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                : "flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg hover:bg-gray-50"
+            )}
             onClick={scrollRightBtn}
             disabled={!canScrollRight}
+            type="button"
           >
-            <IconArrowNarrowRight className="h-6 w-6 text-gray-700" />
+            <IconArrowNarrowRight
+              className={cn(
+                "h-12 w-12",
+                variant === "product" ? "text-white/60" : "h-6 w-6 text-gray-700"
+              )}
+            />
           </button>
         </div>
         {/* Setas de navegação - Mobile: mantém posição original */}
@@ -265,10 +458,12 @@ export const Card = ({
   card,
   index,
   layout = false,
+  variant = "default",
 }: {
   card: Card;
   index: number;
   layout?: boolean;
+  variant?: "default" | "playlist" | "product";
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -339,12 +534,12 @@ export const Card = ({
   const modalContent = (
     <AnimatePresence>
       {open && !card.disableModal && (
-        <div className="fixed inset-0 z-[100000] h-screen overflow-auto">
+        <div className="fixed inset-0 z-100000 h-screen overflow-auto">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 h-full w-full bg-black/80 backdrop-blur-lg z-[100000]"
+            className="fixed inset-0 h-full w-full bg-black/80 backdrop-blur-lg z-100000"
           />
           <motion.div
             initial={{ opacity: 0 }}
@@ -352,7 +547,7 @@ export const Card = ({
             exit={{ opacity: 0 }}
             ref={containerRef}
             layoutId={layout ? `card-${card.title}` : undefined}
-            className="relative z-[100001] mx-auto my-10 h-fit w-[90%] md:w-[80%] lg:max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10"
+            className="relative z-100001 mx-auto my-10 h-fit w-[90%] md:w-[80%] lg:max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10"
           >
             <button
               className="sticky top-4 right-0 ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-black"
@@ -379,35 +574,68 @@ export const Card = ({
     </AnimatePresence>
   );
 
+  const isPlaylist = variant === "playlist";
+  const isProduct = variant === "product";
+
   return (
     <>
       {typeof document !== "undefined" ? createPortal(modalContent, document.body) : null}
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={handleCardClick}
-        className="relative flex h-64 w-48 flex-col items-start justify-between overflow-hidden rounded-3xl bg-gray-100 md:h-96 md:w-72"
+        className={cn(
+          "relative flex flex-col items-start justify-between overflow-hidden rounded-3xl bg-gray-100",
+          isPlaylist
+            ? "h-64 w-56 md:h-104 md:w-152"
+            : isProduct
+              ? "h-72 w-56 md:h-112 md:w-80"
+              : "h-64 w-48 md:h-96 md:w-72"
+        )}
       >
         {!card.hideOverlay && (
           <>
-            <div className="pointer-events-none absolute inset-0 z-30 h-full w-full bg-gradient-to-b from-black/50 via-transparent to-transparent rounded-3xl" />
-            <div className="relative z-40 p-4 md:p-8 w-full overflow-hidden">
+            <div className="pointer-events-none absolute inset-0 z-30 h-full w-full bg-linear-to-b from-black/50 via-transparent to-transparent rounded-3xl" />
+            <div
+              className={cn(
+                "relative z-40 w-full overflow-hidden",
+                isPlaylist || isProduct ? "p-4 md:p-6" : "p-4 md:p-8"
+              )}
+            >
               <motion.p
                 layoutId={layout ? `category-${card.category}` : undefined}
-                className="text-left font-sans text-sm font-medium text-white md:text-base"
+                className={cn(
+                  "text-left font-sans font-medium text-white",
+                  isPlaylist || isProduct ? "text-xs md:text-sm" : "text-sm md:text-base"
+                )}
               >
                 {card.category}
               </motion.p>
               <motion.p
                 layoutId={layout ? `title-${card.title}` : undefined}
-                className="mt-2 w-full text-left font-serif text-lg font-semibold text-white md:text-3xl line-clamp-3 md:line-clamp-4"
+                className={cn(
+                  "mt-2 w-full text-left font-serif font-semibold text-white line-clamp-3 md:line-clamp-4",
+                  isPlaylist || isProduct ? "text-base md:text-2xl" : "text-lg md:text-3xl"
+                )}
               >
                 {card.title}
               </motion.p>
             </div>
             
             {card.buttonLink && card.buttonPlatform && (
-              <div className="relative z-40 p-4 md:p-8 w-full overflow-hidden">
-                <span className="inline-flex items-center justify-center gap-2 md:gap-3 text-white border-2 border-white px-4 md:px-8 py-2.5 md:py-3.5 rounded-full font-sans font-bold text-sm md:text-lg uppercase tracking-wide transition-all duration-300 ease-in-out hover:bg-white/25 pointer-events-none whitespace-nowrap">
+              <div
+                className={cn(
+                  "relative z-40 w-full overflow-hidden flex items-start justify-start",
+                  isPlaylist || isProduct ? "p-4 md:p-6" : "p-4 md:p-8"
+                )}
+              >
+                <span
+                  className={cn(
+                    "inline-flex items-center justify-center gap-2 text-white pointer-events-none whitespace-nowrap transition-all duration-300 ease-in-out self-start",
+                    isPlaylist || isProduct
+                      ? "border border-white/60 bg-white/10 px-3 py-1.5 rounded-full font-sans text-xs md:text-sm font-medium"
+                      : "border-2 border-white px-4 md:px-8 py-2.5 md:py-3.5 rounded-full font-sans font-bold text-sm md:text-lg uppercase tracking-wide hover:bg-white/25"
+                  )}
+                >
                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                   </svg>
@@ -418,13 +646,68 @@ export const Card = ({
           </>
         )}
         
-        <BlurImage
-          src={card.src}
-          alt={card.title}
-          className="absolute inset-0 z-10 object-cover rounded-3xl"
-        />
+        {card.videoSrc ? (
+          <VideoBackground
+            src={card.videoSrc}
+            title={card.title}
+            className="absolute inset-0 z-10 rounded-3xl"
+          />
+        ) : (
+          <BlurImage
+            src={card.src}
+            alt={card.title}
+            className="absolute inset-0 z-10 object-cover rounded-3xl"
+          />
+        )}
       </motion.button>
     </>
+  );
+};
+
+const getYouTubeEmbedUrl = (url: string) => {
+  const match = url.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([^?&/]+)/
+  );
+  const id = match?.[1];
+  if (!id) {
+    return url;
+  }
+  const params = new URLSearchParams({
+    autoplay: "1",
+    mute: "1",
+    loop: "1",
+    controls: "0",
+    playsinline: "1",
+    rel: "0",
+    modestbranding: "1",
+    iv_load_policy: "3",
+    fs: "0",
+    disablekb: "1",
+    playlist: id,
+  });
+  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
+};
+
+const VideoBackground = ({
+  src,
+  title,
+  className,
+}: {
+  src: string;
+  title: string;
+  className?: string;
+}) => {
+  return (
+    <div className={cn("absolute inset-0 overflow-hidden", className)}>
+      <iframe
+        className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-[1.2] pointer-events-none"
+        src={getYouTubeEmbedUrl(src)}
+        title={title}
+        allow="autoplay; encrypted-media; picture-in-picture"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    </div>
   );
 };
 

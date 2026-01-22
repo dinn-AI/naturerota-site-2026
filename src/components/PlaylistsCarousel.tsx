@@ -46,6 +46,7 @@ const playlistsData = [
     category: "Série Completa",
     title: "Aventura de Carro do Brasil até Ushuaia: O Guia Completo",
     src: "/20_dias_patagonia.jpeg",
+    videoSrc: "https://youtu.be/CE4fW_Zxz08?si=097eNf1_DOjj8zBs",
     buttonLink: "https://youtube.com/playlist?list=PLFwipz-cJNpuqJ_lQt1JG_1gxrLxv4VW2&si=N6EK0ZlBk7B8NNkd",
     buttonPlatform: "youtube" as const,
     buttonText: "Assistir Agora",
@@ -97,12 +98,12 @@ const playlistsData = [
 
 export default function PlaylistsCarousel() {
   const cards = playlistsData.map((card, index) => (
-    <Card key={card.src} card={card} index={index} />
+    <Card key={card.src} card={card} index={index} variant="playlist" />
   ));
 
   return (
     <div className="w-full h-full">
-      <Carousel items={cards} />
+      <Carousel items={cards} variant="playlist" infinite />
     </div>
   );
 }
