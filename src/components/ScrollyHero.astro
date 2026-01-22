@@ -1,0 +1,180 @@
+---
+const { src = "/IMG_3835.JPG" } = Astro.props;
+---
+
+<section class="scrolly" id="scrolly-hero">
+  <div class="sticky">
+    <div class="media" id="media">
+      <iframe
+        class="media__el media__el--video"
+        src="https://www.youtube-nocookie.com/embed/6E7FtrOfbFI?autoplay=1&mute=1&loop=1&playlist=6E7FtrOfbFI&controls=0&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0&disablekb=1"
+        title="Vídeo hero Naturerota"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <div class="overlay" aria-hidden="true"></div>
+    </div>
+
+    <div class="copy" aria-hidden="false">
+      <div class="step" data-step="0">
+        <h1>Inspiramos você a viajar mais e transformar a vida em uma grande aventura</h1>
+      </div>
+    </div>
+
+    <!-- Moldura final (encaixe Apple) -->
+    <div class="frame" aria-hidden="true">
+      <img class="frame__img" src="/TV Naturerota.jpg" alt="" loading="lazy" decoding="async" />
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  if (reduceMotion) {
+    const step = document.querySelector("#scrolly-hero .step");
+    const overlay = document.querySelector("#scrolly-hero .overlay");
+    if (step) step.style.opacity = "1";
+    if (overlay) overlay.style.opacity = "0.4";
+  } else {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const section = document.querySelector("#scrolly-hero");
+    const step = document.querySelector("#scrolly-hero .step");
+    const overlay = document.querySelector("#scrolly-hero .overlay");
+    const media = document.querySelector("#scrolly-hero #media");
+    const frame = document.querySelector("#scrolly-hero .frame");
+
+    if (!section || !step || !overlay || !media) {
+      return;
+    }
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate(self) {
+        const p = self.progress;
+        const y = -220 * p;
+        const opacity = Math.max(0, 1 - p * 1.1);
+        step.style.transform = `translateY(${y}px)`;
+        step.style.opacity = `${opacity}`;
+
+        overlay.style.opacity = `${0.4 * (1 - p)}`;
+
+        const clipP = Math.max(0, (p - 0.7) / 0.3);
+        media.style.clipPath = `inset(${12 * clipP}% ${10 * clipP}% ${12 * clipP}% ${10 * clipP}% round ${28 * clipP}px)`;
+        if (frame) {
+          frame.style.opacity = `${clipP}`;
+        }
+      },
+    });
+
+    window.addEventListener("resize", () => ScrollTrigger.refresh());
+  }
+</script>
+
+<style>
+  .scrolly {
+    height: 320vh;
+    background: #FFF8F2;
+    position: relative;
+  }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .media {
+    position: absolute;
+    inset: 0;
+    border-radius: 0;
+    overflow: hidden;
+    z-index: 1;
+    clip-path: inset(0% 0% 0% 0% round 0px);
+    will-change: clip-path;
+  }
+
+  .media__el {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .media__el--video {
+    width: 100vw;
+    height: 100vh;
+    min-width: 177.78vh;
+    min-height: 56.25vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0.4;
+    transition: opacity 0.1s linear;
+  }
+
+  .frame {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 12%;
+    bottom: 12%;
+    border-radius: 28px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 3;
+  }
+
+  .frame__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 28px;
+  }
+
+  .copy {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8vw;
+    color: #fff;
+    z-index: 5;
+    text-align: center;
+  }
+
+  .step {
+    max-width: 720px;
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+  }
+
+  .step h1 {
+    font-family: "DM Serif Display", serif;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 0;
+  }
+</style>
