@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { buildYouTubeEmbedUrl, cn, initYouTubeAutoplay } from "@/lib/utils";
 
 type HeroSlide = {
   id: string;
@@ -62,8 +62,11 @@ export default function AppleHeroCarousel({
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const startXRef = useRef(0);
+  const startYRef = useRef(0);
   const dragOffsetRef = useRef(0);
+  const isDraggingRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   const clampIndex = (index: number) => {
     if (index < 0) return 0;
@@ -90,30 +93,30 @@ export default function AppleHeroCarousel({
     return () => window.removeEventListener("keydown", handleKey);
   }, [activeIndex]);
 
-  const onPointerDown = (event: React.PointerEvent) => {
-    if (
-      event.target instanceof Element &&
-      event.target.closest("a, button")
-    ) {
-      return;
-    }
-    startXRef.current = event.clientX;
+  useEffect(() => {
+    if (!containerRef.current) return;
+    initYouTubeAutoplay(containerRef.current);
+  }, []);
+
+  const beginDrag = (clientX: number, clientY: number) => {
+    startXRef.current = clientX;
+    startYRef.current = clientY;
     dragOffsetRef.current = 0;
+    isDraggingRef.current = true;
     setDragOffset(0);
     setIsDragging(true);
-    containerRef.current?.setPointerCapture(event.pointerId);
   };
 
-  const onPointerMove = (event: React.PointerEvent) => {
-    if (!isDragging) return;
-    const delta = event.clientX - startXRef.current;
+  const updateDrag = (clientX: number) => {
+    const delta = clientX - startXRef.current;
     dragOffsetRef.current = delta;
     setDragOffset(delta);
   };
 
   const finishDrag = () => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
     const delta = dragOffsetRef.current;
+    isDraggingRef.current = false;
     setIsDragging(false);
     setDragOffset(0);
     dragOffsetRef.current = 0;
@@ -126,8 +129,64 @@ export default function AppleHeroCarousel({
     }
   };
 
+  const onPointerDown = (event: React.PointerEvent) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    beginDrag(event.clientX, event.clientY);
+    containerRef.current?.setPointerCapture(event.pointerId);
+  };
+
+  const onPointerMove = (event: React.PointerEvent) => {
+    if (!isDraggingRef.current) return;
+    const deltaX = event.clientX - startXRef.current;
+    const deltaY = event.clientY - startYRef.current;
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 5) {
+      updateDrag(event.clientX);
+    }
+  };
+
+  useEffect(() => {
+    const target = trackRef.current;
+    if (!target) return;
+
+    const handleTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      beginDrag(touch.clientX, touch.clientY);
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!isDraggingRef.current) return;
+      const touch = event.touches[0];
+      if (!touch) return;
+      const deltaX = touch.clientX - startXRef.current;
+      const deltaY = touch.clientY - startYRef.current;
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 5) {
+        event.preventDefault();
+        updateDrag(touch.clientX);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      finishDrag();
+    };
+
+    target.addEventListener("touchstart", handleTouchStart, { passive: true });
+    target.addEventListener("touchmove", handleTouchMove, { passive: false });
+    target.addEventListener("touchend", handleTouchEnd, { passive: true });
+    target.addEventListener("touchcancel", handleTouchEnd, { passive: true });
+
+    return () => {
+      target.removeEventListener("touchstart", handleTouchStart);
+      target.removeEventListener("touchmove", handleTouchMove);
+      target.removeEventListener("touchend", handleTouchEnd);
+      target.removeEventListener("touchcancel", handleTouchEnd);
+    };
+  }, []);
+
   const trackTransform = useMemo(() => {
-    const base = `calc(50vw - var(--slideW) / 2 - ${activeIndex} * (var(--slideW) + var(--gap)))`;
+    const base = `calc(50% - var(--slideW) / 2 - ${activeIndex} * (var(--slideW) + var(--gap)))`;
     if (!isDragging || dragOffset === 0) {
       return `translateX(${base})`;
     }
@@ -137,21 +196,22 @@ export default function AppleHeroCarousel({
   return (
     <section
       ref={containerRef}
-      className={cn("w-full pt-14 pb-24 overflow-hidden", className)}
+      className={cn("w-full px-4 pt-14 pb-24 overflow-hidden md:px-0", className)}
       aria-roledescription="carousel"
     >
       <div className="relative w-full">
         <div
+          ref={trackRef}
           className={cn(
-            "flex items-center",
+            "flex items-center touch-pan-y",
             isDragging
               ? "transition-none"
               : "transition-transform duration-600 ease-[cubic-bezier(0.22,1,0.36,1)]"
           )}
           style={
             {
-              "--slideW": "min(1466px, 72vw)",
-              "--gap": "32px",
+              "--slideW": "min(1466px, 88vw)",
+              "--gap": "clamp(12px, 2.5vw, 24px)",
               transform: trackTransform,
               gap: "var(--gap)",
             } as React.CSSProperties
@@ -170,12 +230,11 @@ export default function AppleHeroCarousel({
               <div
                 key={slide.id}
                 className={cn(
-                  "relative shrink-0 overflow-hidden rounded-[28px]",
+                  "relative shrink-0 overflow-hidden rounded-[28px] h-[540px] md:h-auto md:aspect-video",
                   "transition-[transform,filter,box-shadow] duration-600 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 )}
                 style={{
                   width: "var(--slideW)",
-                  aspectRatio: "16 / 9",
                   zIndex: isActive ? 3 : 1,
                   boxShadow: isActive
                     ? "0 24px 60px rgba(0,0,0,0.55)"
@@ -208,7 +267,7 @@ export default function AppleHeroCarousel({
                     )}
                   >
                     {slide.title && (
-                      <h3 className="text-2xl md:text-3xl font-serif font-semibold text-white leading-tight drop-shadow-sm">
+                      <h3 className="text-xl md:text-2xl font-serif font-semibold text-white leading-tight drop-shadow-sm">
                         {slide.title}
                       </h3>
                     )}
@@ -242,7 +301,7 @@ export default function AppleHeroCarousel({
         </div>
 
         <button
-          className="absolute left-6 top-1/2 -translate-y-1/2 text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+          className="hidden md:inline-flex absolute left-6 top-1/2 -translate-y-1/2 text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
           onClick={goPrev}
           aria-label="Anterior"
           type="button"
@@ -250,7 +309,7 @@ export default function AppleHeroCarousel({
           <Chevron direction="left" className="h-12 w-12" />
         </button>
         <button
-          className="absolute right-6 top-1/2 -translate-y-1/2 text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+          className="hidden md:inline-flex absolute right-6 top-1/2 -translate-y-1/2 text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
           onClick={goNext}
           aria-label="Próximo"
           type="button"
@@ -286,39 +345,16 @@ const Chevron = ({
   </svg>
 );
 
-const getYouTubeEmbedUrl = (url: string) => {
-  const match = url.match(
-    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([^?&/]+)/
-  );
-  const id = match?.[1];
-  if (!id) {
-    return url;
-  }
-  const params = new URLSearchParams({
-    autoplay: "1",
-    mute: "1",
-    loop: "1",
-    controls: "0",
-    playsinline: "1",
-    rel: "0",
-    modestbranding: "1",
-    iv_load_policy: "3",
-    fs: "0",
-    disablekb: "1",
-    playlist: id,
-  });
-  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
-};
-
 const VideoBackground = ({ src, title }: { src: string; title: string }) => (
   <div className="absolute inset-0 overflow-hidden">
     <iframe
-      className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-[1.2] pointer-events-none"
-      src={getYouTubeEmbedUrl(src)}
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-auto h-auto min-w-full min-h-full aspect-video scale-[1.02] pointer-events-none"
+      src={buildYouTubeEmbedUrl(src)}
       title={title}
-      allow="autoplay; encrypted-media; picture-in-picture"
+      allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
       referrerPolicy="strict-origin-when-cross-origin"
       allowFullScreen
+      data-youtube-autoplay="1"
     />
   </div>
 );

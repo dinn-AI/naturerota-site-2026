@@ -1,5 +1,10 @@
 ---
+import { buildYouTubeEmbedUrl } from "../lib/utils";
+
 const { src = "/IMG_3835.JPG" } = Astro.props;
+const heroVideoSrc = buildYouTubeEmbedUrl("https://youtu.be/6E7FtrOfbFI", {
+  embedHost: "https://www.youtube-nocookie.com/embed",
+});
 ---
 
 <section class="scrolly" id="scrolly-hero">
@@ -7,10 +12,11 @@ const { src = "/IMG_3835.JPG" } = Astro.props;
     <div class="media" id="media">
       <iframe
         class="media__el media__el--video"
-        src="https://www.youtube-nocookie.com/embed/6E7FtrOfbFI?autoplay=1&mute=1&loop=1&playlist=6E7FtrOfbFI&controls=0&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0&disablekb=1"
+        src={heroVideoSrc}
         title="Vídeo hero Naturerota"
-        allow="autoplay; fullscreen; picture-in-picture"
+        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
         allowfullscreen
+        data-youtube-autoplay="1"
       ></iframe>
       <div class="overlay" aria-hidden="true"></div>
     </div>
@@ -41,6 +47,12 @@ const { src = "/IMG_3835.JPG" } = Astro.props;
 <script type="module">
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
+  import { initYouTubeAutoplay } from "../lib/utils";
+
+  const heroRoot = document.querySelector("#scrolly-hero");
+  if (heroRoot) {
+    initYouTubeAutoplay(heroRoot);
+  }
 
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   if (reduceMotion) {

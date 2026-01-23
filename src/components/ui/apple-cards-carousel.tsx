@@ -63,7 +63,6 @@ export const Carousel = ({
   const [activeRenderedIndex, setActiveRenderedIndex] = useState(0);
   const [setWidth, setSetWidth] = useState(0);
   const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const snapTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const renderedItems = infinite ? [...items, ...items, ...items] : items;
   const itemsPerSet = items.length;
 
@@ -182,28 +181,6 @@ export const Carousel = ({
     }
   };
 
-  const getClosestIndex = () => {
-    if (!carouselRef.current || itemRefs.current.length === 0) {
-      return 0;
-    }
-    const containerCenter =
-      carouselRef.current.scrollLeft + carouselRef.current.clientWidth / 2;
-    let closestIndex = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    itemRefs.current.forEach((item, idx) => {
-      if (!item) return;
-      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-      const distance = Math.abs(containerCenter - itemCenter);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = idx;
-      }
-    });
-
-    return closestIndex;
-  };
-
   const scrollToRenderedIndex = (index: number) => {
     if (!carouselRef.current) {
       return;
@@ -216,14 +193,6 @@ export const Carousel = ({
     const target =
       itemCenter - carouselRef.current.clientWidth / 2;
     carouselRef.current.scrollTo({ left: target, behavior: "smooth" });
-  };
-
-  const snapToClosest = () => {
-    if (variant !== "product") {
-      return;
-    }
-    const closestIndex = getClosestIndex();
-    scrollToRenderedIndex(closestIndex);
   };
 
   const handleInfiniteLoop = () => {
@@ -316,7 +285,7 @@ export const Carousel = ({
       <div className="relative w-full overflow-hidden">
         <div
           className={cn(
-            "flex w-full overflow-x-scroll overscroll-x-auto pt-10 pb-40 [scrollbar-width:none] md:pt-20 md:pb-40 select-none overflow-y-hidden",
+            "flex w-full overflow-x-scroll overscroll-x-auto pt-14 pb-40 [scrollbar-width:none] md:pt-20 md:pb-40 select-none overflow-y-hidden",
             !isDragging && "scroll-smooth"
           )}
           style={{
@@ -327,17 +296,10 @@ export const Carousel = ({
             checkScrollability();
             updateActiveIndex();
             handleInfiniteLoop();
-            if (variant === "product") {
-              if (snapTimeoutRef.current) {
-                clearTimeout(snapTimeoutRef.current);
-              }
-              snapTimeoutRef.current = setTimeout(snapToClosest, 120);
-            }
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={() => {
             handleMouseUp();
-            snapToClosest();
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
@@ -345,12 +307,11 @@ export const Carousel = ({
           onTouchMove={handleTouchMove}
           onTouchEnd={() => {
             handleTouchEnd();
-            snapToClosest();
           }}
         >
           <div
             className={cn(
-              "flex flex-row justify-start gap-[24px] pl-4 pr-4",
+              "flex flex-row justify-start gap-[24px] pl-6 pr-4",
             )}
           >
             {renderedItems.map((item, index) => {
@@ -374,13 +335,13 @@ export const Carousel = ({
                 key={"card" + index}
                 className={cn(
                   "relative shrink-0 rounded-3xl transition-all duration-300",
-                  !infinite && "last:pr-[5%] md:last:pr-[33%]",
+                  !infinite && "last:mr-[5%] md:last:mr-[33%]",
                   variant === "playlist" &&
                     (isActive ? "scale-100 opacity-100" : "scale-[0.9] opacity-70"),
                   variant === "product" &&
                     (isActive
-                      ? "scale-110 opacity-100 shadow-[0_24px_60px_rgba(0,0,0,0.55)]"
-                      : "scale-[0.92] opacity-80 shadow-[0_24px_60px_rgba(0,0,0,0.35)]")
+                      ? "scale-110 opacity-100 shadow-[0_12px_30px_rgba(0,0,0,0.55)]"
+                      : "scale-[0.92] opacity-80 shadow-[0_12px_30px_rgba(0,0,0,0.35)]")
                 )}
                 style={{ zIndex: renderedItems.length - index }}
                 ref={(el) => {
@@ -430,23 +391,6 @@ export const Carousel = ({
                 variant === "product" ? "text-white/60" : "h-6 w-6 text-gray-700"
               )}
             />
-          </button>
-        </div>
-        {/* Setas de navegação - Mobile: mantém posição original */}
-        <div className="md:hidden mr-10 flex justify-end gap-2">
-          <button
-            className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
-            onClick={scrollLeftBtn}
-            disabled={!canScrollLeft}
-          >
-            <IconArrowNarrowLeft className="h-6 w-6 text-gray-500" />
-          </button>
-          <button
-            className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
-            onClick={scrollRightBtn}
-            disabled={!canScrollRight}
-          >
-            <IconArrowNarrowRight className="h-6 w-6 text-gray-500" />
           </button>
         </div>
       </div>

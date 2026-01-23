@@ -273,7 +273,7 @@ export default function ProductsCarousel() {
 
   return (
     <div className="w-full h-full">
-      <Carousel items={cards} variant="product" infinite />
+      <Carousel items={cards} variant="product" />
     </div>
   );
 }
