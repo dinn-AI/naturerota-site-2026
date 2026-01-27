@@ -6,47 +6,37 @@ const cards = [
   {
     id: 1,
     className: "col-span-1 row-span-2",
-    thumbnail: "/IMG_2184.jpg",
+    thumbnail: "/IMG_3487.jpeg",
   },
   {
     id: 2,
     className: "col-span-1 row-span-1",
-    thumbnail: "/IMG_2659.jpg",
+    thumbnail: "/IMG_3865.jpeg",
   },
   {
     id: 3,
     className: "col-span-1 row-span-1",
-    thumbnail: "/IMG_2992.jpg",
+    thumbnail: "/IMG_4210.jpeg",
   },
   {
     id: 4,
     className: "col-span-1 row-span-2",
-    thumbnail: "/IMG_3265.jpg",
+    thumbnail: "/IMG_5297.jpeg",
   },
   {
     id: 5,
     className: "col-span-1 row-span-1",
-    thumbnail: "/IMG_3407.jpg",
+    thumbnail: "/IMG_5789.jpeg",
   },
   {
     id: 6,
     className: "col-span-1 row-span-1",
-    thumbnail: "/IMG_3441.jpg",
+    thumbnail: "/IMG_6246.jpeg",
   },
   {
     id: 7,
-    className: "col-span-1 row-span-2",
-    thumbnail: "/IMG_3450.jpg",
-  },
-  {
-    id: 8,
     className: "col-span-1 row-span-1",
-    thumbnail: "/IMG_3487.jpeg",
-  },
-  {
-    id: 9,
-    className: "col-span-1 row-span-1",
-    thumbnail: "/IMG_3490.jpg",
+    thumbnail: "/IMG_6289.jpeg",
   },
 ];
 
