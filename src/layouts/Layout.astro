@@ -15,6 +15,8 @@ interface Props {
   author?: string;
   youtubeVideoId?: string;
   videoUrl?: string;
+  hideNavigation?: boolean;
+  hideFooter?: boolean;
   productData?: {
     name?: string;
     description?: string;
@@ -36,6 +38,8 @@ const {
   author,
   youtubeVideoId,
   videoUrl,
+  hideNavigation = false,
+  hideFooter = false,
   productData,
 } = Astro.props;
 ---
@@ -108,7 +112,7 @@ const {
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <NavbarDemo client:load />
+    {!hideNavigation && <NavbarDemo client:load />}
 
     <main>
       <slot />
@@ -179,6 +183,7 @@ const {
       })();
     </script>
 
+    {!hideFooter && (
     <footer class="border-t border-gray-200 mt-auto bg-gray-50">
       <div class="container mx-auto px-4 py-12">
         <div class="grid md:grid-cols-4 gap-8 mb-8">
@@ -258,6 +263,7 @@ const {
         </div>
       </div>
     </footer>
+    )}
   </body>
 </html>
 

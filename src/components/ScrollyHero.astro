@@ -61,57 +61,20 @@ const heroVideoSrc = buildYouTubeEmbedUrl("https://youtu.be/6E7FtrOfbFI", {
     if (step) step.style.opacity = "1";
     if (overlay) overlay.style.opacity = "0.4";
   } else {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const section = document.querySelector("#scrolly-hero");
-    const step = document.querySelector("#scrolly-hero .step");
-    const overlay = document.querySelector("#scrolly-hero .overlay");
-    const media = document.querySelector("#scrolly-hero #media");
-    const frame = document.querySelector("#scrolly-hero .frame");
-
-    if (!section || !step || !overlay || !media) {
-      return;
-    }
-
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      pin: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-      onUpdate(self) {
-        const p = self.progress;
-        const y = -220 * p;
-        const opacity = Math.max(0, 1 - p * 1.1);
-        step.style.transform = `translateY(${y}px)`;
-        step.style.opacity = `${opacity}`;
-
-        overlay.style.opacity = `${0.4 * (1 - p)}`;
-
-        const clipP = Math.max(0, (p - 0.7) / 0.3);
-        media.style.clipPath = `inset(${12 * clipP}% ${10 * clipP}% ${12 * clipP}% ${10 * clipP}% round ${28 * clipP}px)`;
-        if (frame) {
-          frame.style.opacity = `${clipP}`;
-        }
-      },
-    });
-
-    window.addEventListener("resize", () => ScrollTrigger.refresh());
+    // Scroll effect removido: sem pin e sem animação.
   }
 </script>
 
 <style>
   .scrolly {
-    height: 320vh;
+    height: 100vh;
     background: #FFF8F2;
     position: relative;
   }
 
   .sticky {
-    position: sticky;
-    top: 0;
+    position: relative;
+    top: auto;
     height: 100vh;
     overflow: hidden;
   }
@@ -150,7 +113,7 @@ const heroVideoSrc = buildYouTubeEmbedUrl("https://youtu.be/6E7FtrOfbFI", {
     inset: 0;
     background: #000;
     opacity: 0.4;
-    transition: opacity 0.1s linear;
+    transition: none;
   }
 
   .frame {
