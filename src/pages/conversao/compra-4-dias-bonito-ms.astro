@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Compra confirmada | Naturerota"
+  description="Obrigado pela compra. Estamos registrando sua conversão e em instantes você pode voltar ao site."
+  type="website"
+  robots="noindex, nofollow"
+  hideNavigation={true}
+  hideFooter={true}
+>
+  <section class="py-16 md:py-24" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-3xl md:text-5xl font-serif font-semibold text-gray-900 leading-tight">
+          Compra confirmada!
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-gray-700 leading-relaxed">
+          Obrigado por comprar o nosso roteiro. Se você ainda não recebeu o acesso, verifique seu e-mail (incluindo spam e promoções).
+        </p>
+        <div class="mt-10">
+          <a href="/" class="btn-primary inline-flex items-center justify-center text-center">
+            Voltar para o site
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Event snippet for Compra E-boom 4 dias Bonito MS conversion page -->
+  <script is:inline>
+    (function () {
+      var sendTo = "AW-17507970089/gd2SCKeeue4bEKnYuZxB";
+      var value = 1.0;
+      var currency = "BRL";
+
+      var params = new URLSearchParams(window.location.search);
+      var transactionId = params.get("transaction_id") || params.get("tid") || "";
+
+      // Evita duplicar conversão em refresh (por sessão)
+      var storageKey = "nr_gads_conv_sent_" + sendTo + "_" + (transactionId || "no_tid");
+      try {
+        if (sessionStorage.getItem(storageKey)) return;
+        sessionStorage.setItem(storageKey, "1");
+      } catch (e) {}
+
+      if (typeof window.gtag !== "function") return;
+
+      window.gtag("event", "conversion", {
+        send_to: sendTo,
+        value: value,
+        currency: currency,
+        transaction_id: transactionId,
+      });
+    })();
+  </script>
+</Layout>
+

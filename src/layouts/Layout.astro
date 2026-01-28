@@ -10,6 +10,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article' | 'video' | 'product';
   url?: string;
+  robots?: string;
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
@@ -33,6 +34,7 @@ const {
   image,
   type,
   url,
+  robots,
   publishedTime,
   modifiedTime,
   author,
@@ -48,12 +50,27 @@ const {
 <html lang="pt-BR">
   <head>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-P3XJGXL5');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- Meta Pixel Code -->
+    <script is:inline>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1398654025074894');
+      fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
 
     <SEO
       title={title}
@@ -61,6 +78,7 @@ const {
       image={image}
       type={type}
       url={url}
+      robots={robots}
       publishedTime={publishedTime}
       modifiedTime={modifiedTime}
       author={author}
@@ -92,7 +110,7 @@ const {
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KWR7HV8NS"></script>
-    <script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('consent', 'default', {
@@ -112,6 +130,12 @@ const {
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
+    <!-- Meta Pixel Code (noscript) -->
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1398654025074894&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code (noscript) -->
+
     {!hideNavigation && <NavbarDemo client:load />}
 
     <main>
@@ -121,7 +145,7 @@ const {
     <!-- Banner de consentimento de cookies -->
     <div
       id="cookie-consent-banner"
-      class="fixed inset-x-0 bottom-0 z-[100002] hidden bg-white/95 backdrop-blur border-t border-gray-200"
+      class="fixed inset-x-0 bottom-0 z-100002 hidden bg-white/95 backdrop-blur border-t border-gray-200"
     >
       <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
         <p class="text-sm text-gray-700 leading-relaxed">
@@ -138,7 +162,7 @@ const {
       </div>
     </div>
 
-    <script>
+    <script is:inline>
       (function () {
         var storageKey = "nr_cookie_consent";
         var banner = document.getElementById("cookie-consent-banner");
@@ -250,7 +274,7 @@ const {
               Entre em contato conosco através das nossas redes sociais ou por e-mail:
             </p>
             <p class="text-gray-700 text-sm">
-              <a href="mailto:naturerota@gmail.com" class="text-[#123A2B] hover:underline font-medium">
+              <a href="mailto:naturerota@gmail.com" class="text-brand-green hover:underline font-medium">
                 naturerota@gmail.com
               </a>
             </p>

@@ -31,6 +31,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y";
             target="_blank"
             rel="noopener noreferrer"
             class="btn-primary inline-flex items-center justify-center text-center"
+            onclick={`return gtag_report_conversion('${checkoutUrl}')`}
           >
             QUERO MEU GUIA DA PATAGÔNIA POR APENAS R$ 49,90
           </a>
@@ -260,6 +261,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y";
               target="_blank"
               rel="noopener noreferrer"
               class="btn-primary inline-flex items-center justify-center text-center"
+              onclick={`return gtag_report_conversion('${checkoutUrl}')`}
             >
               SIM! QUERO ECONOMIZAR NA MINHA VIAGEM
             </a>
@@ -362,6 +364,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y";
             target="_blank"
             rel="noopener noreferrer"
             class="btn-primary inline-flex items-center justify-center text-center"
+            onclick={`return gtag_report_conversion('${checkoutUrl}')`}
           >
             QUERO MEU GUIA AGORA
           </a>
@@ -369,5 +372,32 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y";
       </div>
     </div>
   </section>
+
+  <!-- Event snippet for clique no botão de compra (Patagônia 20 dias) -->
+  <script is:inline>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof url !== "undefined") {
+          window.location = url;
+        }
+      };
+
+      // Fallback: se gtag não existir (ou consent bloquear), segue para o checkout
+      if (typeof window.gtag !== "function") {
+        callback();
+        return false;
+      }
+
+      window.gtag("event", "conversion", {
+        send_to: "AW-17507970089/gd2SCKeeue4bEKnYuZxB",
+        value: 1.0,
+        currency: "BRL",
+        transaction_id: "",
+        event_callback: callback,
+      });
+
+      return false;
+    }
+  </script>
 </Layout>
 

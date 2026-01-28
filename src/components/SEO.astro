@@ -5,6 +5,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article' | 'video' | 'product';
   url?: string;
+  robots?: string;
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
@@ -26,6 +27,7 @@ const {
   image,
   type = 'website',
   url = Astro.url.href,
+  robots,
   publishedTime,
   modifiedTime,
   author,
@@ -107,6 +109,7 @@ if (type === 'product' && productData) {
 <!-- SEO Primário -->
 <title>{title}</title>
 <meta name="description" content={description} />
+{robots && <meta name="robots" content={robots} />}
 <link rel="canonical" href={canonicalUrl} />
 
 <!-- Open Graph / Facebook -->
