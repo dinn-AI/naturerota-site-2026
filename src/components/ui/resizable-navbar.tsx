@@ -69,8 +69,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
       ref={ref}
       className={cn(
         "sticky inset-x-0 top-0 z-50 w-full",
-        !visible && "bg-[#FFF8F2]",
-        visible && "bg-white/80 backdrop-blur-md",
+        "bg-[#FFF8F2]",
         className
       )}
     >
@@ -96,7 +95,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
           : "none",
         width: visible ? "90%" : "100%",
         transform: visible ? "translateY(20px)" : "translateY(0)",
-        backgroundColor: visible ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 248, 242, 1)",
+        backgroundColor: "rgba(255, 248, 242, 1)",
         transition: "all 0.3s ease",
       }}
       className={cn(
@@ -169,7 +168,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         paddingLeft: visible ? "12px" : "0px",
         borderRadius: visible ? "4px" : "2rem",
         transform: visible ? "translateY(20px)" : "translateY(0)",
-        backgroundColor: visible ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 248, 242, 1)",
+        backgroundColor: "rgba(255, 248, 242, 1)",
         transition: "all 0.3s ease",
       }}
       className={cn(
