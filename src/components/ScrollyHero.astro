@@ -1,23 +1,26 @@
 ---
-import { buildYouTubeEmbedUrl } from "../lib/utils";
+import VideoPlayer from "./VideoPlayer";
 
-const { src = "/IMG_3835.JPG" } = Astro.props;
-const heroVideoSrc = buildYouTubeEmbedUrl("https://youtu.be/6E7FtrOfbFI", {
-  embedHost: "https://www.youtube-nocookie.com/embed",
-});
+const videoSrc = "/videos/Trailer_Naturerota.mp4";
+// Usar uma imagem existente como poster (pode ser substituída depois)
+const videoPoster = "/avif/public/IMG_3835.avif";
 ---
 
 <section class="scrolly" id="scrolly-hero">
   <div class="sticky">
     <div class="media" id="media">
-      <iframe
-        class="media__el media__el--video"
-        src={heroVideoSrc}
-        title="Vídeo hero Naturerota"
-        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-        allowfullscreen
-        data-youtube-autoplay="1"
-      ></iframe>
+      <VideoPlayer
+        client:load
+        src={videoSrc}
+        poster={videoPoster}
+        autoplay={true}
+        loop={true}
+        muted={true}
+        controls={false}
+        playsInline={true}
+        preload="metadata"
+        className="media__el media__el--video"
+      />
       <div class="overlay" aria-hidden="true"></div>
     </div>
 
@@ -45,15 +48,6 @@ const heroVideoSrc = buildYouTubeEmbedUrl("https://youtu.be/6E7FtrOfbFI", {
 </section>
 
 <script type="module">
-  import gsap from "gsap";
-  import ScrollTrigger from "gsap/ScrollTrigger";
-  import { initYouTubeAutoplay } from "../lib/utils";
-
-  const heroRoot = document.querySelector("#scrolly-hero");
-  if (heroRoot) {
-    initYouTubeAutoplay(heroRoot);
-  }
-
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   if (reduceMotion) {
     const step = document.querySelector("#scrolly-hero .step");
@@ -106,6 +100,12 @@ const heroVideoSrc = buildYouTubeEmbedUrl("https://youtu.be/6E7FtrOfbFI", {
     left: 50%;
     transform: translate(-50%, -50%);
     transform-origin: center;
+  }
+
+  .media__el--video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .overlay {
