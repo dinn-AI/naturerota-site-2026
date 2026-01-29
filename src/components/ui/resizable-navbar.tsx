@@ -2,8 +2,6 @@
 import { cn } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import {
-  motion,
-  AnimatePresence,
   useScroll,
   useMotionValueEvent,
 } from "motion/react";
@@ -67,9 +65,8 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   });
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
       className={cn(
         "sticky inset-x-0 top-0 z-50 w-full",
         !visible && "bg-[#FFF8F2]",
@@ -85,26 +82,22 @@ export const Navbar = ({ children, className }: NavbarProps) => {
             )
           : child,
       )}
-    </motion.div>
+    </div>
   );
 };
 
 export const NavBody = ({ children, className, visible }: NavBodyProps) => {
   return (
-    <motion.div
-      animate={{
+    <div
+      style={{
         backdropFilter: visible ? "blur(10px)" : "none",
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
         width: visible ? "90%" : "100%",
-        y: visible ? 20 : 0,
+        transform: visible ? "translateY(20px)" : "translateY(0)",
         backgroundColor: visible ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 248, 242, 1)",
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 200,
-        damping: 50,
+        transition: "all 0.3s ease",
       }}
       className={cn(
         "relative z-50 mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start px-4 py-2 lg:flex",
@@ -120,7 +113,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
             )
           : child,
       )}
-    </motion.div>
+    </div>
   );
 };
 
@@ -129,7 +122,7 @@ export const NavItems = ({ items, className, onItemClick, visible }: NavItemsPro
   const isDark = false; // Navbar sempre bege agora
 
   return (
-    <motion.div
+    <div
       onMouseLeave={() => setHovered(null)}
       className={cn(
         "relative z-[51] flex flex-1 flex-row items-center justify-end space-x-2 text-sm font-medium transition duration-200 lg:flex lg:space-x-2",
@@ -149,8 +142,7 @@ export const NavItems = ({ items, className, onItemClick, visible }: NavItemsPro
           href={item.link}
         >
           {hovered === idx && (
-            <motion.div
-              layoutId="hovered"
+            <div
               className={cn(
                 "absolute inset-0 h-full w-full rounded-full",
                 "bg-gray-100 dark:bg-neutral-800"
@@ -160,14 +152,14 @@ export const NavItems = ({ items, className, onItemClick, visible }: NavItemsPro
           <span className="relative z-20">{item.name}</span>
         </a>
       ))}
-    </motion.div>
+    </div>
   );
 };
 
 export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
   return (
-    <motion.div
-      animate={{
+    <div
+      style={{
         backdropFilter: visible ? "blur(10px)" : "none",
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
@@ -176,13 +168,9 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         paddingRight: visible ? "12px" : "0px",
         paddingLeft: visible ? "12px" : "0px",
         borderRadius: visible ? "4px" : "2rem",
-        y: visible ? 20 : 0,
+        transform: visible ? "translateY(20px)" : "translateY(0)",
         backgroundColor: visible ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 248, 242, 1)",
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 200,
-        damping: 50,
+        transition: "all 0.3s ease",
       }}
       className={cn(
         "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between px-0 py-2 lg:hidden",
@@ -199,7 +187,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
             )
           : child,
       )}
-    </motion.div>
+    </div>
   );
 };
 
@@ -234,21 +222,18 @@ export const MobileNavMenu = ({
   onClose,
 }: MobileNavMenuProps) => {
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <div
           className={cn(
             "absolute inset-x-0 top-16 z-[51] flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
             className,
           )}
         >
           {children}
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 
