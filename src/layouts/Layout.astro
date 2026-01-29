@@ -113,12 +113,6 @@ const {
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('consent', 'default', {
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        analytics_storage: 'denied'
-      });
       gtag('js', new Date());
 
       gtag('config', 'G-9KWR7HV8NS');
@@ -141,71 +135,6 @@ const {
     <main>
       <slot />
     </main>
-
-    <!-- Banner de consentimento de cookies -->
-    <div
-      id="cookie-consent-banner"
-      class="fixed inset-x-0 bottom-0 z-100002 hidden bg-white/95 backdrop-blur border-t border-gray-200"
-    >
-      <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-        <p class="text-sm text-gray-700 leading-relaxed">
-          Usamos cookies para medir e melhorar sua experiência. Você pode aceitar para habilitar as tags de analytics e marketing.
-        </p>
-        <div class="flex items-center gap-3 ml-auto">
-          <button id="cookie-consent-decline" class="btn-secondary text-sm px-4 py-2">
-            Recusar
-          </button>
-          <button id="cookie-consent-accept" class="btn-primary text-sm px-4 py-2">
-            Aceitar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <script is:inline>
-      (function () {
-        var storageKey = "nr_cookie_consent";
-        var banner = document.getElementById("cookie-consent-banner");
-        var acceptBtn = document.getElementById("cookie-consent-accept");
-        var declineBtn = document.getElementById("cookie-consent-decline");
-
-        if (!banner || !acceptBtn || !declineBtn) return;
-
-        var saved = localStorage.getItem(storageKey);
-        if (!saved) {
-          banner.classList.remove("hidden");
-        } else if (saved === "granted") {
-          window.gtag && window.gtag("consent", "update", {
-            ad_storage: "granted",
-            ad_user_data: "granted",
-            ad_personalization: "granted",
-            analytics_storage: "granted"
-          });
-        }
-
-        acceptBtn.addEventListener("click", function () {
-          localStorage.setItem(storageKey, "granted");
-          window.gtag && window.gtag("consent", "update", {
-            ad_storage: "granted",
-            ad_user_data: "granted",
-            ad_personalization: "granted",
-            analytics_storage: "granted"
-          });
-          banner.classList.add("hidden");
-        });
-
-        declineBtn.addEventListener("click", function () {
-          localStorage.setItem(storageKey, "denied");
-          window.gtag && window.gtag("consent", "update", {
-            ad_storage: "denied",
-            ad_user_data: "denied",
-            ad_personalization: "denied",
-            analytics_storage: "denied"
-          });
-          banner.classList.add("hidden");
-        });
-      })();
-    </script>
 
     {!hideFooter && (
     <footer class="border-t border-gray-200 mt-auto bg-gray-50">
