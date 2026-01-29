@@ -1,0 +1,416 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const checkoutUrl = "https://pay.hotmart.com/T98534013N"; // TODO: Atualizar com URL real do produto ES
+---
+
+<Layout
+  title="Guia do Litoral do ES de Motorhome | Naturerota"
+  description="Descubra o Litoral do Espírito Santo de Motorhome com Liberdade Total, Segurança e Sem Jogar Dinheiro Fora. Guia completo testado por Renan, Millena e Ayla."
+  type="product"
+  hideNavigation={true}
+  hideFooter={true}
+>
+  <!-- Hero -->
+  <section class="relative overflow-visible" style="background-color: #5FA8D3;">
+    <div class="relative container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-white/90 text-sm md:text-base font-sans mb-3 tracking-wide">
+          GUIA DEFINITIVO • MOTORHOME • VAN LIFE • LITORAL CAPIXABA
+        </p>
+        <h1 class="text-white font-serif font-semibold text-3xl md:text-5xl leading-tight">
+          Descubra o Litoral do Espírito Santo de Motorhome com Liberdade Total, Segurança e Sem Jogar Dinheiro Fora em Roteiros Ruins
+        </h1>
+        <p class="mt-6 text-white/90 text-lg md:text-xl leading-relaxed">
+          O Guia Definitivo testado por Renan, Millena e Ayla para você viajar do Sul ao Norte do ES sem medo de perrengues, multas ou de dormir em lugar perigoso.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary inline-flex items-center justify-center text-center"
+          >
+            QUERO MEU GUIA DE VIAGEM AGORA
+          </a>
+          <a href="#conteudo" class="btn-secondary inline-flex items-center justify-center text-center">
+            Ver o que tem dentro
+          </a>
+        </div>
+
+        <!-- Mockup do ebook -->
+        <div class="mt-12 flex justify-center -mb-44 md:-mb-56 relative z-10">
+          <img
+            src="/EBOOKS/ES AVIF/Books_ES_CAPA.avif"
+            alt="Mockup do Guia do Litoral ES de Motorhome"
+            class="w-full max-w-xl md:max-w-2xl h-auto drop-shadow-2xl"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 1: A Agitação - Tocando na Ferida -->
+  <section class="pt-40 pb-16 md:pt-56" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+        <div>
+          <h2 class="heading-primary mb-6">
+            Você tem o sonho de pegar a estrada, mas na hora de ligar o motor, bate aquela insegurança?
+          </h2>
+          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+            <p>
+              Nós sabemos exatamente como é. Você olha para o mapa do Espírito Santo e surgem mil dúvidas:
+            </p>
+            <div class="space-y-3">
+              <p>❌ <em>"Será que essa estrada é perigosa para o meu motorhome?"</em></p>
+              <p>❌ <em>"Onde vou dormir hoje? É seguro parar na rua ou preciso pagar camping caro?"</em></p>
+              <p>❌ <em>"E se eu perder as melhores praias porque não sabia onde entrar?"</em></p>
+              <p>❌ <em>"Como vou levar meu cachorro sem levar multa na praia?"</em></p>
+            </div>
+            <p class="font-semibold">
+              A verdade é que viajar sem planejamento não é liberdade, é dor de cabeça.
+            </p>
+            <p>
+              Você acaba gastando diesel à toa rodando em círculos, dorme mal preocupado com a segurança, come em lugares pega-turista e volta para casa com a sensação de que gastou muito e aproveitou pouco.
+            </p>
+            <p class="font-semibold" style="color:#123A2B;">
+              A estrada não precisa ser assim.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+          <div class="aspect-video rounded-xl overflow-hidden bg-gray-100">
+            <img
+              src="/EBOOKS/ES AVIF/IMG_3256.avif"
+              alt="Litoral do Espírito Santo"
+              class="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 2: A Solução -->
+  <section id="conteudo" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="heading-primary mb-6">
+            Imagine ter um "copiloto" experiente te dizendo exatamente onde ir
+          </h2>
+          <p class="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            Não é um guia turístico chato feito por quem viaja de avião e fica em hotel. É um <strong>Guia de Vida na Estrada</strong>, feito por quem viveu 20 dias intensos dentro de uma Kombi percorrendo cada quilômetro desse litoral.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h3 class="text-2xl font-serif font-semibold mb-8" style="color:#123A2B;">
+              O que você vai encontrar no guia?
+            </h3>
+
+            <div class="space-y-4">
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h4 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">📍 Mapeamento de Pontos de Apoio e Campings</h4>
+                <p class="text-gray-700 leading-relaxed">
+                  Saiba exatamente onde dormir em cada cidade (Marataízes, Guarapari, Vila Velha, Itaúnas e muito mais). Dizemos onde tem água, luz, se é seguro e quanto custa (ou se é grátis!).
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h4 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">🌊 As Praias Secretas e Imperdíveis</h4>
+                <p class="text-gray-700 leading-relaxed">
+                  Fuja da multidão. Te mostramos como chegar na Praia dos Padres, nas Falésias do Sul e nas Dunas do Norte.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h4 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">💰 Planilha de Custos Reais</h4>
+                <p class="text-gray-700 leading-relaxed">
+                  Pare de chutar valores. Revelamos quanto custa a famosa Moqueca Capixaba, a média de preço dos campings e dicas para economizar no mercado.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h4 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">🐾 O Guia Pet Friendly da Ayla</h4>
+                <p class="text-gray-700 leading-relaxed">
+                  Viaja com cachorro? Evite multas e estresse. Listamos onde seu pet é bem-vindo, os horários permitidos e onde é proibido pisar na areia.
+                </p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 p-6">
+                <h4 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">🛠️ Logística e Segurança</h4>
+                <p class="text-gray-700 leading-relaxed">
+                  Dicas de estradas, melhor época para fugir da chuva e do "Vento Sul", e onde conseguir sinal de internet para trabalhar.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:sticky lg:top-24">
+            <img
+              src="/EBOOKS/ES AVIF/BOOK_ES.avif"
+              alt="Guia aberto do Litoral ES"
+              class="w-full max-w-md lg:max-w-none mx-auto rounded-2xl shadow-lg object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 3: FAQ / Quebra de Objeções -->
+  <section class="py-16" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="heading-primary mb-10 text-center">Perguntas Frequentes</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <img
+              src="/EBOOKS/ES AVIF/IMG_3177.avif"
+              alt="Motorhomes e Vans no ES"
+              class="w-full h-40 object-cover rounded-xl mb-5"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="font-sans font-semibold text-gray-900 mb-3">
+              Serve para qualquer veículo?
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Sim! Fizemos de Kombi, mas as dicas de camping e pontos de apoio servem para motorhomes grandes (Trucks/Ônibus), Vans (Sprinter/Ducato) e até carros de passeio com barraca de teto.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <img
+              src="/EBOOKS/ES AVIF/IMG_3189.avif"
+              alt="Praias do Espírito Santo"
+              class="w-full h-40 object-cover rounded-xl mb-5"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="font-sans font-semibold text-gray-900 mb-3">
+              Quantos dias preciso para fazer o roteiro?
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Nós ficamos 20 dias, mas o guia é estruturado para que você possa adaptar para uma viagem de 7, 10 ou 30 dias. Você faz o seu ritmo.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <img
+              src="/EBOOKS/ES AVIF/IMG_3196.avif"
+              alt="Segurança no ES"
+              class="w-full h-40 object-cover rounded-xl mb-5"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="font-sans font-semibold text-gray-900 mb-3">
+              O Espírito Santo é seguro?
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Sim, se você souber onde parar. No guia, indicamos os locais onde nos sentimos seguros e onde tivemos apoio.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-sm p-6">
+            <img
+              src="/EBOOKS/ES AVIF/IMG_3244.avif"
+              alt="Estradas do ES"
+              class="w-full h-40 object-cover rounded-xl mb-5"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 class="font-sans font-semibold text-gray-900 mb-3">
+              Preciso de um 4x4?
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Não! O litoral do ES é muito acessível. Indicamos onde a estrada é asfaltada e onde tem terra, para você decidir se vai ou não.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 4: Bônus -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="heading-primary mb-8 text-center">Bônus Exclusivos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-gray-200 p-8">
+            <h3 class="text-xl font-serif font-semibold mb-3" style="color:#123A2B;">
+              📋 Checklist "Fuga do Vento Sul"
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Aprenda a identificar e se proteger do fenômeno climático que pode estragar seu acampamento no ES.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 p-8">
+            <h3 class="text-xl font-serif font-semibold mb-3" style="color:#123A2B;">
+              🐕 Roteiro "Ayla Aprovou"
+            </h3>
+            <p class="text-gray-700 leading-relaxed">
+              Dicas específicas de horários e praias para quem viaja com pets, testadas pela nossa Husky.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 5: Oferta -->
+  <section id="oferta" class="py-16" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="heading-primary mb-6">Quanto vale a sua tranquilidade na estrada?</h2>
+          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+            <p>
+              Pense comigo: Uma única noite em um camping ruim que você escolheu errado custa cerca de <strong>R$ 60,00</strong>.
+            </p>
+            <p>
+              Um jantar "pega-turista" ruim custa mais de <strong>R$ 100,00</strong>. Rodar 50km perdido gasta diesel e tempo.
+            </p>
+            <p>
+              O conhecimento que colocamos neste guia vai te economizar <strong>centenas de reais</strong> logo nos primeiros dias de viagem.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-gray-200 p-8 md:p-10 shadow-sm bg-white">
+          <div class="flex justify-center mb-6">
+            <img
+              src="/EBOOKS/ES AVIF/Books_ES_CAPA.avif"
+              alt="Guia do Litoral ES de Motorhome"
+              class="w-full max-w-[260px] h-auto drop-shadow-xl"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p class="text-xl md:text-2xl font-serif font-semibold mb-1" style="color:#123A2B;">
+            Guia do Litoral ES de Motorhome
+          </p>
+          <p class="text-lg font-serif mt-3 mb-2">
+            <span class="line-through text-gray-500">De: R$ 97,00</span>
+          </p>
+          <p class="text-3xl md:text-4xl font-serif font-semibold" style="color:#123A2B;">
+            Apenas R$ 47,90
+          </p>
+          <p class="text-gray-600 mt-2">(Menos que um tanque de combustível!)</p>
+          <p class="text-sm text-gray-500 mt-1">(pagamento único, acesso vitalício)</p>
+
+          <div class="mt-8 flex flex-col gap-3">
+            <a
+              href={checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary inline-flex items-center justify-center text-center"
+            >
+              QUERO COMEÇAR MINHA AVENTURA AGORA
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 6: Garantia -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto bg-green-50 border border-green-200 rounded-2xl p-8 md:p-10 text-center">
+        <h2 class="text-2xl md:text-3xl font-serif font-semibold mb-4" style="color:#123A2B;">
+          🔒 Risco Zero - Garantia de 7 Dias
+        </h2>
+        <p class="text-lg text-gray-700 leading-relaxed">
+          Se você baixar o guia e achar que o conteúdo não ajuda no seu planejamento, você tem <strong>7 dias</strong> para pedir seu dinheiro de volta. Sem letras miúdas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção 7: Quem Somos -->
+  <section class="py-16" style="background-color: #FFF8F2;">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div class="relative">
+          <img
+            src="/EBOOKS/ES AVIF/IMG_3162.avif"
+            alt="Renan, Millena e Ayla - Canal Naturerota"
+            class="w-full rounded-2xl shadow-lg object-cover"
+            style="max-height: 520px;"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div>
+          <h2 class="heading-primary mb-6">Quem Somos?</h2>
+          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+            <p>
+              <strong>Renan e Millena - Canal Naturerota</strong>
+            </p>
+            <p>
+              Somos viajantes profissionais e criadores de conteúdo focados em <strong>Van Life</strong> e <strong>Vida na Estrada</strong>. Nosso trabalho é desbravar o Brasil (e o mundo) sobre rodas, mostrando a realidade nua e crua — do perrengue mecânico ao pôr do sol inesquecível.
+            </p>
+            <p>
+              Nossa missão com este eBook é simples: <strong>encurtar o seu caminho.</strong> Queremos que você cometa menos erros do que nós e aproveite o Espírito Santo como um local, não como um turista perdido.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-serif font-semibold mb-6" style="color:#123A2B;">
+          O Espírito Santo te espera. Mas vá preparado.
+        </h2>
+        <p class="text-lg text-gray-700 mb-8">
+          Não deixe para descobrir onde dormir quando o sol já tiver se posto. Garanta seu guia, planeje sua rota e <strong>nos vemos na estrada!</strong>
+        </p>
+        <a
+          href={checkoutUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary inline-flex items-center justify-center text-center text-lg px-8 py-4"
+        >
+          GARANTIR ACESSO AGORA POR R$ 47,90
+        </a>
+        <p class="text-sm text-gray-500 mt-4">
+          Acesso imediato via e-mail • Garantia de 7 dias
+        </p>
+        <p class="mt-6 text-gray-700 font-serif">
+          Renan, Millena e Ayla 🚐💨
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="border-t border-gray-200 bg-gray-50 py-8">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-gray-600 text-sm">
+          Copyright © {new Date().getFullYear()} Naturerota. Todos os direitos reservados.
+        </p>
+        <div class="mt-2 space-x-4">
+          <a href="/politica-de-privacidade" class="text-gray-500 hover:text-gray-700 text-sm">
+            Política de Privacidade
+          </a>
+          <span class="text-gray-400">|</span>
+          <a href="/termos-de-uso" class="text-gray-500 hover:text-gray-700 text-sm">
+            Termos de Uso
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</Layout>
