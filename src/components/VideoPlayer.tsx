@@ -46,10 +46,13 @@ export default function VideoPlayer({
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Se autoplay está ativado, carregar imediatamente
+    // Se autoplay está ativado, carregar após um pequeno delay para não bloquear renderização inicial
     if (autoplay) {
-      setShouldLoad(true);
-      return;
+      // Delay mínimo para permitir que o poster seja renderizado primeiro (melhor LCP)
+      const timer = setTimeout(() => {
+        setShouldLoad(true);
+      }, 100);
+      return () => clearTimeout(timer);
     }
 
     // Caso contrário, usar IntersectionObserver
@@ -149,13 +152,19 @@ export default function VideoPlayer({
           className="w-full h-full object-cover"
         />
       ) : (
-        // Placeholder enquanto não carrega
+        // Placeholder enquanto não carrega - sempre mostrar poster para melhor LCP
         poster ? (
-          <img
-            src={poster}
-            alt="Video thumbnail"
-            className="w-full h-full object-cover"
-          />
+          <picture className="absolute inset-0 w-full h-full">
+            <source type="image/avif" srcSet={poster} />
+            <img
+              src={poster.replace(/\.avif$/, '.jpg').replace('/avif/public/', '/')}
+              alt="Video thumbnail"
+              className="w-full h-full object-cover"
+              loading="eager"
+              fetchpriority="high"
+              decoding="sync"
+            />
+          </picture>
         ) : (
           <div className="w-full h-full bg-gray-900 flex items-center justify-center">
             <div className="text-white/50 text-sm">Carregando vídeo...</div>

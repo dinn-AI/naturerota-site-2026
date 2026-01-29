@@ -4,13 +4,14 @@ import VideoPlayer from "./VideoPlayer";
 const videoSrc = "/videos/Trailer_Naturerota.mp4";
 // Usar uma imagem existente como poster (pode ser substituída depois)
 const videoPoster = "/avif/public/IMG_3835.avif";
+const videoPosterFallback = "/IMG_3835.JPG";
 ---
 
 <section class="scrolly" id="scrolly-hero">
   <div class="sticky">
     <div class="media" id="media">
       <VideoPlayer
-        client:load
+        client:idle
         src={videoSrc}
         poster={videoPoster}
         autoplay={true}
