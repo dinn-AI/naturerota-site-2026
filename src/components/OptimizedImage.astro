@@ -1,0 +1,54 @@
+---
+/**
+ * Componente para imagens otimizadas com AVIF e fallback
+ * 
+ * Automaticamente serve AVIF quando disponível, com fallback para formato original.
+ * Preserva todos os atributos HTML padrão de <img>.
+ * 
+ * Uso:
+ *   <OptimizedImage 
+ *     src="/IMG_2316.jpg" 
+ *     alt="Descrição" 
+ *     class="w-full"
+ *     loading="lazy"
+ *   />
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  width?: number | string;
+  height?: number | string;
+  style?: string;
+  [key: string]: any; // Permite outros atributos HTML
+}
+
+const { src, alt, class: className, loading, decoding, width, height, style, ...rest } = Astro.props;
+
+// Converte o src original para o caminho AVIF
+// Ex: /IMG_2316.jpg -> /avif/public/IMG_2316.avif
+function getAvifPath(originalSrc: string): string {
+  const pathWithoutExtension = originalSrc.replace(/\.(jpg|jpeg|png|webp|JPG|JPEG|PNG|WEBP)$/i, '');
+  return `/avif/public${pathWithoutExtension}.avif`;
+}
+
+const avifSrc = getAvifPath(src);
+---
+
+<picture>
+  <source type="image/avif" srcset={avifSrc} />
+  <img
+    src={src}
+    alt={alt}
+    class={className}
+    loading={loading}
+    decoding={decoding}
+    width={width}
+    height={height}
+    style={style}
+    {...rest}
+  />
+</picture>

@@ -1,6 +1,7 @@
 ---
 import GalleryGrid from './GalleryGrid';
 import SocialLink from './SocialLink';
+import OptimizedImage from './OptimizedImage.astro';
 ---
 
 <section id="sobre-nos" class="py-16" style="background-color: #FFF8F2;">
@@ -16,7 +17,7 @@ import SocialLink from './SocialLink';
 
     <!-- Título Principal Centralizado -->
     <div class="max-w-4xl mx-auto text-center mb-16">
-      <h2 class="heading-primary mb-4">Quem Somos: Expedição pelo Litoral do Brasil de Kombi Home com Renan e Millena</h2>
+      <h2 class="heading-primary mb-4">Quem Somos</h2>
     </div>
 
     <!-- Seção Principal: Introdução + Imagem -->
@@ -24,7 +25,7 @@ import SocialLink from './SocialLink';
       <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <!-- Imagem -->
         <div class="relative">
-          <img
+          <OptimizedImage
             src="/IMG_2316.jpg"
             alt="Renan e Millena com a Kombi"
             class="w-full h-auto rounded-2xl shadow-xl object-cover"
@@ -52,87 +53,15 @@ import SocialLink from './SocialLink';
         <div class="order-2 md:order-1">
           <h3 class="text-3xl md:text-4xl font-serif mb-6" style="color: #123A2B;">A Expedição Atual: Do Sul ao Nordeste</h3>
           <p class="text-lg text-gray-700 leading-relaxed">
-            Neste exato momento, estamos vivendo uma grande aventura de <strong>Viagem de Carro</strong>: percorrer todo o litoral brasileiro. Saímos do estado do <strong>Paraná</strong> e estamos subindo rumo ao <strong>Maranhão</strong>, desbravando praias selvagens, vilarejos e as belezas da costa nacional, tudo isso vivendo a experiência real de Morar na Kombi.
+            Neste momento, estamos percorrendo o litoral brasileiro do <strong>Paraná</strong> ao <strong>Maranhão</strong>, desbravando praias e vilarejos vivendo a experiência real de <strong>Morar na Kombi</strong>.
           </p>
         </div>
         
         <!-- Imagem -->
         <div class="relative order-1 md:order-2">
-          <img
-            src="/IMG_6289.jpeg"
+          <OptimizedImage
+            src="/IMG_3512.jpg"
             alt="Expedição pelo litoral"
-            class="w-full h-auto rounded-2xl shadow-xl object-cover"
-            style="max-height: 400px;"
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Seção 2: Nossa História na Estrada (Imagem à esquerda) -->
-    <div class="max-w-7xl mx-auto mb-20">
-      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <!-- Imagem -->
-        <div class="relative">
-          <img
-            src="/IMG_5297.jpeg"
-            alt="Patagônia e Ushuaia"
-            class="w-full h-auto rounded-2xl shadow-xl object-cover"
-            style="max-height: 400px;"
-          />
-        </div>
-        
-        <!-- Texto -->
-        <div>
-          <h3 class="text-3xl md:text-4xl font-serif mb-6" style="color: #123A2B;">Nossa História na Estrada</h3>
-          <p class="text-lg text-gray-700 leading-relaxed mb-4">
-            Antes de encarar o litoral, nossa Vida na Estrada já acumulou milhares de quilômetros e histórias inesquecíveis:
-          </p>
-          <p class="text-lg text-gray-700 leading-relaxed mb-3">
-            <strong>Fim do Mundo de Motorhome:</strong> Uma jornada épica até a <strong>Patagônia Argentina</strong> e <strong>Ushuaia</strong>, onde provamos a resistência da nossa VW Bus entre geleiras e montanhas.
-          </p>
-          <p class="text-lg text-gray-700 leading-relaxed">
-            <strong>Centro-Oeste Brasileiro:</strong> Mergulhamos nas águas cristalinas de <strong>Bonito (MS)</strong>, mostrando que o ecoturismo e o campismo andam juntos.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Seção 3: O Que Compartilhamos (Imagem à direita) -->
-    <div class="max-w-7xl mx-auto mb-20">
-      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <!-- Texto -->
-        <div class="order-2 md:order-1">
-          <h3 class="text-3xl md:text-4xl font-serif mb-6" style="color: #123A2B;">O Que Compartilhamos</h3>
-          <p class="text-lg text-gray-700 leading-relaxed mb-4">
-            Aqui no site e no nosso canal, você encontra tudo sobre o universo <strong>Kombi Motorhome</strong>:
-          </p>
-          <ul class="space-y-3 text-lg text-gray-700">
-            <li class="flex items-start">
-              <svg class="w-6 h-6 mr-3 mt-1 flex-shrink-0" style="color: #123A2B;" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <span>A rotina sem filtros de viver em 4m².</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 mr-3 mt-1 flex-shrink-0" style="color: #123A2B;" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <span>Dicas de construção e manutenção para quem ama Van Life.</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 mr-3 mt-1 flex-shrink-0" style="color: #123A2B;" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-              </svg>
-              <span>Roteiros detalhados das nossas paradas e campings.</span>
-            </li>
-          </ul>
-        </div>
-        
-        <!-- Imagem -->
-        <div class="relative order-1 md:order-2">
-          <img
-            src="/IMG_6460.jpeg"
-            alt="Vida na estrada"
             class="w-full h-auto rounded-2xl shadow-xl object-cover"
             style="max-height: 400px;"
           />
@@ -143,7 +72,7 @@ import SocialLink from './SocialLink';
     <!-- Galeria de Fotos Interativa -->
     <div class="max-w-7xl mx-auto">
       <h2 class="heading-primary text-center mb-6">
-        Se você ama viagem e aventuras, acompanhe a gente no YouTube e no Instagram.
+        Viaje com a gente em tempo real
       </h2>
       
       <!-- Botões de Redes Sociais -->

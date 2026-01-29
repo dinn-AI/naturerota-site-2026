@@ -14,7 +14,7 @@ const navItems = [
   { name: "Home", link: "/" },
   { name: "Blog", link: "/blog" },
   { name: "Quem Somos", link: "/#sobre-nos" },
-  { name: "Produtos", link: "/#guias" },
+  { name: "Produtos", link: "/#produtos" },
 ];
 
 export default function NavbarDemo() {

@@ -1,190 +1,363 @@
 "use client";
 
-import React from "react";
-import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import React, { useRef, useState, useEffect, useCallback } from "react";
+import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 
-const ProductContent = ({ title, description, features, checkoutUrl }: { title: string; description: string; features: string[]; checkoutUrl?: string }) => {
+interface ProductCard {
+  id: string;
+  image: string;
+  alt: string;
+  href?: string;
+}
+
+interface ProductsCarouselProps {
+  products: ProductCard[];
+}
+
+export default function ProductsCarousel({ products }: ProductsCarouselProps) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [hasDragged, setHasDragged] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const dragStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
+
+  // Calcular largura do card baseado no viewport
+  const getCardWidth = useCallback(() => {
+    if (typeof window === "undefined" || !carouselRef.current) return 0;
+    const isMobile = window.innerWidth <= 768;
+    const viewportWidth = window.innerWidth;
+    const padding = isMobile ? 32 : 64; // px-4 (16px) ou px-8 (32px) em cada lado
+    
+    if (isMobile) {
+      // Mobile: card ocupa ~85% da largura disponível
+      const availableWidth = viewportWidth - padding;
+      return availableWidth * 0.85;
+    } else {
+      // Desktop: 3 cards completos + ~30% do 4º card visível
+      const gap = 40;
+      const availableWidth = viewportWidth - padding;
+      return (availableWidth - gap * 2) / 3.3;
+    }
+  }, []);
+
+  const scrollToIndex = useCallback((index: number) => {
+    if (!carouselRef.current) return;
+    
+    const cardWidth = getCardWidth();
+    const gap = 40;
+    const scrollPosition = index * (cardWidth + gap);
+    
+    carouselRef.current.scrollTo({
+      left: scrollPosition,
+      behavior: "smooth",
+    });
+    setCurrentIndex(index);
+  }, [getCardWidth]);
+
+  const handlePrev = useCallback(() => {
+    if (currentIndex > 0) {
+      scrollToIndex(currentIndex - 1);
+    }
+  }, [currentIndex, scrollToIndex]);
+
+  const handleNext = useCallback(() => {
+    if (currentIndex < products.length - 1) {
+      scrollToIndex(currentIndex + 1);
+    }
+  }, [currentIndex, products.length, scrollToIndex]);
+
+  // Drag handlers
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    // Se o clique foi em um card com href, não iniciar drag
+    const target = e.target as HTMLElement;
+    const cardElement = target.closest('[data-product-card]');
+    if (cardElement && cardElement.getAttribute('data-href')) {
+      return; // Deixa o click do card ser processado normalmente
+    }
+
+    if (!carouselRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+    setHasDragged(false);
+    dragStartRef.current = { x: e.pageX, y: e.pageY, time: Date.now() };
+    carouselRef.current.style.cursor = "grabbing";
+    carouselRef.current.setPointerCapture(e.pointerId);
+  }, []);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isDragging || !carouselRef.current) return;
+    e.preventDefault();
+    
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // Velocidade do drag
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+    
+    // Detectar se houve drag significativo (aumentado o threshold)
+    if (Math.abs(walk) > 10) {
+      setHasDragged(true);
+    }
+  }, [isDragging, startX, scrollLeft]);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (!carouselRef.current) return;
+    const wasDragging = hasDragged;
+    setIsDragging(false);
+    carouselRef.current.style.cursor = "grab";
+    carouselRef.current.releasePointerCapture(e.pointerId);
+    
+    // Snap para o card mais próximo apenas se houve drag significativo
+    if (wasDragging) {
+      const cardWidth = getCardWidth();
+      const gap = 40;
+      const scrollPosition = carouselRef.current.scrollLeft;
+      const newIndex = Math.round(scrollPosition / (cardWidth + gap));
+      const clampedIndex = Math.max(0, Math.min(newIndex, products.length - 1));
+      
+      // Usar scroll-snap nativo se disponível, senão usar scrollToIndex
+      if (typeof window !== "undefined" && "scrollBehavior" in document.documentElement.style) {
+        scrollToIndex(clampedIndex);
+      } else {
+        const targetScroll = clampedIndex * (cardWidth + gap);
+        carouselRef.current.scrollTo({
+          left: targetScroll,
+          behavior: "smooth",
+        });
+        setCurrentIndex(clampedIndex);
+      }
+    }
+    
+    dragStartRef.current = null;
+    // Reset hasDragged imediatamente para permitir clicks
+    setHasDragged(false);
+  }, [hasDragged, getCardWidth, scrollToIndex, products.length]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!carouselRef.current?.contains(document.activeElement)) return;
+      
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handlePrev, handleNext]);
+
+  // Atualizar índice baseado no scroll
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const handleScroll = () => {
+      const cardWidth = getCardWidth();
+      const gap = 40;
+      const scrollPosition = carousel.scrollLeft;
+      const newIndex = Math.round(scrollPosition / (cardWidth + gap));
+      setCurrentIndex(Math.max(0, Math.min(newIndex, products.length - 1)));
+    };
+
+    carousel.addEventListener("scroll", handleScroll);
+    return () => carousel.removeEventListener("scroll", handleScroll);
+  }, [getCardWidth, products.length]);
+
+  // Verificar prefers-reduced-motion
+  const prefersReducedMotion = typeof window !== "undefined" && 
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+
   return (
-    <div className="bg-[#FFF8F2] p-8 md:p-14 rounded-3xl mb-4">
-      <p className="text-gray-700 text-base md:text-xl font-sans max-w-3xl mx-auto leading-relaxed mb-6">
-        {description}
-      </p>
-      <div className="space-y-3">
-        {features.map((feature, idx) => (
-          <div key={idx} className="flex items-start">
-            <svg className="w-6 h-6 mr-3 mt-1 shrink-0" style={{ color: '#123A2B' }} fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-            </svg>
-            <span className="text-gray-700 text-base md:text-lg">{feature}</span>
+    <div className="w-full">
+      {/* Carrossel */}
+      <div
+        ref={carouselRef}
+        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-10 px-4 md:px-8 pb-8"
+        style={{
+          cursor: isDragging ? "grabbing" : "grab",
+          touchAction: "pan-y",
+          scrollBehavior: prefersReducedMotion ? "auto" : "smooth",
+          WebkitOverflowScrolling: "touch",
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        role="region"
+        aria-label="Carrossel de produtos"
+        tabIndex={0}
+      >
+        {products.map((product, index) => {
+          const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+          return (
+            <div
+              key={product.id}
+              className="flex-shrink-0 snap-center"
+              style={{
+                width: isMobile ? "85%" : "calc((100vw - 160px) / 3.3)",
+                minWidth: isMobile ? "280px" : "300px",
+                maxWidth: isMobile ? "320px" : "none",
+              }}
+            >
+            {product.href ? (
+              <a
+                href={product.href}
+                data-product-card
+                onClick={(e) => {
+                  // Se houve drag, prevenir navegação
+                  if (hasDragged || isDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                  }
+                  // Verificar se houve movimento significativo
+                  if (dragStartRef.current) {
+                    const dragDistance = Math.sqrt(
+                      Math.pow(e.clientX - dragStartRef.current.x, 2) + 
+                      Math.pow(e.clientY - dragStartRef.current.y, 2)
+                    );
+                    if (dragDistance > 10) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      return;
+                    }
+                  }
+                }}
+                onPointerDown={(e) => {
+                  // Prevenir que o container capture o evento quando clicar no card
+                  e.stopPropagation();
+                  dragStartRef.current = { x: e.clientX, y: e.clientY, time: Date.now() };
+                }}
+                className={`
+                  relative w-full aspect-[4/5] rounded-3xl overflow-hidden block
+                  transition-transform duration-300 ease-out
+                  cursor-pointer hover:scale-[1.02]
+                  ${isDragging ? "select-none pointer-events-none" : ""}
+                `}
+                style={{
+                  userSelect: isDragging ? "none" : "auto",
+                  WebkitUserSelect: isDragging ? "none" : "auto",
+                }}
+                aria-label={product.alt}
+              >
+                {product.image.endsWith('.svg') ? (
+                  <img
+                    src={product.image}
+                    alt={product.alt}
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <picture className="absolute inset-0 w-full h-full">
+                    <source
+                      type="image/avif"
+                      srcSet={`/avif/public${product.image.replace(/\.(jpg|jpeg|png)$/i, ".avif")}`}
+                    />
+                    <img
+                      src={product.image}
+                      alt={product.alt}
+                      className="w-full h-full object-cover"
+                      draggable={false}
+                      loading={index < 3 ? "eager" : "lazy"}
+                    />
+                  </picture>
+                )}
+              </a>
+            ) : (
+              <div
+                className={`
+                  relative w-full aspect-[4/5] rounded-3xl overflow-hidden
+                  transition-transform duration-300 ease-out
+                  cursor-default
+                  ${isDragging ? "select-none" : ""}
+                `}
+                style={{
+                  userSelect: isDragging ? "none" : "auto",
+                  WebkitUserSelect: isDragging ? "none" : "auto",
+                }}
+                role="img"
+                aria-label={product.alt}
+              >
+                {product.image.endsWith('.svg') ? (
+                  <img
+                    src={product.image}
+                    alt={product.alt}
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <picture className="absolute inset-0 w-full h-full">
+                    <source
+                      type="image/avif"
+                      srcSet={`/avif/public${product.image.replace(/\.(jpg|jpeg|png)$/i, ".avif")}`}
+                    />
+                    <img
+                      src={product.image}
+                      alt={product.alt}
+                      className="w-full h-full object-cover"
+                      draggable={false}
+                      loading={index < 3 ? "eager" : "lazy"}
+                    />
+                  </picture>
+                )}
+              </div>
+            )}
           </div>
-        ))}
+          );
+        })}
       </div>
-      <div className="mt-8 text-center">
-        {checkoutUrl ? (
-          <a
-            href={checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-block"
-          >
-            Quero Este Guia
-          </a>
-        ) : (
-          <p className="text-gray-600 text-base md:text-lg font-medium">
-            Disponível em breve...
-          </p>
-        )}
+
+      {/* Botões de navegação */}
+      <div className="flex justify-center items-center gap-4 mt-6">
+        <button
+          onClick={handlePrev}
+          disabled={currentIndex === 0}
+          aria-label="Anterior"
+          className={`
+            w-10 h-10 flex items-center justify-center mx-2
+            bg-neutral-200 dark:bg-neutral-800
+            border-3 border-transparent rounded-full
+            focus:border-[#6D64F7] focus:outline-none
+            hover:-translate-y-0.5 active:translate-y-0.5
+            transition duration-200
+            ${currentIndex === 0
+              ? "text-gray-400 cursor-not-allowed opacity-50"
+              : "text-neutral-600 dark:text-neutral-200"
+            }
+          `}
+        >
+          <IconArrowNarrowLeft className="w-6 h-6" />
+        </button>
+        
+        <button
+          onClick={handleNext}
+          disabled={currentIndex >= products.length - 1}
+          aria-label="Próximo"
+          className={`
+            w-10 h-10 flex items-center justify-center mx-2
+            bg-neutral-200 dark:bg-neutral-800
+            border-3 border-transparent rounded-full
+            focus:border-[#6D64F7] focus:outline-none
+            hover:-translate-y-0.5 active:translate-y-0.5
+            transition duration-200
+            ${currentIndex >= products.length - 1
+              ? "text-gray-400 cursor-not-allowed opacity-50"
+              : "text-neutral-600 dark:text-neutral-200"
+            }
+          `}
+        >
+          <IconArrowNarrowRight className="w-6 h-6" />
+        </button>
       </div>
-    </div>
-  );
-};
-
-const productsData = [
-  {
-    category: "Guia Completo",
-    title: "20 Dias pela Patagônia de Carro",
-    src: "/products_cover/20_dias_pela_patagonia_de_CARRO.jpg",
-    hideOverlay: true,
-    disableModal: true,
-    buttonLink: "/20-dias-pela-patagonia",
-    buttonPlatform: "internal" as const,
-    content: (
-      <ProductContent
-        title="20 Dias pela Patagônia de Carro"
-        description="Roteiro detalhado da nossa jornada épica até o Fim do Mundo. Tudo que você precisa saber para planejar sua viagem dos sonhos pela Patagônia Argentina."
-        features={[
-          "Roteiro dia a dia com quilometragens exatas",
-          "Melhores pontos de parada e pernoite",
-          "Dicas de economia e orçamento realista",
-          "Lugares escondidos que não estão nos guias tradicionais"
-        ]}
-        checkoutUrl="https://pay.hotmart.com/U98520938Y"
-      />
-    ),
-  },
-  {
-    category: "Roteiro Prático",
-    title: "4 Dias em Bonito MS",
-    src: "/products_cover/Roteiro_de_4_dias_em_Bonito_MS_Brasil.jpg",
-    hideOverlay: true,
-    disableModal: true,
-    buttonLink: "/4-dias-em-bonito-ms",
-    buttonPlatform: "internal" as const,
-    content: (
-      <ProductContent
-        title="4 Dias em Bonito MS"
-        description="Descubra as águas cristalinas de Bonito com nosso guia otimizado para aproveitar o máximo em 4 dias."
-        features={[
-          "Sequência ideal de passeios para economizar tempo",
-          "Dicas de agências e valores atualizados",
-          "Onde comer bem gastando pouco",
-          "Campings e hospedagens testados por nós"
-        ]}
-        checkoutUrl="https://pay.hotmart.com/T98534013N"
-      />
-    ),
-  },
-  {
-    category: "Curso Essencial",
-    title: "Começando a Vida na Estrada",
-    src: "/products_cover/comecando_a_vida_na_estrada.jpg",
-    hideOverlay: true,
-    content: (
-      <ProductContent
-        title="Começando a Vida na Estrada"
-        description="O passo a passo completo para largar tudo e viver viajando. Da decisão inicial até os primeiros meses na estrada."
-        features={[
-          "Como se preparar financeiramente",
-          "Escolhendo o veículo ideal para seu perfil",
-          "Documentação e burocracias essenciais",
-          "Primeiros passos e adaptação"
-        ]}
-      />
-    ),
-  },
-  {
-    category: "Trabalho Remoto",
-    title: "Como Ganhar Dinheiro na Estrada",
-    src: "/products_cover/COMO_ganhar_dinheiro_na_estrada.jpg",
-    hideOverlay: true,
-    content: (
-      <ProductContent
-        title="Como Ganhar Dinheiro na Estrada"
-        description="Transforme sua paixão por viagens em fonte de renda. Aprenda as estratégias que usamos para viver viajando."
-        features={[
-          "7 formas comprovadas de ganhar dinheiro viajando",
-          "Como criar conteúdo que gera renda",
-          "Trabalhos remotos para nômades digitais",
-          "Gerenciamento financeiro na vida mobile"
-        ]}
-      />
-    ),
-  },
-  {
-    category: "Van Life com Pets",
-    title: "Vida na Estrada com Pets",
-    src: "/products_cover/Vida_na_Estrada_com_Pets.jpg",
-    hideOverlay: true,
-    content: (
-      <ProductContent
-        title="Vida na Estrada com Pets"
-        description="Ayla Husky é nossa companheira de viagens. Aprenda tudo sobre viajar com seu pet em segurança e conforto."
-        features={[
-          "Preparação e adaptação do pet",
-          "Documentação e vacinas necessárias",
-          "Cuidados diários e alimentação",
-          "Lugares pet-friendly pelo Brasil"
-        ]}
-      />
-    ),
-  },
-  {
-    category: "Segurança",
-    title: "Pernoite Seguro na Estrada",
-    src: "/products_cover/Pernoite_seguro_na_estrada.jpg",
-    hideOverlay: true,
-    content: (
-      <ProductContent
-        title="Pernoite Seguro na Estrada"
-        description="Durma tranquilo onde quer que esteja. Tudo sobre segurança e conforto para pernoites em van/kombi."
-        features={[
-          "Como escolher locais seguros",
-          "Equipamentos de segurança essenciais",
-          "Apps e comunidades de viajantes",
-          "Protocolo de emergências"
-        ]}
-      />
-    ),
-  },
-  {
-    category: "Gastronomia Mobile",
-    title: "Receitas para Camping e Motorhome",
-    src: "/products_cover/Receitas_cozinhar_em_camping_ou_motorhome.jpg",
-    hideOverlay: true,
-    content: (
-      <ProductContent
-        title="Receitas para Camping"
-        description="Cozinhe pratos incríveis com recursos limitados. Nossas receitas favoritas da vida na estrada."
-        features={[
-          "30+ receitas práticas e saborosas",
-          "Ingredientes fáceis de encontrar",
-          "Pouco uso de gás e água",
-          "Dicas de armazenamento sem geladeira"
-        ]}
-      />
-    ),
-  },
-];
-
-export default function ProductsCarousel() {
-  const cards = productsData.map((card, index) => (
-    <Card key={card.src} card={card} index={index} variant="product" />
-  ));
-
-  return (
-    <div className="w-full h-full">
-      <Carousel items={cards} variant="product" />
     </div>
   );
 }
-

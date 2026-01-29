@@ -8,7 +8,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "sanity": "sanity dev",
-    "sanity:deploy": "sanity deploy"
+    "sanity:deploy": "sanity deploy",
+    "images:avif": "node scripts/optimize-images.mjs",
+    "images:avif:dry-run": "node scripts/optimize-images.mjs --dry-run"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@sanity/cli": "^5.1.0",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "sharp": "^0.33.5"
   }
 }

@@ -3,11 +3,18 @@
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { useEffect, useId, useRef, useState } from "react";
 
+// Função helper para converter src em AVIF
+function getAvifPath(originalSrc: string): string {
+  const pathWithoutExtension = originalSrc.replace(/\.(jpg|jpeg|png|webp|JPG|JPEG|PNG|WEBP)$/i, '');
+  return `/avif/public${pathWithoutExtension}.avif`;
+}
+
 interface SlideData {
   title: string;
   button: string;
   src: string;
   href?: string;
+  openInNewTab?: boolean;
 }
 
 interface SlideProps {
@@ -66,6 +73,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
 
   const { src, button, title } = slide;
   const href = slide.href;
+  const openInNewTab = slide.openInNewTab ?? (href ? href.startsWith("http") : false);
 
   return (
     <div className="perspective-distant transform-3d">
@@ -85,7 +93,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
         }}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-[1%] overflow-hidden transition-all duration-150 ease-out"
+          className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-2xl overflow-hidden transition-all duration-150 ease-out"
           style={{
             transform:
               current === index
@@ -93,17 +101,20 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
                 : "none",
           }}
         >
-          <img
-            className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
-            style={{
-              opacity: current === index ? 1 : 0.5,
-            }}
-            alt={title}
-            src={src}
-            onLoad={imageLoaded}
-            loading="eager"
-            decoding="sync"
-          />
+          <picture className="absolute inset-0 w-full h-full">
+            <source type="image/avif" srcSet={getAvifPath(src)} />
+            <img
+              className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+              style={{
+                opacity: current === index ? 1 : 0.5,
+              }}
+              alt={title}
+              src={src}
+              onLoad={imageLoaded}
+              loading="eager"
+              decoding="sync"
+            />
+          </picture>
           {current === index && (
             <div className="absolute inset-0 bg-black/30 transition-all duration-1000" />
           )}
@@ -121,8 +132,8 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
             {href ? (
               <a
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={openInNewTab ? "_blank" : undefined}
+                rel={openInNewTab ? "noopener noreferrer" : undefined}
                 onClick={(e) => e.stopPropagation()}
                 className="mt-6 px-4 py-2 w-fit mx-auto sm:text-sm text-black bg-white h-12 border border-transparent text-xs flex justify-center items-center rounded-2xl hover:shadow-lg transition duration-200 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"
               >

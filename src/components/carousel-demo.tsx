@@ -7,7 +7,7 @@ export default function CarouselDemo() {
     {
       title: "Brasil de Motorhome | Brazil Roadtrip",
       button: "Assistir série",
-      src: "/Kombi_roadTrip_Brazil.png",
+      src: "/IMG_3265.jpg",
       href: "https://youtube.com/playlist?list=PLFwipz-cJNpvymuengU-9T21nqk7M09rw&si=bxutv9-UoeAZHTHd",
     },
     {
@@ -25,7 +25,7 @@ export default function CarouselDemo() {
   ];
 
   return (
-    <div className="relative overflow-visible w-full py-20">
+    <div className="relative overflow-hidden w-full max-w-full py-20">
       <Carousel slides={slideData} />
     </div>
   );

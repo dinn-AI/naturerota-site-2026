@@ -3,6 +3,12 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 
+// Função helper para converter src em AVIF
+function getAvifPath(originalSrc: string): string {
+  const pathWithoutExtension = originalSrc.replace(/\.(jpg|jpeg|png|webp|JPG|JPEG|PNG|WEBP)$/i, '');
+  return `/avif/public${pathWithoutExtension}.avif`;
+}
+
 type Card = {
   id: number;
   className: string;
@@ -22,7 +28,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
 
   return (
     <div className="w-full">
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 auto-rows-[200px] gap-4 relative">
+      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 auto-rows-[160px] gap-3 relative">
         {cards.map((card) => (
           <motion.div
             key={card.id}
@@ -33,11 +39,14 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
             )}
             layoutId={`card-${card.id}`}
           >
-            <motion.img
-              src={card.thumbnail}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-              alt={`Galeria ${card.id}`}
-            />
+            <picture className="absolute inset-0 h-full w-full">
+              <source type="image/avif" srcSet={getAvifPath(card.thumbnail)} />
+              <motion.img
+                src={card.thumbnail}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                alt={`Galeria ${card.id}`}
+              />
+            </picture>
           </motion.div>
         ))}
       </div>
@@ -61,15 +70,18 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
                 className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center pointer-events-auto"
                 onClick={handleOutsideClick}
               >
-                <motion.img
-                  src={selected.thumbnail}
-                  className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                  alt={`Galeria ${selected.id}`}
-                  initial={{ scale: 0.9 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                />
+                <picture>
+                  <source type="image/avif" srcSet={getAvifPath(selected.thumbnail)} />
+                  <motion.img
+                    src={selected.thumbnail}
+                    className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                    alt={`Galeria ${selected.id}`}
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0.9 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </picture>
                 {/* Botão de fechar */}
                 <button
                   onClick={handleOutsideClick}
