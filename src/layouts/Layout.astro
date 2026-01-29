@@ -1,8 +1,8 @@
 ---
+import '../styles/global.css';
 import SEO from '../components/SEO.astro';
 import NavbarDemo from '../components/ui/NavbarDemo.tsx';
 import SocialLink from '../components/SocialLink';
-import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -49,37 +49,26 @@ const {
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <!-- CSS Crítico Inline (Above the Fold) -->
-    <style is:inline>
-      :root{--font-family-sans:'Poppins',system-ui,-apple-system,sans-serif;--font-family-serif:'DM Serif Display',Georgia,serif;--color-brand-green:#123A2B}body{font-family:var(--font-family-sans);margin:0;padding:0;background-color:#FFF8F2;color:#1f2937;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.scrolly{height:100vh;background:#FFF8F2;position:relative;margin-top:0;padding-top:0}.sticky{position:relative;top:auto;height:100vh;overflow:hidden}.media{position:absolute;inset:0;border-radius:0;overflow:hidden;z-index:1}.media__el{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.media__el--video{width:100vw;height:100vh;min-width:177.78vh;min-height:56.25vw;top:50%;left:50%;transform:translate(-50%,-50%);transform-origin:center}.media__el--video video{width:100%;height:100%;object-fit:cover}.overlay{position:absolute;inset:0;background:#000;opacity:.4}.copy{position:absolute;inset:0;height:100%;display:flex;align-items:center;justify-content:center;padding:0 8vw;color:#fff;z-index:5;text-align:center}.step{max-width:720px;opacity:1;transform:translateY(0);position:relative}.step h1{font-family:var(--font-family-serif);font-size:clamp(32px,4vw,56px);line-height:1.1;font-weight:700;margin:0}.container{width:100%;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}
-    </style>
-
-    <!-- Google Tag Manager - Carregar após interação do usuário -->
-    <script is:inline>
-      window.addEventListener('load', function() {
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-P3XJGXL5');
-      });
-    </script>
+    <!-- Google Tag Manager -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P3XJGXL5');</script>
     <!-- End Google Tag Manager -->
 
-    <!-- Meta Pixel Code - Carregar após interação do usuário -->
+    <!-- Meta Pixel Code -->
     <script is:inline>
-      window.addEventListener('load', function() {
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '1398654025074894');
-        fbq('track', 'PageView');
-      });
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1398654025074894');
+      fbq('track', 'PageView');
     </script>
     <!-- End Meta Pixel Code -->
 
@@ -97,35 +86,20 @@ const {
       videoUrl={videoUrl}
       productData={productData}
     />
-    
-    <!-- Preload recursos críticos para LCP (apenas na home) -->
-    {Astro.url.pathname === '/' && (
-      <>
-        <link rel="preload" as="image" href="/avif/public/IMG_3835.avif" type="image/avif" fetchpriority="high" />
-        <link rel="preload" as="image" href="/IMG_3835.JPG" type="image/jpeg" fetchpriority="high" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-      </>
-    )}
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/svg+xml" href="/icon_naturerota.svg" />
     <link rel="apple-touch-icon" href="/icon_naturerota.svg" />
     <link rel="mask-icon" href="/icon_naturerota.svg" color="#123A2B" />
     
-    <!-- Google Fonts - Otimizado com font-display: swap e carregamento assíncrono -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
       as="style"
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;600;700&display=swap"
-      media="print"
-      onload="this.media='all'; this.onload=null;"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
       <link
@@ -134,23 +108,15 @@ const {
       />
     </noscript>
 
-    <!-- Google tag (gtag.js) - Carregar após interação do usuário -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KWR7HV8NS"></script>
     <script is:inline>
-      window.addEventListener('load', function() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-9KWR7HV8NS';
-        document.head.appendChild(script);
-        
-        script.onload = function() {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-9KWR7HV8NS');
-        };
-      });
-    </script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-9KWR7HV8NS');
+    </script>
   </head>
   <body class="min-h-screen text-gray-900 antialiased" style="background-color: #FFF8F2;">
     <!-- Google Tag Manager (noscript) -->
@@ -164,7 +130,7 @@ const {
     /></noscript>
     <!-- End Meta Pixel Code (noscript) -->
 
-    {!hideNavigation && <NavbarDemo client:idle />}
+    {!hideNavigation && <NavbarDemo client:load />}
 
     <main>
       <slot />
@@ -195,12 +161,12 @@ const {
             <h3 class="font-bold font-sans text-gray-900 mb-4">Redes Sociais</h3>
             <ul class="space-y-2">
               <li>
-                <SocialLink client:idle platform="instagram" url="https://instagram.com/naturerota" className="text-gray-600 hover:text-gray-900">
+                <SocialLink client:load platform="instagram" url="https://instagram.com/naturerota" className="text-gray-600 hover:text-gray-900">
                   Instagram
                 </SocialLink>
               </li>
               <li>
-                <SocialLink client:idle platform="youtube" url="https://www.youtube.com/@naturerota" className="text-gray-600 hover:text-gray-900">
+                <SocialLink client:load platform="youtube" url="https://www.youtube.com/@naturerota" className="text-gray-600 hover:text-gray-900">
                   YouTube
                 </SocialLink>
               </li>
@@ -253,4 +219,3 @@ const {
     )}
   </body>
 </html>
-

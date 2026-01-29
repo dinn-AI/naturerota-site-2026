@@ -78,7 +78,7 @@ import OptimizedImage from './OptimizedImage.astro';
       <!-- Botões de Redes Sociais -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-12">
         <SocialLink 
-          client:idle
+          client:load
           platform="youtube"
           url="https://www.youtube.com/@naturerota"
           className="btn-secondary inline-flex items-center gap-3"
@@ -90,7 +90,7 @@ import OptimizedImage from './OptimizedImage.astro';
         </SocialLink>
         
         <SocialLink
-          client:idle
+          client:load
           platform="instagram"
           url="https://instagram.com/naturerota"
           className="btn-secondary inline-flex items-center gap-3"
@@ -102,7 +102,7 @@ import OptimizedImage from './OptimizedImage.astro';
         </SocialLink>
       </div>
       
-      <GalleryGrid client:visible />
+      <GalleryGrid client:load />
     </div>
   </div>
 </section>
