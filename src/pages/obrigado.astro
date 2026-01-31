@@ -101,4 +101,13 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </div>
   </section>
+  
+  <!-- Google tag (gtag.js) event - Purchase Conversion -->
+  <script is:inline>
+    if (typeof window.gtag === 'function') {
+      gtag('event', 'purchase', {
+        // Parâmetros do evento de compra
+      });
+    }
+  </script>
 </Layout>
