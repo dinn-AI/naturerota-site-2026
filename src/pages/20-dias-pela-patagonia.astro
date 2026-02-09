@@ -14,35 +14,40 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
 >
   <!-- Hero -->
   <section class="relative overflow-visible" style="background-color: #87A48E;">
-    <div class="relative container mx-auto px-4 py-16 md:py-24">
-      <div class="max-w-4xl mx-auto text-center">
-        <p class="text-white/90 text-sm md:text-base font-sans mb-3 tracking-wide">
-          EBOOK • ROTEIRO COMPLETO • Pernoites 0800
-        </p>
-        <h1 class="text-white font-serif font-semibold text-3xl md:text-5xl leading-tight">
-          Viaje 20 Dias pela Patagônia Sem Medo de Erros, Gastos Exagerados ou Pernoites Incertos
-        </h1>
-        <p class="mt-6 text-white/90 text-lg md:text-xl leading-relaxed">
-          Roteiro passo a passo até Ushuaia, economizando milhares em hospedagem, evitando multas na fronteira e dormindo de graça nos melhores pontos — testado e aprovado por nós.
-        </p>
+    <div class="relative container mx-auto px-4 py-16 md:py-20 lg:py-24">
+      <!-- Layout responsivo: empilhado em mobile, 2 colunas em desktop -->
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        
+        <!-- Coluna da esquerda: Texto e CTA -->
+        <div class="text-left order-1 lg:order-1">
+          <p class="text-white/90 text-sm md:text-base font-sans mb-3 tracking-wide">
+            EBOOK • ROTEIRO COMPLETO • Pernoites 0800
+          </p>
+          <h1 class="text-white font-serif font-semibold text-3xl md:text-4xl lg:text-5xl leading-tight">
+            Viaje 20 Dias pela Patagônia Sem Medo de Erros, Gastos Exagerados ou Pernoites Incertos
+          </h1>
+          <p class="mt-6 text-white/90 text-lg md:text-xl leading-relaxed">
+            Roteiro passo a passo até Ushuaia, economizando milhares em hospedagem, evitando multas na fronteira e dormindo de graça nos melhores pontos — testado e aprovado por nós.
+          </p>
 
-        <div class="mt-10 flex justify-center">
-          <a
-            href={checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-primary inline-flex items-center justify-center text-center"
-          >
-            QUERO VIAJAR SEGURO E ECONOMIZAR AGORA
-          </a>
+          <div class="mt-8 lg:mt-10 mb-8 lg:mb-0">
+            <a
+              href={checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary inline-flex items-center justify-center text-center w-full sm:w-auto"
+            >
+              QUERO ECONOMIZAR AGORA
+            </a>
+          </div>
         </div>
 
-        <!-- Mockup do ebook (metade no hero, metade sobre a próxima seção) -->
-        <div class="mt-12 flex justify-center -mb-24 md:-mb-32">
+        <!-- Coluna da direita: Mockup do ebook -->
+        <div class="flex justify-center lg:justify-end order-2 lg:order-2">
           <img
             src="/avif/public/Ebook_ushuaia/Books.avif"
             alt="Mockup do ebook 20 dias pela Patagônia"
-            class="w-full max-w-xl md:max-w-2xl h-auto drop-shadow-2xl"
+            class="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-auto drop-shadow-2xl"
             loading="eager"
             decoding="async"
           />
@@ -52,7 +57,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
   </section>
 
   <!-- Seção Prova Social: Números e Credibilidade -->
-  <section class="pt-28 pb-12 md:pt-40 bg-white">
+  <section class="pt-16 pb-12 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <!-- Números de Credibilidade -->
@@ -125,35 +130,15 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
     </div>
   </section>
 
-  <!-- Seção 1: Identificação e promessa -->
-  <section class="pt-28 pb-16 md:pt-40" style="background-color: #FFF8F2;">
+  <!-- Seção 1: Vídeo -->
+  <section class="py-16" style="background-color: #FFF8F2;">
     <div class="container mx-auto px-4">
-      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-        <div>
-          <h2 class="heading-primary mb-6">
-            Você sonha em chegar até Ushuaia, mas trava quando pensa nos custos, na documentação e nos pernoites?
-          </h2>
-          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
-            <p>
-              <strong>Nós sentimos exatamente o mesmo.</strong> O medo de cometer erros caros, o receio de ser parado pela polícia argentina sem a documentação certa, a insegurança de não saber onde dormir de forma segura e gratuita...
-            </p>
-            <p>
-              Quase desistimos antes de começar. Mas decidimos ir — e transformamos essa jornada em um roteiro completo para você fazer o mesmo <strong>sem os erros que quase cometemos</strong>.
-            </p>
-            <p>
-              Somos <strong>Renan e Millena</strong> (e a Ayla), do canal <strong>Naturerota</strong>. Rodamos <strong>8.500 quilômetros</strong> pela Patagônia em 20 dias.
-            </p>
-            <p class="text-xl font-semibold" style="color:#123A2B;">
-              E o melhor? Não gastamos 1 real com hotéis ou Airbnb.
-            </p>
-          </div>
-        </div>
-
+      <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-          <p class="text-sm font-sans text-gray-600 mb-4">
-            📹 Veja um pedacinho da nossa jornada
-          </p>
-          <div class="aspect-video rounded-xl overflow-hidden bg-gray-100">
+          <h2 class="text-2xl md:text-3xl font-serif font-semibold mb-4 text-center" style="color:#123A2B;">
+            📹 Veja como rodamos 8.500 km pela Patagônia sem gastar 1 real em hotéis
+          </h2>
+          <div class="aspect-video rounded-xl overflow-hidden bg-gray-100 mt-6">
             <iframe
               class="w-full h-full"
               src="https://www.youtube-nocookie.com/embed/CE4fW_Zxz08?rel=0"
@@ -163,14 +148,9 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
               allowfullscreen
             ></iframe>
           </div>
-          <div class="mt-6 space-y-3 text-gray-700">
-            <p class="text-base leading-relaxed">
-              Dormimos em postos de combustível (o famoso 0800), campings selvagens e dentro da nossa barraca.
-            </p>
-            <p class="text-base leading-relaxed">
-              E agora, compilamos <strong>tudo</strong> — cada coordenada, cada custo e cada segredo — neste Ebook para você viver o mesmo, sem medo de cometer erros caros.
-            </p>
-          </div>
+          <p class="mt-6 text-center text-gray-700 text-lg leading-relaxed">
+            <strong>Somos Renan e Millena</strong>, do canal Naturerota. Compilamos cada coordenada, cada custo e cada segredo desta viagem neste guia completo.
+          </p>
         </div>
       </div>
     </div>
@@ -189,62 +169,47 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
               Não é apenas um livro. É o <strong>mapa completo da sua liberdade na estrada</strong> — com cada detalhe que você precisa para transformar o sonho em realidade.
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="rounded-2xl border-2 border-gray-200 p-6 hover:border-[#87A48E] transition-colors">
-                <div class="flex items-start gap-3 mb-3">
-                  <svg class="w-6 h-6 mt-1 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl bg-white border-2 border-gray-200 p-5 hover:border-[#87A48E] transition-colors">
+                <div class="flex items-center gap-3">
+                  <svg class="w-6 h-6 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                   </svg>
-                  <h3 class="text-xl font-serif font-semibold" style="color:#123A2B;">Roteiro dia a dia pronto</h3>
+                  <h3 class="text-lg font-semibold" style="color:#123A2B;">Roteiro dia a dia completo</h3>
                 </div>
-                <p class="text-gray-700 leading-relaxed">
-                  <strong>Sem ter que montar nada no Google Maps.</strong> Você já recebe o caminho completo de 20 dias traçado, testado e validado — é só seguir.
-                </p>
               </div>
-              <div class="rounded-2xl border-2 border-gray-200 p-6 hover:border-[#87A48E] transition-colors">
-                <div class="flex items-start gap-3 mb-3">
-                  <svg class="w-6 h-6 mt-1 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="rounded-xl bg-white border-2 border-gray-200 p-5 hover:border-[#87A48E] transition-colors">
+                <div class="flex items-center gap-3">
+                  <svg class="w-6 h-6 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <h3 class="text-xl font-serif font-semibold" style="color:#123A2B;">Planilha financeira real</h3>
+                  <h3 class="text-lg font-semibold" style="color:#123A2B;">Planilha com custos reais</h3>
                 </div>
-                <p class="text-gray-700 leading-relaxed">
-                  <strong>Saiba exatamente quanto gastar por dia.</strong> Com custos reais de combustível, alimentação e câmbio, você planeja o orçamento sem surpresas.
-                </p>
               </div>
-              <div class="rounded-2xl border-2 border-gray-200 p-6 hover:border-[#87A48E] transition-colors">
-                <div class="flex items-start gap-3 mb-3">
-                  <svg class="w-6 h-6 mt-1 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="rounded-xl bg-white border-2 border-gray-200 p-5 hover:border-[#87A48E] transition-colors">
+                <div class="flex items-center gap-3">
+                  <svg class="w-6 h-6 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <h3 class="text-xl font-serif font-semibold" style="color:#123A2B;">Mapa dos pernoites gratuitos</h3>
+                  <h3 class="text-lg font-semibold" style="color:#123A2B;">GPS de pernoites gratuitos</h3>
                 </div>
-                <p class="text-gray-700 leading-relaxed">
-                  <strong>Economize até R$ 8.000 em hospedagem.</strong> Coordenadas GPS exatas de postos 0800 e campings selvagens seguros — evite perrengue e durma tranquilo.
-                </p>
               </div>
-              <div class="rounded-2xl border-2 border-gray-200 p-6 hover:border-[#87A48E] transition-colors">
-                <div class="flex items-start gap-3 mb-3">
-                  <svg class="w-6 h-6 mt-1 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="rounded-xl bg-white border-2 border-gray-200 p-5 hover:border-[#87A48E] transition-colors">
+                <div class="flex items-center gap-3">
+                  <svg class="w-6 h-6 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
-                  <h3 class="text-xl font-serif font-semibold" style="color:#123A2B;">Documentação e segurança</h3>
+                  <h3 class="text-lg font-semibold" style="color:#123A2B;">Documentação obrigatória</h3>
                 </div>
-                <p class="text-gray-700 leading-relaxed">
-                  <strong>Viaje sem multas nem problemas de fronteira.</strong> Checklist completo com tudo que é obrigatório levar no carro (carta verde, triângulo duplo, extintor e mais).
-                </p>
               </div>
-              <div class="rounded-2xl border-2 border-gray-200 p-6 md:col-span-2 hover:border-[#87A48E] transition-colors">
-                <div class="flex items-start gap-3 mb-3">
-                  <svg class="w-6 h-6 mt-1 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="rounded-xl bg-white border-2 border-gray-200 p-5 md:col-span-2 hover:border-[#87A48E] transition-colors">
+                <div class="flex items-center gap-3">
+                  <svg class="w-6 h-6 shrink-0" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
-                  <h3 class="text-xl font-serif font-semibold" style="color:#123A2B;">Segredos das trilhas imperdíveis</h3>
+                  <h3 class="text-lg font-semibold" style="color:#123A2B;">Dicas para Fitz Roy, Torres del Paine e Perito Moreno</h3>
                 </div>
-                <p class="text-gray-700 leading-relaxed">
-                  <strong>Aproveite o melhor da Patagônia sem cometer erros de novato.</strong> Dicas práticas para Monte Fitz Roy, Torres del Paine, Perito Moreno e mais — horários ideais, equipamentos necessários e como evitar perrengues.
-                </p>
               </div>
             </div>
           </div>
@@ -258,159 +223,6 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
               decoding="async"
             />
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seção Comparativa: Por que este guia é diferente -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="heading-primary mb-6 text-center">
-          Por que este guia é diferente?
-        </h2>
-        <p class="text-lg text-gray-700 leading-relaxed text-center mb-12 max-w-3xl mx-auto">
-          Não é só mais um roteiro turístico. É um manual completo baseado na nossa experiência real de quem viveu cada quilômetro, enfrentou cada desafio e economizou milhares de reais.
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Outros guias -->
-          <div class="rounded-2xl bg-gray-50 p-6 border-2 border-gray-200">
-            <div class="text-center mb-4">
-              <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Outros Guias</p>
-            </div>
-            <ul class="space-y-3">
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Só listam lugares turísticos</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Não informam custos reais</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Sem coordenadas de pernoites</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Informações genéricas</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Não incluem documentação necessária</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Nosso guia (destacado) -->
-          <div class="rounded-2xl p-6 border-4 shadow-xl relative" style="background: linear-gradient(135deg, #87A48E 0%, #A4D0AF 100%); border-color: #123A2B;">
-            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <span class="bg-brand-green text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wide">
-                Nosso Guia
-              </span>
-            </div>
-            <div class="text-center mb-4 mt-2">
-              <p class="text-sm font-semibold text-white uppercase tracking-wide">20 Dias pela Patagônia</p>
-            </div>
-            <ul class="space-y-3">
-              <li class="flex items-start gap-2 text-white">
-                <svg class="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong>Roteiro dia a dia completo</strong></span>
-              </li>
-              <li class="flex items-start gap-2 text-white">
-                <svg class="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong>Planilha com custos reais</strong></span>
-              </li>
-              <li class="flex items-start gap-2 text-white">
-                <svg class="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong>GPS de pernoites gratuitos</strong></span>
-              </li>
-              <li class="flex items-start gap-2 text-white">
-                <svg class="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong>Testado e vivido por nós</strong></span>
-              </li>
-              <li class="flex items-start gap-2 text-white">
-                <svg class="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span><strong>Checklist documentação completa</strong></span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Contratar agência -->
-          <div class="rounded-2xl bg-gray-50 p-6 border-2 border-gray-200">
-            <div class="text-center mb-4">
-              <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Agências de Viagem</p>
-            </div>
-            <ul class="space-y-3">
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Custos altíssimos (R$ 15k+)</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Roteiro engessado</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Sem liberdade na estrada</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Experiência "turística"</span>
-              </li>
-              <li class="flex items-start gap-2 text-gray-600">
-                <svg class="w-5 h-5 mt-0.5 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                <span>Não ensina autonomia</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- CTA Intermediário -->
-        <div class="mt-12 text-center">
-          <a
-            href={checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-primary inline-flex items-center justify-center text-center"
-          >
-            GARANTIR MEU GUIA COMPLETO AGORA
-          </a>
-          <p class="mt-3 text-gray-600 text-sm">
-            Mais de 8.500 km de experiência compilados para você
-          </p>
         </div>
       </div>
     </div>
@@ -481,19 +293,10 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
     <div class="container mx-auto px-4">
       <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div>
-          <h2 class="heading-primary mb-6">Quanto vale dormir 20 noites de graça?</h2>
-          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
-            <p>
-              Uma única noite em hotel simples em El Calafate ou Ushuaia custa em média <strong>R$ 400</strong>. Em 20 dias, você gastaria <strong>R$ 8.000</strong> só em hospedagem.
-            </p>
+          <h2 class="heading-primary mb-6">Investimento que se paga sozinho</h2>
+          <div class="text-gray-700 text-xl leading-relaxed">
             <p>
               <strong>Usando apenas 1 coordenada de pernoite gratuito deste guia, você já economiza 160x o valor do investimento.</strong>
-            </p>
-            <p>
-              E tem mais: você evita multas (que podem chegar a R$ 1.000+), não se perde na estrada e não corre o risco de ficar sem lugar para dormir.
-            </p>
-            <p class="text-xl font-semibold" style="color:#123A2B;">
-              Por isso, o guia completo + 4 bônus estão hoje por um valor simbólico:
             </p>
           </div>
         </div>
@@ -526,7 +329,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
               rel="noopener noreferrer"
               class="btn-primary inline-flex items-center justify-center text-center"
             >
-              COMEÇAR MINHA AVENTURA NA PATAGÔNIA
+              QUERO ECONOMIZAR AGORA
             </a>
             <p class="text-sm text-gray-600 text-center">
               ✓ Acesso imediato por e-mail • ✓ PDF para baixar e imprimir
@@ -551,155 +354,53 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
     </div>
   </section>
 
-  <!-- Seção 5: Bônus -->
+  <!-- Seção 5: O que está incluído -->
   <section class="py-16" style="background-color: #FFF8F2;">
     <div class="container mx-auto px-4">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="heading-primary mb-4 text-center">
-          Bônus Exclusivos Inclusos
-        </h2>
-        <p class="text-lg text-gray-700 leading-relaxed text-center mb-12 max-w-3xl mx-auto">
-          Além do guia completo, você recebe gratuitamente materiais extras para garantir que sua viagem seja perfeita do início ao fim.
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Bônus 1 -->
-          <div class="bg-white rounded-2xl shadow-md p-8 relative">
-            <div class="absolute -top-3 -right-3 bg-brand-green text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
-              Bônus #1
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <svg class="w-12 h-12" style="color:#87A48E;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">
-                  Checklist Completo de Documentação
-                </h3>
-                <p class="text-gray-700 leading-relaxed mb-3">
-                  Lista pronta para imprimir com <strong>todos os itens obrigatórios</strong> para o carro e documentos pessoais (carta verde, triângulo duplo, extintor, seguro, etc.).
-                </p>
-                <p class="text-sm font-semibold" style="color:#87A48E;">
-                  Valor: R$ 47,00
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bônus 2 -->
-          <div class="bg-white rounded-2xl shadow-md p-8 relative">
-            <div class="absolute -top-3 -right-3 bg-brand-green text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
-              Bônus #2
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <svg class="w-12 h-12" style="color:#87A48E;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">
-                  Planilha de Custos Editável
-                </h3>
-                <p class="text-gray-700 leading-relaxed mb-3">
-                  Arquivo editável para você <strong>adaptar ao seu orçamento</strong>, com base nos nossos gastos reais (combustível, alimentação, passeios e câmbio).
-                </p>
-                <p class="text-sm font-semibold" style="color:#87A48E;">
-                  Valor: R$ 37,00
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bônus 3 -->
-          <div class="bg-white rounded-2xl shadow-md p-8 relative">
-            <div class="absolute -top-3 -right-3 bg-brand-green text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
-              Bônus #3
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <svg class="w-12 h-12" style="color:#87A48E;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">
-                  Coordenadas GPS dos Pernoites
-                </h3>
-                <p class="text-gray-700 leading-relaxed mb-3">
-                  <strong>Localizações exatas (GPS)</strong> de todos os postos 0800, campings selvagens e pontos seguros onde dormimos — copie direto para o GPS do carro.
-                </p>
-                <p class="text-sm font-semibold" style="color:#87A48E;">
-                  Valor: Inestimável
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bônus 4 -->
-          <div class="bg-white rounded-2xl shadow-md p-8 relative">
-            <div class="absolute -top-3 -right-3 bg-brand-green text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
-              Bônus #4
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <svg class="w-12 h-12" style="color:#87A48E;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-serif font-semibold mb-2" style="color:#123A2B;">
-                  Guia de Sobrevivência no Clima Extremo
-                </h3>
-                <p class="text-gray-700 leading-relaxed mb-3">
-                  Dicas práticas de <strong>como lidar com frio intenso, vento e chuva</strong> na Patagônia — o que levar, como se preparar e evitar desconforto.
-                </p>
-                <p class="text-sm font-semibold" style="color:#87A48E;">
-                  Valor: R$ 27,00
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Total de valor -->
-        <div class="mt-10 bg-white rounded-2xl shadow-md p-8 text-center">
-          <p class="text-gray-600 text-lg mb-2">Valor total se vendidos separadamente:</p>
-          <p class="text-3xl md:text-4xl font-serif font-semibold mb-4" style="color:#123A2B;">
-            R$ 208,90
-          </p>
-          <p class="text-xl text-gray-700">
-            <strong>Hoje, você leva tudo por apenas R$ 49,90</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seção Garantia -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <div class="rounded-2xl shadow-xl p-8 md:p-12 text-center" style="background: linear-gradient(135deg, #87A48E 0%, #A4D0AF 100%);">
-          <div class="flex justify-center mb-6">
-            <div class="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center">
-              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        <h2 class="heading-primary mb-8 text-center">
+          O que está incluído no ebook
+        </h2>
+
+        <div class="bg-white rounded-2xl shadow-md p-8 md:p-10">
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 shrink-0 mt-0.5" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
-            </div>
-          </div>
-          <h2 class="text-3xl md:text-4xl font-serif font-semibold mb-4 text-white">
-            Garantia de 7 Dias Sem Riscos
-          </h2>
-          <p class="text-white/95 text-lg md:text-xl leading-relaxed mb-6">
-            Se por qualquer motivo você não ficar satisfeito com o guia, basta enviar um e-mail em até 7 dias e devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracia.
-          </p>
-          <p class="text-white/90 text-base">
-            <strong>O risco é todo nosso.</strong> Você só tem a ganhar.
-          </p>
+              <span class="text-lg text-gray-700">Roteiro completo de 20 dias</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 shrink-0 mt-0.5" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-lg text-gray-700">Coordenadas GPS de pernoites gratuitos</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 shrink-0 mt-0.5" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-lg text-gray-700">Planilha com custos reais da viagem</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 shrink-0 mt-0.5" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-lg text-gray-700">Checklist de documentação obrigatória</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 shrink-0 mt-0.5" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-lg text-gray-700">Dicas práticas para clima extremo</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 shrink-0 mt-0.5" style="color:#123A2B;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-lg text-gray-700">Guia completo para Fitz Roy, Torres del Paine e Perito Moreno</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -720,22 +421,16 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
           />
         </div>
         <div>
-          <h2 class="heading-primary mb-6">Por que confiar em nós?</h2>
-          <div class="space-y-5 text-gray-700 text-lg leading-relaxed">
+          <h2 class="heading-primary mb-6">Quem somos</h2>
+          <div class="text-gray-700 text-xl leading-relaxed">
             <p>
-              Somos <strong>Renan, Millena e Ayla</strong> — uma família que trocou o convencional pela estrada.
+              Oi, somos o Renan e a Millena.
             </p>
-            <p>
-              Já transformamos uma Kombi em casa móvel (a Catarina), rodamos milhares de quilômetros pelo Brasil e América do Sul, e vivemos a estrada na pele — com todos os perrengues, aprendizados e vitórias que isso traz.
+            <p class="mt-4">
+              Muita gente acha que ir pra Patagônia custa 20 mil reais. Nós fomos e não gastamos 1 real com hotel.
             </p>
-            <p>
-              No <strong>canal Naturerota</strong>, compartilhamos a realidade nua e crua de viver viajando. Não romantizamos — <strong>mostramos o que funciona de verdade</strong>.
-            </p>
-            <p>
-              Este guia não é teoria. É o resultado de <strong>20 dias reais na estrada</strong>, com cada erro corrigido, cada coordenada validada e cada custo documentado.
-            </p>
-            <p class="text-xl font-semibold" style="color:#123A2B;">
-              Compilamos tudo isso para você fazer a mesma rota — só que melhor.
+            <p class="mt-4">
+              Se você quer as coordenadas exatas de onde dormimos e o checklist pra não ser parado pela polícia, esse guia é pra você.
             </p>
           </div>
         </div>
@@ -814,27 +509,6 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
           </details>
         </div>
 
-        <!-- Reforço Emocional Final -->
-        <div class="mt-16 bg-white rounded-2xl shadow-md p-8 md:p-10">
-          <h3 class="text-2xl md:text-3xl font-serif font-semibold mb-6 text-center" style="color:#123A2B;">
-            Imagine-se vivendo essa liberdade...
-          </h3>
-          <div class="space-y-4 text-gray-700 text-lg leading-relaxed max-w-3xl mx-auto">
-            <p>
-              Você acorda em um posto de combustível no meio da Patagônia, abre a porta do carro e sente o vento gelado no rosto. Ao longe, montanhas cobertas de neve refletem o sol da manhã.
-            </p>
-            <p>
-              <strong>Você não pagou 1 real de hotel.</strong> Não passou perrengue procurando lugar para dormir. Não se perdeu na estrada. Não levou multa na fronteira.
-            </p>
-            <p>
-              Porque você tinha o mapa completo, as coordenadas exatas, a documentação certa e a confiança de quem sabe exatamente o que está fazendo.
-            </p>
-            <p class="text-xl font-semibold" style="color:#123A2B;">
-              Essa pode ser a SUA história. E ela começa agora.
-            </p>
-          </div>
-        </div>
-
         <div class="mt-10 text-center">
           <a
             href={checkoutUrl}
@@ -842,7 +516,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
             rel="noopener noreferrer"
             class="btn-primary inline-flex items-center justify-center text-center text-lg px-10 py-4"
           >
-            SIM! QUERO REALIZAR ESSE SONHO
+            QUERO ECONOMIZAR AGORA
           </a>
           <p class="mt-4 text-gray-600">
             Por apenas 7x de R$ 8,16 (ou R$ 49,90 à vista)
