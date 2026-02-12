@@ -217,5 +217,45 @@ const {
       </div>
     </footer>
     )}
+
+    <!-- Script para capturar UTMs e repassar para checkout Hotmart -->
+    <script is:inline>
+      /**
+       * Script para capturar parâmetros da URL e repassar para os botões da Hotmart
+       */
+      document.addEventListener('DOMContentLoaded', function() {
+          // Lista de parâmetros que você quer capturar
+          const parameters = ['src', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+          
+          const urlParams = new URLSearchParams(window.location.search);
+          const paramsToAdd = {};
+
+          // Verifica quais parâmetros estão presentes na URL atual
+          parameters.forEach(param => {
+              if (urlParams.has(param)) {
+                  paramsToAdd[param] = urlParams.get(param);
+              }
+          });
+
+          // Se não houver parâmetros, não faz nada
+          if (Object.keys(paramsToAdd).length === 0) return;
+
+          // Procura todos os links que levam ao checkout da Hotmart
+          const links = document.querySelectorAll('a[href*="hotmart.com"]');
+
+          links.forEach(link => {
+              try {
+                  const url = new URL(link.href);
+                  // Adiciona cada parâmetro capturado ao link do botão
+                  Object.keys(paramsToAdd).forEach(key => {
+                      url.searchParams.set(key, paramsToAdd[key]);
+                  });
+                  link.href = url.toString();
+              } catch (e) {
+                  console.error('Erro ao processar link:', e);
+              }
+          });
+      });
+    </script>
   </body>
 </html>
