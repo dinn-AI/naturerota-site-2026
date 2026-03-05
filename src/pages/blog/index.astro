@@ -5,6 +5,9 @@ import { sanityClient, urlFor } from '../../lib/sanity';
 // Buscar todos os posts do Sanity ordenados por data de publicação
 let allPosts: any[] = [];
 try {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 25000);
+  
   allPosts = await sanityClient.fetch(
     `*[_type == "post"] | order(publishedAt desc) {
       _id,
@@ -17,10 +20,15 @@ try {
         name,
         image
       }
-    }`
+    }`,
+    {},
+    { signal: controller.signal }
   );
+  
+  clearTimeout(timeoutId);
 } catch (err) {
   // Se o Sanity estiver indisponível/mal configurado, não derruba a página
+  console.warn('Aviso: Não foi possível carregar posts do Sanity:', err instanceof Error ? err.message : 'Erro desconhecido');
   allPosts = [];
 }
 

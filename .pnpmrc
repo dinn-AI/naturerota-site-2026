@@ -1,0 +1,6 @@
+shamefully-hoist=true
+fetch-timeout=120000
+fetch-retry-mintimeout=20000
+fetch-retry-maxtimeout=120000
+fetch-retry=5
+use-node-version=file

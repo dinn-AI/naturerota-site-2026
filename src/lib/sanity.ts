@@ -17,6 +17,9 @@ export const sanityClient = createClient({
   apiVersion,
   useCdn: true, // Usa CDN para produção
   token, // Token opcional para leitura/escrita
+  // Timeouts explícitos para evitar travamentos
+  timeout: 30000, // 30 segundos para operações normais
+  requestTagPrefix: 'naturerota',
 });
 
 const builder = imageUrlBuilder(sanityClient);

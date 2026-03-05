@@ -1,0 +1,14 @@
+
+> superior-shepherd@0.0.1 dev /Users/renancavalheiro/Documents/Naturerota_site_2026
+> astro dev
+
+10:43:33 [types] Generated 0ms
+10:43:33 [content] Syncing content
+10:43:33 [content] Synced content
+
+ astro  v5.18.0 ready in 109 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+10:43:33 watching for file changes...

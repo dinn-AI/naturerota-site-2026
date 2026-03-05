@@ -22,14 +22,22 @@ interface SlideProps {
   index: number;
   current: number;
   handleSlideClick: (index: number) => void;
+  onPreviousClick: () => void;
+  onNextClick: () => void;
+  slidesLength: number;
 }
 
-const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
+const Slide = ({ slide, index, current, handleSlideClick, onPreviousClick, onNextClick, slidesLength }: SlideProps) => {
   const slideRef = useRef<HTMLLIElement>(null);
 
   const xRef = useRef(0);
   const yRef = useRef(0);
   const frameRef = useRef<number>();
+  
+  // Touch/Swipe tracking
+  const touchStartXRef = useRef(0);
+  const touchStartYRef = useRef(0);
+  const isSwiping = useRef(false);
 
   useEffect(() => {
     const animate = () => {
@@ -67,6 +75,48 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
     yRef.current = 0;
   };
 
+  // Touch handlers para swipe em mobile
+  const handleTouchStart = (event: React.TouchEvent) => {
+    if (event.touches.length === 0) return;
+    touchStartXRef.current = event.touches[0].clientX;
+    touchStartYRef.current = event.touches[0].clientY;
+    isSwiping.current = true;
+  };
+
+  const handleTouchMove = (event: React.TouchEvent) => {
+    if (!isSwiping.current || event.touches.length === 0) return;
+    
+    const currentX = event.touches[0].clientX;
+    const currentY = event.touches[0].clientY;
+    const deltaX = currentX - touchStartXRef.current;
+    const deltaY = currentY - touchStartYRef.current;
+    
+    // Se o movimento for mais vertical que horizontal, não é swipe horizontal
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      isSwiping.current = false;
+      return;
+    }
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent) => {
+    if (!isSwiping.current) return;
+    
+    const endX = event.changedTouches[0]?.clientX || touchStartXRef.current;
+    const deltaX = endX - touchStartXRef.current;
+    const minSwipeDistance = 50; // Mínimo de pixels para considerar um swipe
+    
+    // Swipe para direita (voltar ao slide anterior)
+    if (deltaX > minSwipeDistance) {
+      onPreviousClick();
+    }
+    // Swipe para esquerda (ir para próximo slide)
+    else if (deltaX < -minSwipeDistance) {
+      onNextClick();
+    }
+    
+    isSwiping.current = false;
+  };
+
   const imageLoaded = (event: React.SyntheticEvent<HTMLImageElement>) => {
     event.currentTarget.style.opacity = "1";
   };
@@ -79,10 +129,13 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
     <div className="perspective-distant transform-3d">
       <li
         ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10 "
+        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10 cursor-grab active:cursor-grabbing"
         onClick={() => handleSlideClick(index)}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{
           transform:
             current !== index
@@ -90,6 +143,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
               : "scale(1) rotateX(0deg)",
           transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
           transformOrigin: "bottom",
+          touchAction: "pan-y", // Permitir swipe horizontal, bloquear vertical
         }}
       >
         <div
@@ -218,6 +272,9 @@ export default function Carousel({ slides }: CarouselProps) {
             index={index}
             current={current}
             handleSlideClick={handleSlideClick}
+            onPreviousClick={handlePreviousClick}
+            onNextClick={handleNextClick}
+            slidesLength={slides.length}
           />
         ))}
       </ul>

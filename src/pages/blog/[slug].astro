@@ -5,17 +5,25 @@ import { sanityClient, urlFor } from '../../lib/sanity';
 // Gerar rotas estáticas para todos os posts
 export async function getStaticPaths() {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 25000);
+    
     const posts = await sanityClient.fetch(
       `*[_type == "post"] {
         "slug": slug.current
-      }`
+      }`,
+      {},
+      { signal: controller.signal }
     );
+    
+    clearTimeout(timeoutId);
 
     return posts.map((post: any) => ({
       params: { slug: post.slug },
     }));
   } catch (err) {
     // Se o Sanity estiver indisponível/mal configurado, evita quebrar o build
+    console.warn('Aviso: Não foi possível gerar rotas de posts:', err instanceof Error ? err.message : 'Erro desconhecido');
     return [];
   }
 }
@@ -25,6 +33,9 @@ const { slug } = Astro.params;
 
 let post: any = null;
 try {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 25000);
+  
   post = await sanityClient.fetch(
     `*[_type == "post" && slug.current == $slug][0] {
       _id,
@@ -50,9 +61,13 @@ try {
         }
       }
     }`,
-    { slug }
+    { slug },
+    { signal: controller.signal }
   );
+  
+  clearTimeout(timeoutId);
 } catch (err) {
+  console.warn('Aviso: Não foi possível carregar o post:', err instanceof Error ? err.message : 'Erro desconhecido');
   post = null;
 }
 

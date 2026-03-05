@@ -1,0 +1,37 @@
+
+> superior-shepherd@0.0.1 dev /Users/renancavalheiro/Documents/Naturerota_site_2026
+> astro dev
+
+11:02:30 [types] Generated 0ms
+11:02:30 [content] Syncing content
+11:02:30 [content] Synced content
+
+ astro  v5.18.0 ready in 168 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+11:02:30 watching for file changes...
+11:02:32 [404] /products_cover/Praias para conhecer no Espírito Santo de Motorhome.svg 37ms
+11:02:32 [404] /products_cover/Rota Bahia de Motorhome_ O Guia Completo Para Explorar as Melhores Praias com Liberdade e Segurança.svg 44ms
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+11:02:33 [200] / 105ms
+[BABEL] Note: The code generator has deoptimised the styling of /Users/renancavalheiro/Documents/Naturerota_site_2026/.vite/deps/@astrojs_react_client__js.js?v=0db6cbcf as it exceeds the max of 500KB.
+11:02:34 [404] /products_cover/Praias para conhecer no Espírito Santo de Motorhome.svg 1ms
+11:02:34 [404] /products_cover/Rota Bahia de Motorhome_ O Guia Completo Para Explorar as Melhores Praias com Liberdade e Segurança.svg 0ms
+node:events:486
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: ETIMEDOUT: connection timed out, read
+Emitted 'error' event on ReadStream instance at:
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  errno: -60,
+  code: 'ETIMEDOUT',
+  syscall: 'read'
+}
+
+Node.js v24.8.0
+ ELIFECYCLE  Command failed with exit code 1.

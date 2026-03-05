@@ -1,0 +1,15 @@
+
+> superior-shepherd@0.0.1 dev /Users/renancavalheiro/Documents/Naturerota_site_2026
+> astro dev
+
+10:53:58 [types] Generated 0ms
+10:53:58 [content] Syncing content
+10:53:58 [content] Synced content
+10:53:58 [vite] Port 4321 is in use, trying another one...
+
+ astro  v5.18.0 ready in 115 ms
+
+┃ Local    http://localhost:4322/
+┃ Network  use --host to expose
+
+10:53:58 watching for file changes...

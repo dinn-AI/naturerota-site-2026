@@ -1,0 +1,17 @@
+
+> superior-shepherd@0.0.1 dev /Users/renancavalheiro/Documents/Naturerota_site_2026
+> astro dev
+
+11:15:34 [types] Generated 0ms
+11:15:34 [content] Syncing content
+11:15:34 [content] Synced content
+11:15:34 [vite] Re-optimizing dependencies because vite config has changed
+
+ astro  v5.18.0 ready in 217 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+11:15:34 watching for file changes...
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+11:15:36 [200] / 172ms

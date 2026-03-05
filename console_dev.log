@@ -1,0 +1,33 @@
+
+> superior-shepherd@0.0.1 dev /Users/renancavalheiro/Documents/Naturerota_site_2026
+> astro dev
+
+11:00:05 [types] Generated 0ms
+11:00:05 [content] Syncing content
+11:00:05 [content] Synced content
+
+ astro  v5.18.0 ready in 143 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+11:00:05 watching for file changes...
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+11:00:58 [200] / 115ms
+[BABEL] Note: The code generator has deoptimised the styling of /Users/renancavalheiro/Documents/Naturerota_site_2026/.vite/deps/@astrojs_react_client__js.js?v=1861731e as it exceeds the max of 500KB.
+node:events:486
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: ETIMEDOUT: connection timed out, read
+Emitted 'error' event on ReadStream instance at:
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  errno: -60,
+  code: 'ETIMEDOUT',
+  syscall: 'read'
+}
+
+Node.js v24.8.0
+ ELIFECYCLE  Command failed with exit code 1.

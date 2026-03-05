@@ -18,16 +18,25 @@ interface BlogPost {
 // Buscar os 4 últimos posts publicados no Sanity
 let posts: BlogPost[] = [];
 try {
+  // Usar AbortController para timeout de 25 segundos
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 25000);
+  
   posts = await sanityClient.fetch(
     `*[_type == "post"] | order(publishedAt desc)[0...4] {
       title,
       mainImage,
       slug,
       publishedAt
-    }`
+    }`,
+    {},
+    { signal: controller.signal }
   );
+  
+  clearTimeout(timeoutId);
 } catch (err) {
   // Se o Sanity estiver indisponível/mal configurado, não derruba a página
+  console.warn('Aviso: Não foi possível carregar posts do Sanity:', err instanceof Error ? err.message : 'Erro desconhecido');
   posts = [];
 }
 

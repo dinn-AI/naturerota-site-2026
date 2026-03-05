@@ -1,0 +1,41 @@
+
+> superior-shepherd@0.0.1 dev /Users/renancavalheiro/Documents/Naturerota_site_2026
+> astro dev
+
+11:04:20 [types] Generated 0ms
+11:04:20 [content] Syncing content
+11:04:20 [content] Synced content
+
+ astro  v5.18.0 ready in 115 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+11:04:20 watching for file changes...
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+11:04:21 [200] / 109ms
+11:05:26 [200] / 8ms
+11:06:26 [watch] .vite/deps/_metadata.json
+11:06:26 [watch] .vite/deps/_metadata.json
+11:06:26 [200] / 70ms
+11:06:27 [200] / 7ms
+11:06:27 [404] /products_cover/Praias para conhecer no Espírito Santo de Motorhome.svg 1ms
+11:06:27 [404] /products_cover/Rota Bahia de Motorhome_ O Guia Completo Para Explorar as Melhores Praias com Liberdade e Segurança.svg 0ms
+11:11:12 [watch] CONSOLE_ERRORS_FIXED.md
+11:11:12 [watch] CONSOLE_ERRORS_FIXED.md
+11:11:12 [200] / 26ms
+11:11:12 [200] / 5ms
+11:11:13 [404] /products_cover/Praias para conhecer no Espírito Santo de Motorhome.svg 0ms
+11:11:13 [404] /products_cover/Rota Bahia de Motorhome_ O Guia Completo Para Explorar as Melhores Praias com Liberdade e Segurança.svg 0ms
+11:13:09 [200] / 4ms
+11:13:20 [watch] /src/components/ui/carousel.tsx, /src/styles/global.css
+11:13:20 [watch] src/components/ui/carousel.tsx
+11:13:31 [watch] /src/components/ui/carousel.tsx, /src/styles/global.css
+11:13:31 [watch] src/components/ui/carousel.tsx
+11:13:45 [watch] /src/components/ui/carousel.tsx, /src/styles/global.css
+11:13:45 [watch] src/components/ui/carousel.tsx
+11:13:55 [watch] /src/components/ui/carousel.tsx, /src/styles/global.css
+11:13:55 [watch] src/components/ui/carousel.tsx
+11:15:16 [watch] /src/components/ui/carousel.tsx, /src/styles/global.css
+11:15:16 [watch] src/components/ui/carousel.tsx
+/Users/renancavalheiro/Library/pnpm/pnpm: line 12: 14575 Killed: 9               "$basedir/.tools/pnpm-exe/10.18.1/pnpm" "$@"

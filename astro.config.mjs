@@ -20,11 +20,37 @@ export default defineConfig({
         '@': path.resolve(__dirname, './src'),
       },
     },
+    // Desabilitar cache que pode estar causando problemas
+    cacheDir: false,
+    // Timeouts de arquivo e operações
+    fs: {
+      strict: false,
+      allow: ['/'],
+      // Aumentar timeout para operações de arquivo (padrão é 5000ms)
+      cachedChecks: false,
+    },
+    // Desabilitar algumas otimizações que podem causar timeout
+    build: {
+      minify: false,
+      sourcemap: false,
+    },
+    // Configurações de otimização
+    esbuild: {
+      // Desabilitar transforms que podem causar timeout
+      drop: [],
+    },
   },
 
   image: {
     domains: ['cdn.sanity.io'],
+    // Melhorias para processamento de imagens
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+    },
   },
 
   integrations: [react()],
+  
+  // Output otimizado
+  output: 'static',
 });
