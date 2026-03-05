@@ -13,3 +13,4 @@
 ┃ Network  use --host to expose
 
 10:53:58 watching for file changes...
+/Users/renancavalheiro/Library/pnpm/pnpm: line 12: 11803 Killed: 9               "$basedir/.tools/pnpm-exe/10.18.1/pnpm" "$@"

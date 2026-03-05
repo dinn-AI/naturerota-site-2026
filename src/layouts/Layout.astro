@@ -49,41 +49,6 @@ const {
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <!-- Google Tag Manager -->
-    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-P3XJGXL5');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Meta Pixel Code -->
-    <script is:inline>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '1398654025074894');
-      fbq('track', 'PageView');
-    </script>
-    <!-- End Meta Pixel Code -->
-
-    <!-- TikTok Pixel Code Start -->
-    <script is:inline>
-      !function (w, d, t) {
-        w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-        var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-        ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
-        ttq.load('D6BL7NBC77UBQKG7PF20');
-        ttq.page();
-      }(window, document, 'ttq');
-    </script>
-    <!-- TikTok Pixel Code End -->
 
     <SEO
       title={title}
@@ -120,28 +85,8 @@ const {
         href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;600;700&display=swap"
       />
     </noscript>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KWR7HV8NS"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-9KWR7HV8NS');
-    </script>
   </head>
   <body class="min-h-screen text-gray-900 antialiased" style="background-color: #FFF8F2;">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P3XJGXL5"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-    <!-- Meta Pixel Code (noscript) -->
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1398654025074894&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code (noscript) -->
 
     {!hideNavigation && <NavbarDemo client:load />}
 
@@ -269,6 +214,156 @@ const {
               }
           });
       });
+    </script>
+
+    <!-- ========================================
+         OPTIMIZED THIRD-PARTY SCRIPTS LAZY LOADING
+         ======================================== -->
+    <script is:inline>
+      /**
+       * STRATEGY FOR CORE WEB VITALS OPTIMIZATION:
+       * 
+       * Problem: Third-party scripts (GTM, GA4, Meta Pixel, TikTok) block rendering
+       * and increase INP/TBT by consuming main thread early.
+       * 
+       * Solution: Lazy-load scripts strategically to avoid blocking:
+       * 
+       * 1. GTM, GA4, TikTok: Load after window.load (or requestIdleCallback)
+       *    - These are analytics, not critical for user experience
+       *    - Deferred loading reduces impact on LCP and FCP
+       * 
+       * 2. Meta Pixel: Load on first user interaction (pointerdown/scroll)
+       *    - Lower priority than analytics
+       *    - Only loads if user is actually engaged
+       *    - Fallback: loads after 5 seconds if no interaction
+       * 
+       * 3. All scripts use async loading to prevent blocking
+       * 
+       * Result: Improved LCP, FCP, INP, TBT metrics
+       */
+
+      window._thirdPartyLoaded = false;
+      window._metaPixelLoaded = false;
+
+      function loadAnalytics() {
+        if (window._thirdPartyLoaded) return;
+        window._thirdPartyLoaded = true;
+
+        // ===== GTM (Google Tag Manager) =====
+        (function(w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          d.body.appendChild(j);
+        })(window, document, 'script', 'dataLayer', 'GTM-P3XJGXL5');
+
+        // ===== GA4 (Google Analytics 4) =====
+        var gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-9KWR7HV8NS';
+        document.body.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-9KWR7HV8NS', { 'anonymize_ip': true });
+
+        // ===== TikTok Pixel =====
+        (function(w, d, t) {
+          w.TiktokAnalyticsObject = t;
+          var ttq = w[t] = w[t] || [];
+          ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"];
+          ttq.setAndDefer = function(t, e) {
+            t[e] = function() {
+              t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+            };
+          };
+          for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+          ttq.instance = function(t) {
+            for (var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(e, ttq.methods[n]);
+            return e;
+          };
+          ttq.load = function(e, n) {
+            var r = "https://analytics.tiktok.com/i18n/pixel/events.js", o = n && n.partner;
+            ttq._i = ttq._i || {};
+            ttq._i[e] = [];
+            ttq._i[e]._u = r;
+            ttq._t = ttq._t || {};
+            ttq._t[e] = +new Date();
+            ttq._o = ttq._o || {};
+            ttq._o[e] = n || {};
+            n = document.createElement("script");
+            n.type = "text/javascript";
+            n.async = !0;
+            n.src = r + "?sdkid=" + e + "&lib=" + t;
+            e = document.getElementsByTagName("script")[0];
+            e.parentNode.insertBefore(n, e);
+          };
+          ttq.load('D6BL7NBC77UBQKG7PF20');
+          ttq.page();
+        })(window, document, 'ttq');
+      }
+
+      function loadMetaPixel() {
+        if (window._metaPixelLoaded) return;
+        window._metaPixelLoaded = true;
+
+        document.removeEventListener('pointerdown', loadMetaPixel, true);
+        document.removeEventListener('scroll', loadMetaPixel, true);
+
+        // ===== Meta Pixel (Facebook Events) =====
+        !function(f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function() {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = '2.0';
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+        fbq('init', '1398654025074894');
+        fbq('track', 'PageView');
+      }
+
+      // ===== EXECUTION STRATEGY =====
+      
+      // Load GTM, GA4, TikTok after page load
+      if (document.readyState === 'loading') {
+        window.addEventListener('load', loadAnalytics);
+      } else {
+        // DOM already loaded
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadAnalytics, { timeout: 3000 });
+        } else {
+          setTimeout(loadAnalytics, 1000);
+        }
+      }
+
+      // Load Meta Pixel on first user interaction
+      document.addEventListener('pointerdown', loadMetaPixel, { once: true, capture: true });
+      document.addEventListener('scroll', loadMetaPixel, { once: true, capture: true });
+
+      // Fallback: load Meta Pixel after 5 seconds if no interaction
+      setTimeout(() => {
+        if (!window._metaPixelLoaded) {
+          loadMetaPixel();
+        }
+      }, 5000);
     </script>
   </body>
 </html>
