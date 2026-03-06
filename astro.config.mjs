@@ -39,18 +39,18 @@ export default defineConfig({
       // Desabilitar transforms que podem causar timeout
       drop: [],
     },
+    ssr: {
+      noExternal: [],
+    },
   },
 
   image: {
     domains: ['cdn.sanity.io'],
-    // Melhorias para processamento de imagens
     service: {
       entrypoint: 'astro/assets/services/sharp',
     },
   },
 
   integrations: [react()],
-  
-  // Output otimizado
   output: 'static',
 });

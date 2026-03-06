@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import LazyYouTubeEmbed from '../components/LazyYouTubeEmbed.astro';
 import OptimizedImage from "../components/OptimizedImage.astro";
 
 const checkoutUrl = "https://pay.hotmart.com/T98534013N";
@@ -86,16 +87,7 @@ const checkoutUrl = "https://pay.hotmart.com/T98534013N";
           <p class="text-sm font-sans text-gray-600 mb-4">
             Neste roteiro
           </p>
-          <div class="aspect-video rounded-xl overflow-hidden bg-gray-100">
-            <iframe
-              class="w-full h-full"
-              src="https://www.youtube-nocookie.com/embed/GNdOaR9fW9M?rel=0"
-              title="Bonito em 4 dias - roteiro premium"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
+          <LazyYouTubeEmbed videoId="GNdOaR9fW9M" title="Bonito em 4 dias - roteiro premium" />
         </div>
       </div>
     </div>

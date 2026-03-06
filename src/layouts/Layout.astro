@@ -18,6 +18,8 @@ interface Props {
   videoUrl?: string;
   hideNavigation?: boolean;
   hideFooter?: boolean;
+  /** URL da imagem LCP (hero) para preload e melhoria de Performance (PageSpeed) */
+  preloadLcpImage?: string;
   productData?: {
     name?: string;
     description?: string;
@@ -42,6 +44,7 @@ const {
   videoUrl,
   hideNavigation = false,
   hideFooter = false,
+  preloadLcpImage,
   productData,
 } = Astro.props;
 ---
@@ -70,6 +73,11 @@ const {
     <link rel="apple-touch-icon" href="/icon_naturerota.svg" />
     <link rel="mask-icon" href="/icon_naturerota.svg" color="#123A2B" />
     
+    <!-- Preload LCP image (hero) para Performance / PageSpeed -->
+    {preloadLcpImage && (
+      <link rel="preload" as="image" href={preloadLcpImage} fetchpriority="high" />
+    )}
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -78,6 +86,13 @@ const {
       as="style"
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;600;700&display=swap"
       onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="https://fonts.gstatic.com/s/dmserifdisplay/v21/jizfREFUsXFIH2BjXwM15qZHXgjV41dNgMzG.woff2"
+      type="font/woff2"
+      crossorigin
     />
     <noscript>
       <link

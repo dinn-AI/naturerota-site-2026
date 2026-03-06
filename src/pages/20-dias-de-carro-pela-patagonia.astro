@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import LazyYouTubeEmbed from '../components/LazyYouTubeEmbed.astro';
 import OptimizedImage from "../components/OptimizedImage.astro";
 
 const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
@@ -153,16 +154,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
           <p class="text-sm font-sans text-gray-600 mb-4">
             📹 Veja um pedacinho da nossa jornada
           </p>
-          <div class="aspect-video rounded-xl overflow-hidden bg-gray-100">
-            <iframe
-              class="w-full h-full"
-              src="https://www.youtube-nocookie.com/embed/CE4fW_Zxz08?rel=0"
-              title="Trailer - 20 dias pela Patagônia"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
+          <LazyYouTubeEmbed videoId="CE4fW_Zxz08" title="Trailer - 20 dias pela Patagônia" />
           <div class="mt-6 space-y-3 text-gray-700">
             <p class="text-base leading-relaxed">
               Dormimos em postos de combustível (o famoso 0800), campings selvagens e dentro da nossa barraca.

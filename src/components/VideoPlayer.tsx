@@ -155,6 +155,7 @@ export default function VideoPlayer({
             src={poster}
             alt="Video thumbnail"
             className="w-full h-full object-cover"
+            fetchPriority="high"
           />
         ) : (
           <div className="w-full h-full bg-gray-900 flex items-center justify-center">

@@ -1,0 +1,173 @@
+---
+/**
+ * Lazy YouTube Embed Component
+ * 
+ * Carrega YouTube iframe sob demanda (clique ou scroll)
+ * Reduz payload inicial em ~750KB (script do YouTube + dados)
+ * 
+ * Uso:
+ * <LazyYouTubeEmbed videoId="CE4fW_Zxz08" title="Video Title" />
+ */
+
+interface Props {
+  videoId: string;
+  title?: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}
+
+const { 
+  videoId, 
+  title = "YouTube Video",
+  width = 560,
+  height = 315,
+  className = ""
+} = Astro.props;
+
+const aspectRatio = (height / width) * 100;
+---
+
+<div class={`lazy-youtube-wrapper ${className}`} style={`--aspect-ratio: ${aspectRatio}%`}>
+  <div class="lazy-youtube-placeholder" data-video-id={videoId} role="button" tabindex="0" data-title={title}>
+    <img 
+      src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`}
+      alt={title}
+      loading="lazy"
+      decoding="async"
+      fetchpriority="low"
+      class="lazy-youtube-thumbnail"
+      width="1280"
+      height="720"
+    />
+    <button class="lazy-youtube-button" aria-label={`Play: ${title}`}>
+      <svg viewBox="0 0 68 48" preserveAspectRatio="xMidYMid slice">
+        <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.88,.13,34,0,34,0S12.12,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.12,47.87,34,48,34,48s21.88-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19c1.42-5.31,1.48-16.26,1.48-16.26 S67.94,13.05,66.52,7.74z" fill="currentColor"></path>
+        <path d="M 45,24 27,14 27,34z" fill="white"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  function initLazyYouTube() {
+    document.querySelectorAll('.lazy-youtube-placeholder').forEach((placeholder) => {
+      const videoId = placeholder.getAttribute('data-video-id');
+      const title = placeholder.getAttribute('data-title');
+      
+      const loadVideo = () => {
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.position = 'absolute';
+        iframe.style.inset = '0';
+        iframe.style.border = 'none';
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
+        iframe.title = title ?? 'Video';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        
+        placeholder.parentElement?.replaceChild(iframe, placeholder);
+      };
+      
+      placeholder.addEventListener('click', loadVideo);
+      placeholder.addEventListener('keydown', (e: Event) => {
+        const ev = e as KeyboardEvent;
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          loadVideo();
+        }
+      });
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(loadVideo, 500);
+            observer.unobserve(placeholder);
+          }
+        });
+      }, { rootMargin: '50px' });
+      
+      observer.observe(placeholder);
+    });
+  }
+  if (document.readyState === 'complete') {
+    if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(initLazyYouTube, { timeout: 2000 });
+    } else {
+      setTimeout(initLazyYouTube, 1);
+    }
+  } else {
+    window.addEventListener('load', () => {
+      if (typeof requestIdleCallback !== 'undefined') {
+        requestIdleCallback(initLazyYouTube, { timeout: 2000 });
+      } else {
+        setTimeout(initLazyYouTube, 1);
+      }
+    });
+  }
+</script>
+
+<style>
+  .lazy-youtube-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: var(--aspect-ratio);
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .lazy-youtube-placeholder {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    transition: opacity 0.2s ease;
+  }
+
+  .lazy-youtube-placeholder:hover {
+    opacity: 0.8;
+  }
+
+  .lazy-youtube-thumbnail {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lazy-youtube-button {
+    position: relative;
+    z-index: 2;
+    width: 68px;
+    height: 48px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lazy-youtube-button:hover {
+    transform: scale(1.1);
+  }
+
+  .lazy-youtube-button:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .lazy-youtube-button svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  }
+</style>
