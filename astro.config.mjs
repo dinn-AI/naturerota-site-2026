@@ -9,11 +9,15 @@ import react from '@astrojs/react';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Em build: usar .public-build (preparado por scripts/prepare-public.mjs) para evitar timeout em arquivos offloaded (ex. iCloud)
+const publicDir = process.env.ASTRO_PUBLIC_BUILD_DIR || 'public';
+
 // https://astro.build/config
 export default defineConfig({
   site: process.env.PUBLIC_SITE_URL || 'http://localhost:4321',
 
   vite: {
+    publicDir: path.join(__dirname, publicDir),
     plugins: [tailwindcss()],
     resolve: {
       alias: {
