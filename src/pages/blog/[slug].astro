@@ -105,19 +105,27 @@ function formatDateShort(dateString: string): string {
 
 // Processar conteúdo do Sanity (body)
 const bodyContent = post.body || [];
+
+const lcpImageUrl = getImageUrl(post.mainImage, 1920, 1080);
 ---
 
 <Layout 
   title={`${post.title} - Blog Naturerota`}
   description={post.excerpt || `Leia sobre ${post.title} no blog da Naturerota`}
+  preloadLcpImage={lcpImageUrl}
 >
   <article class="min-h-screen" style="background-color: #FFF8F2;">
     <!-- Imagem de Capa -->
     <div class="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden" style="margin-top: 80px;">
       <img 
-        src={getImageUrl(post.mainImage, 1920, 1080)} 
+        src={lcpImageUrl} 
         alt={post.title}
         class="w-full h-full object-cover"
+        width={1920}
+        height={1080}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
       

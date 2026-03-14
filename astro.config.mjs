@@ -33,9 +33,8 @@ export default defineConfig({
       // Aumentar timeout para operações de arquivo (padrão é 5000ms)
       cachedChecks: false,
     },
-    // Desabilitar algumas otimizações que podem causar timeout
     build: {
-      minify: false,
+      minify: true,
       sourcemap: false,
     },
     // Configurações de otimização

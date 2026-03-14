@@ -103,7 +103,7 @@ const {
   </head>
   <body class="min-h-screen text-gray-900 antialiased" style="background-color: #FFF8F2;">
 
-    {!hideNavigation && <NavbarDemo client:load />}
+    {!hideNavigation && <NavbarDemo client:idle />}
 
     <main>
       <slot />
@@ -134,12 +134,12 @@ const {
             <h3 class="font-bold font-sans text-gray-900 mb-4">Redes Sociais</h3>
             <ul class="space-y-2">
               <li>
-                <SocialLink client:load platform="instagram" url="https://instagram.com/naturerota" className="text-gray-600 hover:text-gray-900">
+                <SocialLink client:visible platform="instagram" url="https://instagram.com/naturerota" className="text-gray-600 hover:text-gray-900">
                   Instagram
                 </SocialLink>
               </li>
               <li>
-                <SocialLink client:load platform="youtube" url="https://www.youtube.com/@naturerota" className="text-gray-600 hover:text-gray-900">
+                <SocialLink client:visible platform="youtube" url="https://www.youtube.com/@naturerota" className="text-gray-600 hover:text-gray-900">
                   YouTube
                 </SocialLink>
               </li>
@@ -191,44 +191,31 @@ const {
     </footer>
     )}
 
-    <!-- Script para capturar UTMs e repassar para checkout Hotmart -->
+    <!-- Script para capturar UTMs e repassar para checkout Hotmart (adiado para não competir com LCP) -->
     <script is:inline>
-      /**
-       * Script para capturar parâmetros da URL e repassar para os botões da Hotmart
-       */
-      document.addEventListener('DOMContentLoaded', function() {
-          // Lista de parâmetros que você quer capturar
-          const parameters = ['src', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-          
-          const urlParams = new URLSearchParams(window.location.search);
-          const paramsToAdd = {};
-
-          // Verifica quais parâmetros estão presentes na URL atual
-          parameters.forEach(param => {
-              if (urlParams.has(param)) {
-                  paramsToAdd[param] = urlParams.get(param);
-              }
+      (function() {
+        function applyHotmartUtms() {
+          var parameters = ['src', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+          var urlParams = new URLSearchParams(window.location.search);
+          var paramsToAdd = {};
+          parameters.forEach(function(param) {
+            if (urlParams.has(param)) paramsToAdd[param] = urlParams.get(param);
           });
-
-          // Se não houver parâmetros, não faz nada
           if (Object.keys(paramsToAdd).length === 0) return;
-
-          // Procura todos os links que levam ao checkout da Hotmart
-          const links = document.querySelectorAll('a[href*="hotmart.com"]');
-
-          links.forEach(link => {
-              try {
-                  const url = new URL(link.href);
-                  // Adiciona cada parâmetro capturado ao link do botão
-                  Object.keys(paramsToAdd).forEach(key => {
-                      url.searchParams.set(key, paramsToAdd[key]);
-                  });
-                  link.href = url.toString();
-              } catch (e) {
-                  console.error('Erro ao processar link:', e);
-              }
+          document.querySelectorAll('a[href*="hotmart.com"]').forEach(function(link) {
+            try {
+              var url = new URL(link.href);
+              Object.keys(paramsToAdd).forEach(function(key) { url.searchParams.set(key, paramsToAdd[key]); });
+              link.href = url.toString();
+            } catch (e) {}
           });
-      });
+        }
+        if (window.requestIdleCallback) {
+          requestIdleCallback(applyHotmartUtms, { timeout: 3000 });
+        } else {
+          window.addEventListener('load', function() { setTimeout(applyHotmartUtms, 1); });
+        }
+      })();
     </script>
 
     <!-- ========================================

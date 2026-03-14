@@ -249,7 +249,7 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
               >
                 {product.image.endsWith('.svg') ? (
                   <img
-                    src={product.image}
+                    src={encodeURI(product.image)}
                     alt={product.alt}
                     className="w-full h-full object-cover"
                     draggable={false}
@@ -259,10 +259,10 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
                   <picture className="absolute inset-0 w-full h-full">
                     <source
                       type="image/avif"
-                      srcSet={`/avif/public${product.image.replace(/\.(jpg|jpeg|png)$/i, ".avif")}`}
+                      srcSet={encodeURI(`/avif/public${product.image.replace(/\.(jpg|jpeg|png)$/i, ".avif")}`)}
                     />
                     <img
-                      src={product.image}
+                      src={encodeURI(product.image)}
                       alt={product.alt}
                       className="w-full h-full object-cover"
                       draggable={false}
@@ -288,7 +288,7 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
               >
                 {product.image.endsWith('.svg') ? (
                   <img
-                    src={product.image}
+                    src={encodeURI(product.image)}
                     alt={product.alt}
                     className="w-full h-full object-cover"
                     draggable={false}
@@ -298,10 +298,10 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
                   <picture className="absolute inset-0 w-full h-full">
                     <source
                       type="image/avif"
-                      srcSet={`/avif/public${product.image.replace(/\.(jpg|jpeg|png)$/i, ".avif")}`}
+                      srcSet={encodeURI(`/avif/public${product.image.replace(/\.(jpg|jpeg|png)$/i, ".avif")}`)}
                     />
                     <img
-                      src={product.image}
+                      src={encodeURI(product.image)}
                       alt={product.alt}
                       className="w-full h-full object-cover"
                       draggable={false}

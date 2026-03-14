@@ -42,37 +42,46 @@ export default function VideoPlayer({
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Lazy-load: só carrega quando entra no viewport
+  // Evitar carregar vídeo em rede lenta ou modo economia de dados (mobile/sinal fraco)
+  const shouldLoadVideo = (): boolean => {
+    if (typeof navigator === "undefined") return true;
+    const conn = (navigator as { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (conn?.saveData) return false;
+    const et = conn?.effectiveType;
+    if (et === "slow-2g" || et === "2g") return false;
+    return true;
+  };
+
+  // Lazy-load: só carrega quando entra no viewport; com autoplay, atrasa para poster pintar primeiro (LCP)
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Se autoplay está ativado, carregar imediatamente
     if (autoplay) {
-      setShouldLoad(true);
-      return;
+      if (!shouldLoadVideo()) return; // Fica só no poster em Save-Data/rede muito lenta
+      const scheduleLoad = () => setShouldLoad(true);
+      const id =
+        typeof requestIdleCallback !== "undefined"
+          ? requestIdleCallback(scheduleLoad, { timeout: 2000 })
+          : (setTimeout(scheduleLoad, 100) as unknown as number);
+      return () => {
+        if (typeof cancelIdleCallback !== "undefined") cancelIdleCallback(id);
+        else clearTimeout(id);
+      };
     }
 
-    // Caso contrário, usar IntersectionObserver
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && shouldLoadVideo()) {
             setShouldLoad(true);
             observer.disconnect();
           }
         });
       },
-      {
-        rootMargin: "50px", // Começar a carregar 50px antes de entrar no viewport
-        threshold: 0.1,
-      }
+      { rootMargin: "50px", threshold: 0.1 }
     );
-
     observer.observe(containerRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [autoplay]);
 
   // Gerenciar autoplay quando o vídeo carregar

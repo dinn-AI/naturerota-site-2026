@@ -40,11 +40,6 @@ const videoPosterFallback = "/IMG_3835.JPG";
         </div>
       </div>
     </div>
-
-    <!-- Moldura final (encaixe Apple) -->
-    <div class="frame" aria-hidden="true">
-      <img class="frame__img" src="/TV Naturerota.jpg" alt="" loading="lazy" decoding="async" width="1920" height="1080" />
-    </div>
   </div>
 </section>
 
@@ -117,25 +112,6 @@ const videoPosterFallback = "/IMG_3835.JPG";
     background: #000;
     opacity: 0.4;
     transition: none;
-  }
-
-  .frame {
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 12%;
-    bottom: 12%;
-    border-radius: 28px;
-    pointer-events: none;
-    opacity: 0;
-    z-index: 3;
-  }
-
-  .frame__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 28px;
   }
 
   .copy {

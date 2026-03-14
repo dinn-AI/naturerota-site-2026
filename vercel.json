@@ -15,7 +15,7 @@
       ]
     },
     {
-      "source": "/dist/(.*)\\.(?:js|css)$",
+      "source": "/videos/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
