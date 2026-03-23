@@ -24,7 +24,7 @@
       ]
     },
     {
-      "source": "/avif/public/(.*)\\.(?:avif|jpg|jpeg|png|webp|svg)$",
+      "source": "/avif/public/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "source": "/products_cover/(.*)\\.(?:svg|png)$",
+      "source": "/products_cover/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -51,7 +51,7 @@
       ]
     },
     {
-      "source": "/fonts/(.*)\\.(?:woff|woff2|ttf|eot)$",
+      "source": "/fonts/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "source": "/(?!.*\\.js|\\.css|\\.avif|\\.jpg|\\.jpeg|\\.png|\\.webp|\\.svg|\\.woff|\\.woff2)(.*)",
+      "source": "/:path*",
       "headers": [
         {
           "key": "Cache-Control",
