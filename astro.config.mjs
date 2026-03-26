@@ -24,26 +24,17 @@ export default defineConfig({
         '@': path.resolve(__dirname, './src'),
       },
     },
-    // Desabilitar cache que pode estar causando problemas
-    cacheDir: false,
-    // Timeouts de arquivo e operações
-    fs: {
-      strict: false,
-      allow: ['/'],
-      // Aumentar timeout para operações de arquivo (padrão é 5000ms)
-      cachedChecks: false,
+    // Cache em node_modules/.vite (padrão correto)
+    cacheDir: 'node_modules/.vite',
+    server: {
+      fs: {
+        strict: false,
+        allow: ['/'],
+      },
     },
     build: {
       minify: true,
       sourcemap: false,
-    },
-    // Configurações de otimização
-    esbuild: {
-      // Desabilitar transforms que podem causar timeout
-      drop: [],
-    },
-    ssr: {
-      noExternal: [],
     },
   },
 
