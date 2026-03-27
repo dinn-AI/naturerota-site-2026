@@ -11,49 +11,200 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
   type="product"
   hideNavigation={true}
   hideFooter={true}
-  preloadLcpImage="/curso-cgdv/IMG_6289.avif"
+  preloadLcpImage="/curso-cgdv/IMG_6564.avif"
 >
-  <!-- Hero -->
+  <!-- Hero + VSL -->
   <section class="relative overflow-visible" style="background-color: #123A2B;">
-    <div class="relative container mx-auto px-4 py-16 md:py-20 lg:py-24">
-      <!-- Layout responsivo: empilhado em mobile, 2 colunas em desktop -->
-      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        
-        <!-- Coluna da esquerda: Texto e CTA -->
-        <div class="text-left order-1 lg:order-1">
-          <h1 class="text-white font-serif font-semibold text-3xl md:text-4xl lg:text-5xl leading-tight">
-            Viva na estrada com segurança financeira
-          </h1>
-          <p class="mt-6 text-white/90 text-lg md:text-xl leading-relaxed">
-            Mesmo começando do zero e sem depender da internet
-          </p>
+    <div class="relative container mx-auto px-4 pt-14 pb-10 md:pt-16 md:pb-12">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-white font-serif font-semibold text-3xl md:text-4xl lg:text-5xl leading-tight">
+          Viva na estrada com segurança financeira
+        </h1>
+        <p class="mt-4 text-white/80 text-lg md:text-xl leading-relaxed">
+          Mesmo começando do zero e sem depender da internet
+        </p>
 
-          <div class="mt-8 lg:mt-10 mb-8 lg:mb-0">
-            <a
-              href={checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-primary inline-flex items-center justify-center text-center w-full sm:w-auto"
-              style="background-color: #87A48E; border-color: #87A48E;"
-            >
-              COMEÇAR AGORA
-            </a>
+        <!-- Vídeo VSL com player customizado -->
+        <div id="vsl-wrapper" class="mt-8 relative w-full rounded-2xl overflow-hidden shadow-2xl" style="padding-bottom: 56.25%;">
+          <!-- iframe do YouTube (IFrame API) -->
+          <div id="vsl-player" class="absolute inset-0 w-full h-full"></div>
+
+          <!-- Overlay "Clique para ouvir" -->
+          <div id="vsl-overlay" class="absolute inset-0 flex flex-col items-center justify-center cursor-pointer z-10" style="background: rgba(0,0,0,0.38);">
+            <div style="background: rgba(30,60,48,0.82); border-radius: 16px; padding: 24px 36px; display: flex; flex-direction: column; align-items: center; gap: 10px; backdrop-filter: blur(2px);">
+              <!-- Ícone mudo -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <p style="color:white; font-weight:700; font-size:1.1rem; margin:0;">Seu vídeo já começou</p>
+              <p style="color:rgba(255,255,255,0.85); font-size:1rem; margin:0;">Toque para ouvir</p>
+            </div>
+          </div>
+
+          <!-- Controles customizados (play/pause + restart) -->
+          <div id="vsl-controls" class="absolute bottom-0 left-0 right-0 z-20 flex items-center gap-4 px-4 py-3" style="background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); opacity:0; transition: opacity 0.3s;">
+            <!-- Play/Pause -->
+            <button id="vsl-playpause" aria-label="Play/Pause" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
+              <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+              <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white" style="display:none;">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+            <!-- Restart -->
+            <button id="vsl-restart" aria-label="Reiniciar" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 .49-4.5"></path>
+              </svg>
+            </button>
+            <!-- Barra de progresso simples -->
+            <div id="vsl-progress-bg" style="flex:1; height:4px; background:rgba(255,255,255,0.3); border-radius:2px; cursor:pointer;" title="Progresso">
+              <div id="vsl-progress-bar" style="height:100%; background:#87A48E; border-radius:2px; width:0%; transition: width 0.5s linear;"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Coluna da direita: Foto hero -->
-        <div class="flex justify-center lg:justify-end order-2 lg:order-2">
-          <img
-            src="/curso-cgdv/IMG_6289.avif"
-            alt="Viver na estrada com segurança financeira — Método CGDV"
-            class="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-auto drop-shadow-2xl rounded-2xl object-cover"
-            style="max-height: 480px;"
-            width="480"
-            height="480"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-          />
+        <script is:inline>
+          (function() {
+            // Carrega a API do YouTube
+            var tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+
+            var player;
+            var unmuted = false;
+            var progressTimer;
+
+            window.onYouTubeIframeAPIReady = function() {
+              player = new YT.Player('vsl-player', {
+                videoId: 'Uvnv1sVRmpE',
+                playerVars: {
+                  autoplay: 1,
+                  mute: 1,
+                  controls: 0,
+                  rel: 0,
+                  modestbranding: 1,
+                  playsinline: 1,
+                  disablekb: 1,
+                  fs: 0,
+                  iv_load_policy: 3,
+                },
+                events: {
+                  onReady: onPlayerReady,
+                  onStateChange: onPlayerStateChange,
+                }
+              });
+            };
+
+            function onPlayerReady(event) {
+              event.target.playVideo();
+              startProgressTimer();
+              showControls();
+            }
+
+            function onPlayerStateChange(event) {
+              var iconPlay  = document.getElementById('icon-play');
+              var iconPause = document.getElementById('icon-pause');
+              if (event.data === YT.PlayerState.PLAYING) {
+                if (iconPlay)  iconPlay.style.display  = 'none';
+                if (iconPause) iconPause.style.display = '';
+                startProgressTimer();
+              } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                if (iconPlay)  iconPlay.style.display  = '';
+                if (iconPause) iconPause.style.display = 'none';
+                clearInterval(progressTimer);
+              }
+            }
+
+            // Overlay: primeiro toque desmuta, toque seguinte pausa/retoma
+            var overlay = document.getElementById('vsl-overlay');
+            if (overlay) {
+              overlay.addEventListener('click', function() {
+                if (!unmuted) {
+                  unmuted = true;
+                  if (player) player.unMute();
+                  overlay.style.display = 'none';
+                }
+              });
+            }
+
+            // Play/Pause
+            var btnPlayPause = document.getElementById('vsl-playpause');
+            if (btnPlayPause) {
+              btnPlayPause.addEventListener('click', function() {
+                if (!player) return;
+                var state = player.getPlayerState();
+                if (state === YT.PlayerState.PLAYING) {
+                  player.pauseVideo();
+                } else {
+                  player.playVideo();
+                }
+              });
+            }
+
+            // Restart
+            var btnRestart = document.getElementById('vsl-restart');
+            if (btnRestart) {
+              btnRestart.addEventListener('click', function() {
+                if (!player) return;
+                player.seekTo(0, true);
+                player.playVideo();
+                if (!unmuted) {
+                  unmuted = true;
+                  player.unMute();
+                  var ov = document.getElementById('vsl-overlay');
+                  if (ov) ov.style.display = 'none';
+                }
+              });
+            }
+
+            // Barra de progresso
+            function startProgressTimer() {
+              clearInterval(progressTimer);
+              progressTimer = setInterval(function() {
+                if (!player || typeof player.getCurrentTime !== 'function') return;
+                var duration = player.getDuration();
+                var current  = player.getCurrentTime();
+                if (duration > 0) {
+                  var pct = (current / duration) * 100;
+                  var bar = document.getElementById('vsl-progress-bar');
+                  if (bar) bar.style.width = pct + '%';
+                }
+              }, 500);
+            }
+
+            // Mostrar controles ao passar o mouse / tocar
+            function showControls() {
+              var controls = document.getElementById('vsl-controls');
+              var wrapper  = document.getElementById('vsl-wrapper');
+              if (!controls || !wrapper) return;
+              var hideTimer;
+              function show() {
+                controls.style.opacity = '1';
+                clearTimeout(hideTimer);
+                hideTimer = setTimeout(function() { controls.style.opacity = '0'; }, 3000);
+              }
+              wrapper.addEventListener('mousemove', show);
+              wrapper.addEventListener('touchstart', show, { passive: true });
+            }
+          })();
+        </script>
+
+        <div class="mt-8">
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary inline-flex items-center justify-center text-center"
+            style="background-color: #87A48E; border-color: #87A48E;"
+          >
+            COMEÇAR AGORA
+          </a>
         </div>
       </div>
     </div>
@@ -141,50 +292,7 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
     </div>
   </section>
 
-  <!-- Seção VSL: Vídeo -->
-  <section class="py-16" style="background-color: #FFF8F2;">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-          <h2 class="text-2xl md:text-3xl font-serif font-semibold mb-4 text-center" style="color:#123A2B;">
-            Assista ao vídeo antes de tomar qualquer decisão
-          </h2>
-          <p class="text-center text-gray-600 mb-6">Você vai entender:</p>
-          <ul class="space-y-2 mb-6 max-w-xl mx-auto text-gray-700">
-            <li class="flex items-start gap-2"><span class="text-green-700 font-bold mt-0.5">•</span> Por que a maioria falha tentando viver viajando</li>
-            <li class="flex items-start gap-2"><span class="text-green-700 font-bold mt-0.5">•</span> Como gerar renda na estrada (sem depender de redes sociais)</li>
-            <li class="flex items-start gap-2"><span class="text-green-700 font-bold mt-0.5">•</span> O erro que faz iniciantes perderem dinheiro</li>
-            <li class="flex items-start gap-2"><span class="text-green-700 font-bold mt-0.5">•</span> O caminho simples para começar com segurança</li>
-          </ul>
-          <div class="mt-6">
-            <video
-            src="/videos/Trailer_Naturerota.mp4"
-            controls
-            preload="metadata"
-            class="w-full rounded-xl"
-            style="max-height: 480px;"
-          >
-            Seu navegador não suporta vídeo HTML5.
-          </video>
-          </div>
-          <p class="mt-6 text-center text-gray-600 text-base leading-relaxed">
-            Sem promessas irreais. Sem "largar tudo" no impulso.<br>
-            <strong>Existe um caminho mais seguro — e é isso que você vai ver agora.</strong>
-          </p>
-          <div class="mt-6 text-center">
-            <a
-              href={checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-primary inline-flex items-center justify-center text-center"
-            >
-              COMEÇAR AGORA
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Seção Identificação: Você se encaixa aqui? -->
   <section class="py-16 bg-white">
@@ -285,7 +393,7 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
           </div>
           <div class="bg-white rounded-2xl shadow-sm p-6">
             <img
-              src="/curso-cgdv/IMG_9893.avif"
+              src="/curso-cgdv/IMG_6558.avif"
               alt="Estratégia de renda viajando"
               class="w-full h-40 object-cover rounded-xl mb-5"
               width="400"
@@ -349,7 +457,7 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
           </div>
           <div class="flex justify-center mb-6">
             <img
-              src="/curso-cgdv/GP015090.avif"
+              src="/curso-cgdv/Trabalho-remoto.avif"
               alt="Método CGDV — Curso Como Ganhar Dinheiro Viajando"
               class="w-full max-w-[260px] h-auto drop-shadow-xl rounded-xl object-cover"
               width="260"
