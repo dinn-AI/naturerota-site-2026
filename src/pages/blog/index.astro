@@ -1,36 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { sanityClient, urlFor } from '../../lib/sanity';
+import { urlFor } from '../../lib/sanity';
+import { fetchSafe } from '../../lib/sanity-helpers';
 
-// Buscar todos os posts do Sanity ordenados por data de publicação
-let allPosts: any[] = [];
-try {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 25000);
-  
-  allPosts = await sanityClient.fetch(
-    `*[_type == "post"] | order(publishedAt desc) {
-      _id,
-      title,
-      slug,
-      mainImage,
-      excerpt,
-      publishedAt,
-      author->{
-        name,
-        image
-      }
-    }`,
-    {},
-    { signal: controller.signal }
-  );
-  
-  clearTimeout(timeoutId);
-} catch (err) {
-  // Se o Sanity estiver indisponível/mal configurado, não derruba a página
-  console.warn('Aviso: Não foi possível carregar posts do Sanity:', err instanceof Error ? err.message : 'Erro desconhecido');
-  allPosts = [];
-}
+// Buscar todos os posts do Sanity ordenados por data de publicação de forma segura
+const allPosts = await fetchSafe<any[]>(
+  `*[_type == "post"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    mainImage,
+    excerpt,
+    publishedAt,
+    author->{
+      name,
+      image
+    }
+  }`,
+  [] // Fallback: array vazio
+);
 
 // Função para obter URL da imagem ou fallback
 function getImageUrl(post: any): string {

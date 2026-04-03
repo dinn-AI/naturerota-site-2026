@@ -1,5 +1,6 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity';
+import { urlFor } from '../lib/sanity';
+import { fetchSafe } from '../lib/sanity-helpers';
 
 interface BlogPost {
   title: string;
@@ -15,30 +16,16 @@ interface BlogPost {
   publishedAt: string;
 }
 
-// Buscar os 4 últimos posts publicados no Sanity
-let posts: BlogPost[] = [];
-try {
-  // Usar AbortController para timeout de 25 segundos
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 25000);
-  
-  posts = await sanityClient.fetch(
-    `*[_type == "post"] | order(publishedAt desc)[0...4] {
-      title,
-      mainImage,
-      slug,
-      publishedAt
-    }`,
-    {},
-    { signal: controller.signal }
-  );
-  
-  clearTimeout(timeoutId);
-} catch (err) {
-  // Se o Sanity estiver indisponível/mal configurado, não derruba a página
-  console.warn('Aviso: Não foi possível carregar posts do Sanity:', err instanceof Error ? err.message : 'Erro desconhecido');
-  posts = [];
-}
+// Buscar os 4 últimos posts publicados no Sanity de forma segura
+const posts = await fetchSafe<BlogPost[]>(
+  `*[_type == "post"] | order(publishedAt desc)[0...4] {
+    title,
+    mainImage,
+    slug,
+    publishedAt
+  }`,
+  [] // Fallback: array vazio
+);
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);

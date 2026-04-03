@@ -1,22 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { sanityClient, urlFor } from '../../lib/sanity';
+import { urlFor } from '../../lib/sanity';
+import { fetchWithTimeout } from '../../lib/sanity-helpers';
 
 // Gerar rotas estáticas para todos os posts
 export async function getStaticPaths() {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 25000);
-    
-    const posts = await sanityClient.fetch(
+    const posts = await fetchWithTimeout<any[]>(
       `*[_type == "post"] {
         "slug": slug.current
-      }`,
-      {},
-      { signal: controller.signal }
+      }`
     );
-    
-    clearTimeout(timeoutId);
 
     return posts.map((post: any) => ({
       params: { slug: post.slug },
@@ -28,48 +22,39 @@ export async function getStaticPaths() {
   }
 }
 
+import { fetchSafe } from '../../lib/sanity-helpers';
+
 // Buscar o post pelo slug
 const { slug } = Astro.params;
 
-let post: any = null;
-try {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 25000);
-  
-  post = await sanityClient.fetch(
-    `*[_type == "post" && slug.current == $slug][0] {
+const post = await fetchSafe<any>(
+  `*[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    mainImage,
+    excerpt,
+    body,
+    publishedAt,
+    author->{
+      name,
+      image,
+      bio
+    },
+    "relatedPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
       _id,
       title,
       slug,
       mainImage,
-      excerpt,
-      body,
       publishedAt,
       author->{
-        name,
-        image,
-        bio
-      },
-      "relatedPosts": *[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
-        _id,
-        title,
-        slug,
-        mainImage,
-        publishedAt,
-        author->{
-          name
-        }
+        name
       }
-    }`,
-    { slug },
-    { signal: controller.signal }
-  );
-  
-  clearTimeout(timeoutId);
-} catch (err) {
-  console.warn('Aviso: Não foi possível carregar o post:', err instanceof Error ? err.message : 'Erro desconhecido');
-  post = null;
-}
+    }
+  }`,
+  null,
+  { slug }
+);
 
 // Se não encontrar o post, retornar 404
 if (!post) {

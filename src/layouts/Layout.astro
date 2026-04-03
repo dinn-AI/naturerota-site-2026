@@ -338,7 +338,10 @@ const {
           s.parentNode.insertBefore(t, s);
         }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-        fbq('init', '1398654025074894');
+        fbq('init', '1398654025074894', {
+          em: window.localStorage.getItem('user_email') || '', // Tenta capturar e-mail do localStorage se disponível
+          ph: window.localStorage.getItem('user_phone') || ''  // Tenta capturar telefone do localStorage se disponível
+        });
         fbq('track', 'PageView');
       }
 
