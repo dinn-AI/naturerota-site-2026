@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -46,5 +47,9 @@ export default defineConfig({
   },
 
   integrations: [react()],
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    imagesConfig: { domains: ['cdn.sanity.io'], sizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840] }
+  }),
   output: 'static',
 });
