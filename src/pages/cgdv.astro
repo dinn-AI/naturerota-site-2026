@@ -1,0 +1,519 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=1774553429551";
+---
+
+<Layout
+  title="Método CGDV | Como Ganhar Dinheiro Viajando | Naturerota"
+  description="Saia da vida que te impede de viver — mesmo achando que não tem dinheiro pra viajar. O Método CGDV é o caminho para sua liberdade financeira na estrada."
+  type="product"
+  hideNavigation={true}
+  hideFooter={true}
+  preloadLcpImage="/curso-cgdv/LOGO-METODO-CGDV.svg"
+>
+  <!-- Timer Fixo -->
+  <div class="fixed top-0 left-0 right-0 z-50 py-2 px-4 text-center shadow-lg" style="background-color: #CA7B50; color: white;">
+    <p class="text-sm md:text-base font-bold">
+      🔥 Oferta especial - De R$ 497 por R$ 257 SÓ HOJE! 
+      <span id="timer-count" class="ml-2 font-mono bg-white/20 px-2 py-0.5 rounded">15:00</span>
+    </p>
+  </div>
+
+  <script is:inline>
+    (function() {
+      const timerId = 'cgdv-countdown-v2';
+      let timeLeft = localStorage.getItem(timerId);
+      
+      if (!timeLeft || timeLeft <= 0) {
+        timeLeft = 15 * 60; // 15 minutos
+      } else {
+        timeLeft = parseInt(timeLeft, 10);
+      }
+
+      function updateDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        const display = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        const el = document.getElementById('timer-count');
+        if (el) el.innerText = display;
+      }
+
+      const timerInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) {
+          timeLeft = 15 * 60; // Loop simples para marketing
+        }
+        localStorage.setItem(timerId, timeLeft);
+        updateDisplay();
+      }, 1000);
+
+      updateDisplay();
+    })();
+  </script>
+
+  <!-- Hero Section (Logo + Apresentação) -->
+  <section class="pt-20 pb-16 bg-[#123A2B] text-white overflow-hidden">
+    <div class="container mx-auto px-4">
+      <!-- Logo -->
+      <div class="flex justify-center mb-12">
+        <img 
+          src="/curso-cgdv/LOGO-METODO-CGDV.svg" 
+          alt="Logo Método CGDV" 
+          class="h-24 md:h-32 w-auto invert brightness-0"
+          style="filter: brightness(0) invert(1);"
+          width="300"
+          height="120"
+        />
+      </div>
+
+      <div class="max-w-4xl mx-auto text-center" id="apresentacao">
+        <h1 class="text-[28px] md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-4">
+          Saia da vida que te impede de viver — mesmo achando que não tem dinheiro pra viajar.
+        </h1>
+        <p class="text-xl md:text-2xl text-white/80 mb-10">
+          "Muita gente ganhou dinheiro viajando depois que descobriu isso"
+        </p>
+
+        <div class="max-w-4xl mx-auto">
+          <!-- Vídeo VSL -->
+          <div id="vsl-wrapper" class="relative w-full rounded-2xl overflow-hidden shadow-2xl mb-10 mx-auto max-w-3xl" style="padding-bottom: 56.25%;">
+            <div id="vsl-player" class="absolute inset-0 w-full h-full"></div>
+            <div id="vsl-overlay" class="absolute inset-0 flex flex-col items-center justify-center cursor-pointer z-10" style="background: rgba(0,0,0,0.38);">
+              <div style="background: rgba(30,60,48,0.82); border-radius: 16px; padding: 24px 36px; display: flex; flex-direction: column; align-items: center; gap: 10px; backdrop-filter: blur(2px);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <line x1="23" y1="9" x2="17" y2="15"></line>
+                  <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+                <p style="color:white; font-weight:700; font-size:1.1rem; margin:0;">Seu vídeo já começou</p>
+                <p style="color:rgba(255,255,255,0.85); font-size:1rem; margin:0;">Toque para ouvir</p>
+              </div>
+            </div>
+            <div id="vsl-controls" class="absolute bottom-0 left-0 right-0 z-20 flex items-center gap-4 px-4 py-3" style="background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); opacity:0; transition: opacity 0.3s;">
+              <button id="vsl-playpause" aria-label="Play/Pause" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
+                <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+                  <rect x="6" y="4" width="4" height="16"></rect>
+                  <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>
+                <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white" style="display:none;">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </button>
+              <button id="vsl-restart" aria-label="Reiniciar" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <path d="M3.51 15a9 9 0 1 0 .49-4.5"></path>
+                </svg>
+              </button>
+              <div id="vsl-progress-bg" style="flex:1; height:4px; background:rgba(255,255,255,0.3); border-radius:2px; cursor:pointer;">
+                <div id="vsl-progress-bar" style="height:100%; background:#87A48E; border-radius:2px; width:0%; transition: width 0.5s linear;"></div>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary inline-flex items-center justify-center text-center w-full max-w-md py-5 text-base sm:text-xl tracking-tight font-bold rounded-2xl shadow-2xl hover:scale-105 transition-transform"
+            style="background-color: #CA7B50; border-color: #CA7B50;"
+          >
+            QUERO SAIR DESSA VIDA
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [DOR + IDENTIFICAÇÃO] -->
+  <section class="py-20 bg-white overflow-hidden">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="space-y-6 text-xl md:text-3xl font-serif text-gray-800 leading-tight">
+          <p>Você acorda cansado.</p>
+          <p>Trabalha em algo que não gosta.</p>
+          <p>Volta exausto.</p>
+          <p class="font-bold py-4">E repete.</p>
+          <p class="text-gray-500 italic">Enquanto isso…</p>
+          <p class="text-3xl md:text-4xl text-brand-green font-bold">a vida passa.</p>
+        </div>
+        
+        <div class="mt-12">
+          <img
+            src="/curso-cgdv/IMG_9893.avif"
+            alt="Reflexão sobre a vida"
+            class="w-full max-w-2xl mx-auto rounded-2xl shadow-xl border-4 border-[#FFF8F2]"
+            width="800"
+            height="500"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [QUEBRA DE CRENÇA] -->
+  <section class="py-20 bg-[#123A2B] text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center space-y-8">
+        <h2 class="text-2xl md:text-5xl font-serif leading-tight">
+          Você acha que o problema é dinheiro.
+        </h2>
+        <p class="text-4xl md:text-6xl font-bold text-[#CA7B50]">
+          Não é.
+        </p>
+        <p class="text-2xl md:text-3xl text-white/80">
+          É falta de um plano.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [NOVA POSSIBILIDADE] -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-5xl font-serif text-center mb-12 text-[#123A2B]">
+          Existe outro jeito:
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            <div class="flex items-center gap-4 text-xl md:text-2xl text-gray-700">
+              <span class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">✓</span>
+              <p>Trabalhar de onde quiser</p>
+            </div>
+            <div class="flex items-center gap-4 text-xl md:text-2xl text-gray-700">
+              <span class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">✓</span>
+              <p>Ganhar dinheiro na estrada</p>
+            </div>
+            <div class="flex items-center gap-4 text-xl md:text-2xl text-gray-700">
+              <span class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">✓</span>
+              <p>Viver com menos… e melhor</p>
+            </div>
+            <div class="flex items-center gap-4 text-xl md:text-2xl text-gray-700">
+              <span class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green">✓</span>
+              <p>Não depender de férias ou chefe</p>
+            </div>
+          </div>
+          <div class="relative">
+            <img
+              src="/curso-cgdv/IMG_9198.avif"
+              alt="Liberdade na estrada"
+              class="rounded-3xl shadow-2xl object-cover w-full h-full min-h-[300px]"
+              width="500"
+              height="400"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function() {
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+      var player;
+      var unmuted = false;
+      var progressTimer;
+      window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('vsl-player', {
+          videoId: 'Uvnv1sVRmpE',
+          playerVars: { autoplay: 1, mute: 1, controls: 0, rel: 0, modestbranding: 1, playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3 },
+          events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange }
+        });
+      };
+      function onPlayerReady(event) { event.target.playVideo(); startProgressTimer(); showControls(); }
+      function onPlayerStateChange(event) {
+        var iconPlay  = document.getElementById('icon-play');
+        var iconPause = document.getElementById('icon-pause');
+        if (event.data === YT.PlayerState.PLAYING) {
+          if (iconPlay)  iconPlay.style.display  = 'none';
+          if (iconPause) iconPause.style.display = '';
+          startProgressTimer();
+        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+          if (iconPlay)  iconPlay.style.display  = '';
+          if (iconPause) iconPause.style.display = 'none';
+          clearInterval(progressTimer);
+        }
+      }
+      var overlay = document.getElementById('vsl-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (!unmuted) { unmuted = true; if (player) player.unMute(); overlay.style.display = 'none'; }
+        });
+      }
+      var btnPlayPause = document.getElementById('vsl-playpause');
+      if (btnPlayPause) {
+        btnPlayPause.addEventListener('click', function() {
+          if (!player) return;
+          var state = player.getPlayerState();
+          if (state === YT.PlayerState.PLAYING) { player.pauseVideo(); } else { player.playVideo(); }
+        });
+      }
+      var btnRestart = document.getElementById('vsl-restart');
+      if (btnRestart) {
+        btnRestart.addEventListener('click', function() {
+          if (!player) return;
+          player.seekTo(0, true); player.playVideo();
+          if (!unmuted) { unmuted = true; player.unMute(); var ov = document.getElementById('vsl-overlay'); if (ov) ov.style.display = 'none'; }
+        });
+      }
+      function startProgressTimer() {
+        clearInterval(progressTimer);
+        progressTimer = setInterval(function() {
+          if (!player || typeof player.getCurrentTime !== 'function') return;
+          var duration = player.getDuration();
+          var current  = player.getCurrentTime();
+          if (duration > 0) {
+            var pct = (current / duration) * 100;
+            var bar = document.getElementById('vsl-progress-bar');
+            if (bar) bar.style.width = pct + '%';
+          }
+        }, 500);
+      }
+      function showControls() {
+        var controls = document.getElementById('vsl-controls');
+        var wrapper  = document.getElementById('vsl-wrapper');
+        if (!controls || !wrapper) return;
+        var hideTimer;
+        function show() {
+          controls.style.opacity = '1';
+          clearTimeout(hideTimer);
+          hideTimer = setTimeout(function() { controls.style.opacity = '0'; }, 3000);
+        }
+        wrapper.addEventListener('mousemove', show);
+        wrapper.addEventListener('touchstart', show, { passive: true });
+      }
+    })();
+  </script>
+
+  <!-- [O QUE VOCÊ VAI TER] -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-5xl font-serif text-center mb-12 text-[#123A2B]">
+          O que você vai ter:
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-6 rounded-2xl border-2 border-[#f0f7f2] bg-[#f0f7f2]/30 flex items-start gap-4">
+            <span class="text-2xl">✔</span>
+            <p class="text-xl text-gray-800">Quanto precisa pra começar</p>
+          </div>
+          <div class="p-6 rounded-2xl border-2 border-[#f0f7f2] bg-[#f0f7f2]/30 flex items-start gap-4">
+            <span class="text-2xl">✔</span>
+            <p class="text-xl text-gray-800">Como gerar renda antes de sair</p>
+          </div>
+          <div class="p-6 rounded-2xl border-2 border-[#f0f7f2] bg-[#f0f7f2]/30 flex items-start gap-4">
+            <span class="text-2xl">✔</span>
+            <p class="text-xl text-gray-800">Fontes de renda (online e offline)</p>
+          </div>
+          <div class="p-6 rounded-2xl border-2 border-[#f0f7f2] bg-[#f0f7f2]/30 flex items-start gap-4">
+            <span class="text-2xl">✔</span>
+            <p class="text-xl text-gray-800">Como gastar menos vivendo mais</p>
+          </div>
+          <div class="p-6 rounded-2xl border-2 border-[#f0f7f2] bg-[#f0f7f2]/30 flex items-start gap-4 md:col-span-2">
+            <span class="text-2xl">✔</span>
+            <p class="text-xl text-gray-800">Plano pra não voltar atrás</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [PROVA / CONTRASTE] -->
+  <section class="py-20 bg-[#FFF8F2]">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-2xl md:text-5xl font-serif text-[#123A2B] mb-6">
+          Enquanto você espera férias…
+        </h2>
+        <p class="text-2xl md:text-3xl text-gray-600 mb-12">
+          Tem gente comum vivendo isso.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 italic text-lg text-gray-700">
+            "Sem dinheiro sobrando."
+          </div>
+          <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 italic text-lg text-gray-700">
+            "Sem sorte."
+          </div>
+          <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 italic text-lg text-gray-700">
+            "Só com o método certo."
+          </div>
+        </div>
+
+        <!-- Depoimentos de Alunos -->
+        <h3 class="text-2xl font-bold mb-10 text-[#123A2B]">Resultados dos nossos alunos:</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <img src="/depoimentos-curso-CGDV/Comentário 9.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário 10.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário 11.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário 12.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário-13.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário-14.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [OFERTA] -->
+  <section class="py-24 bg-white" id="oferta">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto rounded-[3rem] border-8 border-[#123A2B] shadow-2xl relative">
+        <div class="absolute -top-6 left-1/2 -translate-x-1/2 z-10 w-full max-w-[200px] flex justify-center">
+          <div class="absolute inset-0 bg-[#CA7B50]/40 rounded-full animate-ping"></div>
+          <div class="relative bg-[#CA7B50] text-white px-8 py-3 rounded-full font-bold tracking-wider whitespace-nowrap shadow-lg">
+            OFERTA ÚNICA
+          </div>
+        </div>
+        
+        <div class="p-8 md:p-14 text-center">
+          <h2 class="text-2xl md:text-5xl font-serif text-[#123A2B] mb-8">Comece hoje sua nova jornada</h2>
+          
+          <div class="flex flex-col items-center gap-4 mb-10">
+            <div class="bg-[#123A2B] rounded-3xl p-8 text-white w-full max-w-sm">
+              <span class="text-white/50 text-xl line-through mb-4 block">De R$ 497</span>
+              <p class="text-xl mb-4">Por apenas</p>
+              <p class="text-6xl font-bold mb-2">12x R$ 26,58</p>
+              <p class="text-lg text-white/70">ou R$ 257 à vista SÓ HOJE!</p>
+            </div>
+          </div>
+
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary inline-flex items-center justify-center text-center w-full max-w-md py-5 text-base sm:text-xl tracking-tight font-bold rounded-2xl shadow-2xl hover:scale-105 transition-transform mb-6"
+            style="background-color: #87A48E; border-color: #87A48E;"
+          >
+            QUERO COMEÇAR AGORA
+          </a>
+          
+          <img src="/curso-cgdv/Trabalho-remoto.avif" alt="Curso CGDV" class="w-full max-w-md mx-auto rounded-2xl mb-8" loading="lazy" />
+
+          <!-- [BÔNUS] -->
+          <div class="bg-[#FFF8F2] p-8 rounded-3xl text-left border-2 border-dashed border-[#CA7B50]">
+            <h3 class="text-2xl font-bold text-[#CA7B50] mb-6 mb-6">🎁 Você ainda leva de presente:</h3>
+            <ul class="space-y-4 text-lg text-gray-700">
+              <li class="flex items-start gap-3">
+                <span class="text-2xl">🎁</span>
+                <p><strong>+300 ideias de renda na estrada:</strong> Guia completo com formas online e offline de manter a grana entrando.</p>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-2xl">🎁</span>
+                <p><strong>Grupo no WhatsApp:</strong> Suporte direto conosco e troca real com outros viajantes e alunos.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [GARANTIA] -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12 p-10 rounded-[3rem] bg-[#123A2B] text-white">
+        <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 relative">
+          <div class="absolute inset-0 bg-white/10 rounded-full animate-ping"></div>
+          <div class="relative w-full h-full bg-[#CA7B50] rounded-full flex flex-col items-center justify-center border-8 border-white shadow-2xl">
+            <span class="text-5xl md:text-6xl font-black">30</span>
+            <span class="text-xl md:text-2xl font-bold">DIAS</span>
+          </div>
+        </div>
+        <div class="text-center md:text-left space-y-4">
+          <h2 class="text-3xl md:text-5xl font-serif">7 dias? Não. 30 dias.</h2>
+          <p class="text-xl font-bold text-[#A4D0AF]">Teste tudo.</p>
+          <p class="text-lg text-white/80 leading-relaxed">
+            Se não fizer sentido para o seu momento, ou se você simplesmente desistir da ideia: 
+            <br/><br/>
+            <strong>100% do seu dinheiro de volta. Sem perguntas.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [FUTURO + DECISÃO] -->
+  <section class="py-24 bg-[#FFF8F2]">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-5xl font-serif text-[#123A2B] mb-8 leading-tight">
+            Se nada mudar…<br/>Tudo continua igual.
+          </h2>
+          <p class="text-xl text-gray-700 mb-8 italic">MAS, se você agir agora:</p>
+          <ul class="space-y-6">
+            <li class="flex items-center gap-4 text-xl text-gray-800">
+              <span class="w-12 h-12 rounded-full bg-brand-green text-white flex items-center justify-center font-bold">1</span>
+              <span>Mais liberdade</span>
+            </li>
+            <li class="flex items-center gap-4 text-xl text-gray-800">
+              <span class="w-12 h-12 rounded-full bg-brand-green text-white flex items-center justify-center font-bold">2</span>
+              <span>Mais tempo</span>
+            </li>
+            <li class="flex items-center gap-4 text-xl text-gray-800">
+              <span class="w-12 h-12 rounded-full bg-brand-green text-white flex items-center justify-center font-bold">3</span>
+              <span>Mais vida</span>
+            </li>
+          </ul>
+        </div>
+        <div class="relative">
+          <img src="/curso-cgdv/IMG_6289.avif" alt="Vida livre" class="rounded-[2rem] shadow-2xl border-8 border-white" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [CTA FINAL] -->
+  <section class="py-24 bg-[#123A2B] text-white">
+    <div class="container mx-auto px-4 text-center">
+      <div class="max-w-3xl mx-auto space-y-10">
+        <h2 class="text-3xl md:text-5xl font-serif leading-tight">
+          Ou você continua preso… ou muda hoje.
+        </h2>
+        
+        <a
+          href={checkoutUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary inline-flex items-center justify-center text-center w-full max-w-md py-5 text-base sm:text-xl tracking-tight font-bold rounded-2xl shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:scale-110 transition-transform"
+          style="background-color: white; color: #123A2B; border-color: white;"
+        >
+          QUERO COMEÇAR AGORA 👉
+        </a>
+
+        <div class="pt-12 text-center space-y-4">
+          <p class="text-[#CA7B50] font-bold text-2xl">Último aviso:</p>
+          <p class="text-3xl md:text-4xl font-serif italic text-white/90">
+            O tempo que você tá perdendo… não volta. 🚀
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ e Segurança Simples -->
+  <section class="py-16 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-4 text-center">
+      <p class="text-gray-500 mb-8 max-w-2xl mx-auto">
+        Pagamento 100% Seguro via Hotmart. Acesso imediato no seu e-mail logo após a confirmação.
+      </p>
+      <div class="flex justify-center mt-8">
+        <img 
+          src="/compra-segura-hotmart-w1000.png" 
+          alt="Compra Segura Hotmart" 
+          class="w-full max-w-2xl h-auto"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+</Layout>
