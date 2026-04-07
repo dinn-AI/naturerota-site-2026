@@ -14,6 +14,51 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
   hideFooter={true}
   preloadLcpImage="/avif/public/Ebook_ushuaia/Books.avif"
 >
+  <!-- Sticky Timer -->
+  <div id="sticky-timer" class="sticky top-0 z-50 bg-[#B4714D] text-white py-2 px-4 text-center shadow-lg">
+    <div class="container mx-auto">
+      <p class="text-sm md:text-base font-bold">
+        🔥 Oferta especial encerra em <span id="timer-display">15:00</span> — De R$197 por R$57 somente HOJE!
+      </p>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Timer Logic
+    function startTimer(duration, display) {
+      let timer = duration, minutes, seconds;
+      
+      // Try to get saved time from sessionStorage to keep it during refresh
+      const savedTime = sessionStorage.getItem('patagonia_timer');
+      if (savedTime) {
+        timer = parseInt(savedTime, 10);
+      }
+
+      setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+        
+        // Save current time
+        sessionStorage.setItem('patagonia_timer', timer);
+
+        if (--timer < 0) {
+          timer = 0; // Keep at 00:00 or reset. User said "ends in 15m", usually it stays at 0 or resets. 
+          // For scarcity, staying at 0 or a very low number is common.
+        }
+      }, 1000);
+    }
+
+    window.onload = function () {
+      const fifteenMinutes = 60 * 15;
+      const display = document.querySelector('#timer-display');
+      startTimer(fifteenMinutes, display);
+    };
+  </script>
   <!-- Hero -->
   <section class="relative overflow-visible" style="background-color: #87A48E;">
     <div class="relative container mx-auto px-4 py-16 md:py-20 lg:py-24">
@@ -155,6 +200,53 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
             <strong>Somos Renan e Millena</strong>, do canal Naturerota. Compilamos cada coordenada, cada custo e cada segredo desta viagem neste guia completo.
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção Depoimentos -->
+  <section class="py-16 bg-white overflow-hidden">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-12 text-center max-w-4xl mx-auto" style="color:#123A2B;">
+        A gente desafia você a não ter essa viagem planejada com acesso do ebook!
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário-01.jpg" alt="Depoimento 1" class="w-full h-auto" loading="lazy" />
+        </div>
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário 02.jpg" alt="Depoimento 2" class="w-full h-auto" loading="lazy" />
+        </div>
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário 3.jpg" alt="Depoimento 3" class="w-full h-auto" loading="lazy" />
+        </div>
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário 4.jpg" alt="Depoimento 4" class="w-full h-auto" loading="lazy" />
+        </div>
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário-05.jpg" alt="Depoimento 5" class="w-full h-auto" loading="lazy" />
+        </div>
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário-05-1.jpg" alt="Depoimento 6" class="w-full h-auto" loading="lazy" />
+        </div>
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário-05-2.jpg" alt="Depoimento 7" class="w-full h-auto" loading="lazy" />
+        </div>
+        <div class="rounded-xl shadow-md border border-gray-100 overflow-hidden transform hover:scale-[1.02] transition-transform">
+          <img src="/depoimentos-Ushuaia-ebooks/Comentário 8.jpg" alt="Depoimento 8" class="w-full h-auto" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <a
+          href={checkoutUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary inline-flex items-center justify-center text-center px-12 py-4 text-xl"
+        >
+          OBTER E-BOOK AGORA!
+        </a>
       </div>
     </div>
   </section>
@@ -329,7 +421,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
               decoding="async"
             />
           </div>
-          <p class="text-gray-500 line-through text-lg mb-2">De R$ 97,90</p>
+          <p class="text-gray-500 line-through text-lg mb-2">De R$ 197,90</p>
           <p class="text-3xl md:text-4xl font-serif font-semibold" style="color:#123A2B;">
             Por apenas 8x de R$ 8,42 só hoje!
           </p>
@@ -510,7 +602,7 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
               6. Vale a pena mesmo? Como sei que vou economizar?
             </summary>
             <p class="mt-3 text-gray-700 leading-relaxed">
-              Uma única noite de hotel na Patagônia custa em média R$ 400. Se você usar apenas 1 das coordenadas de pernoite gratuito do guia, já economiza 8x o valor investido. Além disso, você tem garantia de 7 dias — se não gostar, devolvemos seu dinheiro.
+              Uma única noite de hotel na Patagônia custa em média R$ 400. Se você usar apenas 1 das coordenadas de pernoite gratuito do guia, já economiza 8x o valor investido. Além disso, você tem garantia de 30 dias — se não gostar do ebook e se com ele não conseguir planejar a sua viagem, devolvemos seu dinheiro!
             </p>
           </details>
 
@@ -564,9 +656,9 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h3 class="font-sans font-semibold text-gray-900 mb-2">Garantia de 7 Dias</h3>
+            <h3 class="font-sans font-semibold text-gray-900 mb-2">Garantia de 30 Dias</h3>
             <p class="text-gray-600 text-sm">
-              Se não gostar, devolvemos 100% do seu dinheiro sem perguntas
+              Se não gostar do ebook e se com ele não conseguir planejar a sua viagem, devolvemos 100% do seu dinheiro!
             </p>
           </div>
 
