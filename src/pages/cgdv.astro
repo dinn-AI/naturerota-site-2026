@@ -76,40 +76,26 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
         </p>
 
         <div class="max-w-4xl mx-auto">
-          <!-- Vídeo VSL -->
-          <div id="vsl-wrapper" class="relative w-full rounded-2xl overflow-hidden shadow-2xl mb-10 mx-auto max-w-3xl" style="padding-bottom: 56.25%;">
-            <div id="vsl-player" class="absolute inset-0 w-full h-full"></div>
-            <div id="vsl-overlay" class="absolute inset-0 flex flex-col items-center justify-center cursor-pointer z-10" style="background: rgba(0,0,0,0.38);">
-              <div style="background: rgba(30,60,48,0.82); border-radius: 16px; padding: 24px 36px; display: flex; flex-direction: column; align-items: center; gap: 10px; backdrop-filter: blur(2px);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                  <line x1="23" y1="9" x2="17" y2="15"></line>
-                  <line x1="17" y1="9" x2="23" y2="15"></line>
-                </svg>
-                <p style="color:white; font-weight:700; font-size:1.1rem; margin:0;">Seu vídeo já começou</p>
-                <p style="color:rgba(255,255,255,0.85); font-size:1rem; margin:0;">Toque para ouvir</p>
+          <!-- Vídeo VSL (Facade) -->
+          <div id="vsl-wrapper" class="relative w-full rounded-2xl overflow-hidden shadow-2xl mb-10 mx-auto max-w-3xl" style="padding-bottom: 56.25%; background: #000; cursor: pointer;">
+            <div id="vsl-facade" class="absolute inset-0 w-full h-full z-10" onclick="loadYouTube()">
+              <img 
+                src="https://i.ytimg.com/vi/Uvnv1sVRmpE/maxresdefault.jpg"
+                alt="Assistir vídeo"
+                class="w-full h-full object-cover opacity-60"
+                fetchpriority="high"
+                loading="eager"
+              />
+              <div id="vsl-overlay" class="absolute inset-0 flex flex-col items-center justify-center">
+                <div style="background: rgba(30,60,48,0.82); border-radius: 16px; padding: 24px 36px; display: flex; flex-direction: column; align-items: center; gap: 10px; backdrop-filter: blur(2px);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <p style="color:white; font-weight:700; font-size:1.1rem; margin:0;">Tocar vídeo</p>
+                </div>
               </div>
             </div>
-            <div id="vsl-controls" class="absolute bottom-0 left-0 right-0 z-20 flex items-center gap-4 px-4 py-3" style="background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); opacity:0; transition: opacity 0.3s;">
-              <button id="vsl-playpause" aria-label="Play/Pause" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
-                <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
-                  <rect x="6" y="4" width="4" height="16"></rect>
-                  <rect x="14" y="4" width="4" height="16"></rect>
-                </svg>
-                <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white" style="display:none;">
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-              </button>
-              <button id="vsl-restart" aria-label="Reiniciar" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="1 4 1 10 7 10"></polyline>
-                  <path d="M3.51 15a9 9 0 1 0 .49-4.5"></path>
-                </svg>
-              </button>
-              <div id="vsl-progress-bg" style="flex:1; height:4px; background:rgba(255,255,255,0.3); border-radius:2px; cursor:pointer;">
-                <div id="vsl-progress-bar" style="height:100%; background:#87A48E; border-radius:2px; width:0%; transition: width 0.5s linear;"></div>
-              </div>
-            </div>
+            <div id="vsl-player" class="absolute inset-0 w-full h-full" style="display: none;"></div>
           </div>
 
           <a
@@ -141,7 +127,9 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
         
         <div class="mt-12">
           <img
-            src="/curso-cgdv/IMG_9893.avif"
+            src="/curso-cgdv/IMG_9893-800w.avif"
+            srcset="/curso-cgdv/IMG_9893-400w.avif 400w, /curso-cgdv/IMG_9893-800w.avif 800w"
+            sizes="(max-width: 768px) 100vw, 800px"
             alt="Reflexão sobre a vida"
             class="w-full max-w-2xl mx-auto rounded-2xl shadow-xl border-4 border-[#FFF8F2]"
             width="800"
@@ -199,11 +187,14 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
           </div>
           <div class="relative">
             <img
-              src="/curso-cgdv/IMG_9198.avif"
+              src="/curso-cgdv/IMG_9198-800w.avif"
+              srcset="/curso-cgdv/IMG_9198-400w.avif 400w, /curso-cgdv/IMG_9198-800w.avif 800w"
+              sizes="(max-width: 768px) 100vw, 500px"
               alt="Liberdade na estrada"
               class="rounded-3xl shadow-2xl object-cover w-full h-full min-h-[300px]"
               width="500"
               height="400"
+              loading="lazy"
             />
           </div>
         </div>
@@ -212,83 +203,40 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
   </section>
 
   <script is:inline>
-    (function() {
-      var tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(tag);
-      var player;
-      var unmuted = false;
-      var progressTimer;
-      window.onYouTubeIframeAPIReady = function() {
-        player = new YT.Player('vsl-player', {
-          videoId: 'Uvnv1sVRmpE',
-          playerVars: { autoplay: 1, mute: 1, controls: 0, rel: 0, modestbranding: 1, playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3 },
-          events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange }
-        });
-      };
-      function onPlayerReady(event) { event.target.playVideo(); startProgressTimer(); showControls(); }
-      function onPlayerStateChange(event) {
-        var iconPlay  = document.getElementById('icon-play');
-        var iconPause = document.getElementById('icon-pause');
-        if (event.data === YT.PlayerState.PLAYING) {
-          if (iconPlay)  iconPlay.style.display  = 'none';
-          if (iconPause) iconPause.style.display = '';
-          startProgressTimer();
-        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-          if (iconPlay)  iconPlay.style.display  = '';
-          if (iconPause) iconPause.style.display = 'none';
-          clearInterval(progressTimer);
-        }
+    function loadYouTube() {
+      // Remove facade
+      document.getElementById('vsl-facade').style.display = 'none';
+      document.getElementById('vsl-player').style.display = 'block';
+      
+      // Load YouTube API if not already loaded
+      if (!window.YT) {
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      } else {
+        onYouTubeIframeAPIReady();
       }
-      var overlay = document.getElementById('vsl-overlay');
-      if (overlay) {
-        overlay.addEventListener('click', function() {
-          if (!unmuted) { unmuted = true; if (player) player.unMute(); overlay.style.display = 'none'; }
-        });
-      }
-      var btnPlayPause = document.getElementById('vsl-playpause');
-      if (btnPlayPause) {
-        btnPlayPause.addEventListener('click', function() {
-          if (!player) return;
-          var state = player.getPlayerState();
-          if (state === YT.PlayerState.PLAYING) { player.pauseVideo(); } else { player.playVideo(); }
-        });
-      }
-      var btnRestart = document.getElementById('vsl-restart');
-      if (btnRestart) {
-        btnRestart.addEventListener('click', function() {
-          if (!player) return;
-          player.seekTo(0, true); player.playVideo();
-          if (!unmuted) { unmuted = true; player.unMute(); var ov = document.getElementById('vsl-overlay'); if (ov) ov.style.display = 'none'; }
-        });
-      }
-      function startProgressTimer() {
-        clearInterval(progressTimer);
-        progressTimer = setInterval(function() {
-          if (!player || typeof player.getCurrentTime !== 'function') return;
-          var duration = player.getDuration();
-          var current  = player.getCurrentTime();
-          if (duration > 0) {
-            var pct = (current / duration) * 100;
-            var bar = document.getElementById('vsl-progress-bar');
-            if (bar) bar.style.width = pct + '%';
+    }
+
+    window.onYouTubeIframeAPIReady = function() {
+      new YT.Player('vsl-player', {
+        videoId: 'Uvnv1sVRmpE',
+        playerVars: { 
+          autoplay: 1, 
+          mute: 0, 
+          controls: 1, 
+          rel: 0, 
+          modestbranding: 1, 
+          playsinline: 1 
+        },
+        events: {
+          'onReady': function(event) {
+            event.target.playVideo();
           }
-        }, 500);
-      }
-      function showControls() {
-        var controls = document.getElementById('vsl-controls');
-        var wrapper  = document.getElementById('vsl-wrapper');
-        if (!controls || !wrapper) return;
-        var hideTimer;
-        function show() {
-          controls.style.opacity = '1';
-          clearTimeout(hideTimer);
-          hideTimer = setTimeout(function() { controls.style.opacity = '0'; }, 3000);
         }
-        wrapper.addEventListener('mousemove', show);
-        wrapper.addEventListener('touchstart', show, { passive: true });
-      }
-    })();
+      });
+    };
   </script>
 
   <!-- [O QUE VOCÊ VAI TER] -->
@@ -351,12 +299,12 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
         <!-- Depoimentos de Alunos -->
         <h3 class="text-2xl font-bold mb-10 text-[#123A2B]">Resultados dos nossos alunos:</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <img src="/depoimentos-curso-CGDV/Comentário 9.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
-          <img src="/depoimentos-curso-CGDV/Comentário 10.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
-          <img src="/depoimentos-curso-CGDV/Comentário 11.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
-          <img src="/depoimentos-curso-CGDV/Comentário 12.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
-          <img src="/depoimentos-curso-CGDV/Comentário-13.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
-          <img src="/depoimentos-curso-CGDV/Comentário-14.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário 9.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" width="400" height="500" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário 10.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" width="400" height="500" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário 11.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" width="400" height="500" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário 12.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" width="400" height="500" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário-13.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" width="400" height="500" loading="lazy" />
+          <img src="/depoimentos-curso-CGDV/Comentário-14.jpg" alt="Depoimento Aluno" class="rounded-2xl shadow-lg w-full h-auto" width="400" height="500" loading="lazy" />
         </div>
       </div>
     </div>

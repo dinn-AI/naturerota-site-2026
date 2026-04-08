@@ -78,28 +78,48 @@ const {
       <link rel="preload" as="image" href={preloadLcpImage} fetchpriority="high" />
     )}
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <link
-      rel="preload"
-      as="font"
-      href="https://fonts.gstatic.com/s/dmserifdisplay/v21/jizfREFUsXFIH2BjXwM15qZHXgjV41dNgMzG.woff2"
-      type="font/woff2"
-      crossorigin
-    />
     <noscript>
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;600;700&display=swap"
       />
     </noscript>
+
+    <!-- Critical CSS (Above-the-fold) -->
+    <style is:inline>
+      :root {
+        --color-brand-green: #123A2B;
+        --font-serif: 'DM Serif Display', Georgia, serif;
+        --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+      }
+      body { 
+        margin: 0; 
+        background-color: #FFF8F2;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+      }
+      .bg-\[\#123A2B\] { background-color: var(--color-brand-green); }
+      .text-white { color: #fff; }
+      .font-serif { font-family: var(--font-serif); }
+      .fixed { position: fixed; }
+      .top-0 { top: 0; }
+      .left-0 { left: 0; }
+      .right-0 { right: 0; }
+      .z-50 { z-index: 50; }
+      .btn-primary { 
+        display: inline-flex; 
+        align-items: center; 
+        justify-content: center; 
+        border-radius: 1rem; 
+        font-weight: 700; 
+        transition: transform 0.2s;
+      }
+    </style>
+
+    <!-- Optimized Preconnect Hints -->
+    <link rel="preconnect" href="https://capi-automation.s3.us-east-2.amazonaws.com">
+    <link rel="preconnect" href="https://cdn.cookiehub.eu">
+    <link rel="preconnect" href="https://server-side-tagging-6nox5tu63a-uc.a.run.app">
   </head>
   <body class="min-h-screen text-gray-900 antialiased" style="background-color: #FFF8F2;">
 
@@ -365,28 +385,20 @@ const {
 
       // ===== EXECUTION STRATEGY =====
       
-      // Load GTM, GA4, TikTok after page load
-      if (document.readyState === 'loading') {
-        window.addEventListener('load', loadAnalytics);
-      } else {
-        // DOM already loaded
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadAnalytics, { timeout: 3000 });
-        } else {
-          setTimeout(loadAnalytics, 1000);
-        }
+      // Load GTM, GA4, TikTok after interaction or 3s delay
+      function initThirdParties() {
+        if (window._thirdPartyLoaded) return;
+        loadAnalytics();
+        loadMetaPixel();
       }
 
-      // Load Meta Pixel on first user interaction
-      document.addEventListener('pointerdown', loadMetaPixel, { once: true, capture: true });
-      document.addEventListener('scroll', loadMetaPixel, { once: true, capture: true });
+      // Delayed loading
+      setTimeout(initThirdParties, 4000);
 
-      // Fallback: load Meta Pixel after 5 seconds if no interaction
-      setTimeout(() => {
-        if (!window._metaPixelLoaded) {
-          loadMetaPixel();
-        }
-      }, 5000);
+      // Interaction loading
+      document.addEventListener('scroll', initThirdParties, { once: true, capture: true, passive: true });
+      document.addEventListener('pointerdown', initThirdParties, { once: true, capture: true });
+      document.addEventListener('touchstart', initThirdParties, { once: true, capture: true, passive: true });
     </script>
   </body>
 </html>
