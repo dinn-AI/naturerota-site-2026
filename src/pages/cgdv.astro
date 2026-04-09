@@ -16,7 +16,7 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
   <div class="fixed top-0 left-0 right-0 z-50 py-2 px-4 text-center shadow-lg" style="background-color: #CA7B50; color: white;">
     <p class="text-sm md:text-base font-bold">
       🔥 Oferta especial - De R$ 497 por R$ 257 SÓ HOJE! 
-      <span id="timer-count" class="ml-2 font-mono bg-white/20 px-2 py-0.5 rounded">15:00</span>
+      <span id="timer-count" class="ml-2 font-mono bg-black/30 px-2 py-0.5 rounded">15:00</span>
     </p>
   </div>
 
@@ -80,9 +80,16 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
           <div id="vsl-wrapper" class="relative w-full rounded-2xl overflow-hidden shadow-2xl mb-10 mx-auto max-w-3xl" style="padding-bottom: 56.25%; background: #000; cursor: pointer;">
             <div id="vsl-facade" class="absolute inset-0 w-full h-full z-10" onclick="loadYouTube()">
               <img 
-                src="https://i.ytimg.com/vi/Uvnv1sVRmpE/maxresdefault.jpg"
+                src="/curso-cgdv/vsl-thumb-700w.webp"
+                srcset="
+                  /curso-cgdv/vsl-thumb-400w.webp 400w,
+                  /curso-cgdv/vsl-thumb-700w.webp 700w
+                "
+                sizes="(max-width: 768px) 100vw, 700px"
                 alt="Assistir vídeo"
                 class="w-full h-full object-cover opacity-60"
+                width="700" 
+                height="394"
                 fetchpriority="high"
                 loading="eager"
               />
@@ -103,7 +110,7 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
             target="_blank"
             rel="noopener noreferrer"
             class="btn-primary inline-flex items-center justify-center text-center w-full max-w-md py-5 text-base sm:text-xl tracking-tight font-bold rounded-2xl shadow-2xl hover:scale-105 transition-transform"
-            style="background-color: #CA7B50; border-color: #CA7B50;"
+            style="background-color: #A85E35; border-color: #A85E35;"
           >
             QUERO SAIR DESSA VIDA
           </a>
@@ -315,8 +322,8 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto rounded-[3rem] border-8 border-[#123A2B] shadow-2xl relative">
         <div class="absolute -top-6 left-1/2 -translate-x-1/2 z-10 w-full max-w-[200px] flex justify-center">
-          <div class="absolute inset-0 bg-[#CA7B50]/40 rounded-full animate-ping"></div>
-          <div class="relative bg-[#CA7B50] text-white px-8 py-3 rounded-full font-bold tracking-wider whitespace-nowrap shadow-lg">
+          <div class="absolute inset-0 bg-[#A85E35]/40 rounded-full animate-ping"></div>
+          <div class="relative bg-[#A85E35] text-white px-8 py-3 rounded-full font-bold tracking-wider whitespace-nowrap shadow-lg">
             OFERTA ÚNICA
           </div>
         </div>
@@ -326,7 +333,7 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
           
           <div class="flex flex-col items-center gap-4 mb-10">
             <div class="bg-[#123A2B] rounded-3xl p-8 text-white w-full max-w-sm">
-              <span class="text-white/50 text-xl line-through mb-4 block">De R$ 497</span>
+              <span class="text-white/70 text-xl line-through mb-4 block">De R$ 497</span>
               <p class="text-xl mb-4">Por apenas</p>
               <p class="text-6xl font-bold mb-2">12x R$ 26,58</p>
               <p class="text-lg text-white/70">ou R$ 257 à vista SÓ HOJE!</p>
@@ -338,12 +345,12 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
             target="_blank"
             rel="noopener noreferrer"
             class="btn-primary inline-flex items-center justify-center text-center w-full max-w-md py-5 text-base sm:text-xl tracking-tight font-bold rounded-2xl shadow-2xl hover:scale-105 transition-transform mb-6"
-            style="background-color: #87A48E; border-color: #87A48E;"
+            style="background-color: #4A7C5F; border-color: #4A7C5F;"
           >
             QUERO COMEÇAR AGORA
           </a>
           
-          <img src="/curso-cgdv/Trabalho-remoto.avif" alt="Curso CGDV" class="w-full max-w-md mx-auto rounded-2xl mb-8" loading="lazy" />
+          <img src="/curso-cgdv/Trabalho-remoto.avif" alt="Curso CGDV" class="w-full max-w-md mx-auto rounded-2xl mb-8" width="448" height="300" loading="lazy" />
 
           <!-- [BÔNUS] -->
           <div class="bg-[#FFF8F2] p-8 rounded-3xl text-left border-2 border-dashed border-[#CA7B50]">
@@ -413,7 +420,7 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
           </ul>
         </div>
         <div class="relative">
-          <img src="/curso-cgdv/IMG_6289.avif" alt="Vida livre" class="rounded-[2rem] shadow-2xl border-8 border-white" loading="lazy" />
+          <img src="/curso-cgdv/IMG_6289.avif" alt="Vida livre" class="rounded-[2rem] shadow-2xl border-8 border-white" width="500" height="400" loading="lazy" />
         </div>
       </div>
     </div>
@@ -458,6 +465,8 @@ const checkoutUrl = "https://pay.hotmart.com/K105077150A?checkoutMode=10&bid=177
           src="/compra-segura-hotmart-w1000.png" 
           alt="Compra Segura Hotmart" 
           class="w-full max-w-2xl h-auto"
+          width="1000" 
+          height="200"
           loading="lazy"
         />
       </div>

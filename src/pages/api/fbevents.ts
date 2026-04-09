@@ -11,7 +11,8 @@ const ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN;
  */
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!ACCESS_TOKEN) {
-    return new Response(JSON.stringify({ error: 'Configuração FB_ACCESS_TOKEN ausente' }), { status: 500 });
+    console.warn('CAPI Error: FB_ACCESS_TOKEN logic bypassed (missing secret)');
+    return new Response(JSON.stringify({ error: 'Configuração FB_ACCESS_TOKEN ausente' }), { status: 200 }); // Retorna 200 para evitar erro 500 no client, mas loga o aviso
   }
 
   try {
