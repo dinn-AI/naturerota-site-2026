@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import OptimizedImage from "../components/OptimizedImage.astro";
 
 const checkoutUrl = "https://pay.hotmart.com/V104153173W";
 ---
@@ -11,7 +10,7 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
   type="product"
   hideNavigation={true}
   hideFooter={true}
-  preloadLcpImage="/EBOOKS/AYLA AVIF/Hard Cover Book.avif"
+  preloadLcpImage="/ebook-4-patas/husky-no-parque-800w.avif"
 >
   <!-- Hero -->
   <section class="relative overflow-visible" style="background-color: #A4D0AF;">
@@ -41,13 +40,18 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
           </a>
         </div>
 
-        <!-- Mockup do ebook (metade no hero, metade sobre a próxima seção) -->
+        <!-- Hero image (LCP) -->
         <div class="mt-12 flex justify-center -mb-44 md:-mb-56 relative z-10">
-          <OptimizedImage
-            src="/EBOOKS/AYLA AVIF/Hard Cover Book.avif"
-            alt="Mockup do e-book 4 Patas na Estrada"
+          <img
+            src="/ebook-4-patas/husky-no-parque-800w.avif"
+            srcset="/ebook-4-patas/husky-no-parque-400w.avif 400w, /ebook-4-patas/husky-no-parque-800w.avif 800w"
+            sizes="(max-width: 768px) 100vw, 672px"
+            alt="Ayla, a Husky Siberiana, explorando o parque com amanhecer ao fundo"
             class="w-full max-w-xl md:max-w-2xl h-auto drop-shadow-2xl rounded-2xl"
+            width="800"
+            height="1067"
             loading="eager"
+            fetchpriority="high"
             decoding="async"
           />
         </div>
@@ -81,10 +85,14 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
 
         <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
           <div class="aspect-[4/5] rounded-xl overflow-hidden bg-gray-100">
-            <OptimizedImage
-              src="/EBOOKS/AYLA AVIF/IMG_2950.avif"
-              alt="Ayla na Kombi Catarina - vida feliz na estrada"
+            <img
+              src="/ebook-4-patas/kombi-catarina-800w.avif"
+              srcset="/ebook-4-patas/kombi-catarina-400w.avif 400w, /ebook-4-patas/kombi-catarina-800w.avif 800w"
+              sizes="(max-width: 1024px) 100vw, 480px"
+              alt="A Kombi Catarina — a casa sobre rodas da família Naturerota"
               class="w-full h-full object-cover"
+              width="800"
+              height="1067"
               loading="lazy"
               decoding="async"
             />
@@ -120,11 +128,15 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
             </p>
           </div>
           <div class="relative">
-            <OptimizedImage
-              src="/EBOOKS/AYLA AVIF/IMG_5045.avif"
-              alt="Renan, Millena e Ayla - família viajante"
+            <img
+              src="/ebook-4-patas/millena-na-montanha-800w.avif"
+              srcset="/ebook-4-patas/millena-na-montanha-400w.avif 400w, /ebook-4-patas/millena-na-montanha-800w.avif 800w"
+              sizes="(max-width: 1024px) 100vw, 500px"
+              alt="Millena nas Torres del Paine, Patagônia chilena"
               class="w-full rounded-2xl shadow-lg object-cover"
               style="max-height: 520px;"
+              width="800"
+              height="1067"
               loading="lazy"
               decoding="async"
             />
@@ -188,10 +200,14 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
           </div>
 
           <div class="lg:sticky lg:top-24">
-            <OptimizedImage
-              src="/EBOOKS/AYLA AVIF/7DFEB5C5-EAE1-4D34-999C-C57DE9059352.avif"
-              alt="Ayla aproveitando a liberdade na estrada"
+            <img
+              src="/ebook-4-patas/husky-no-ombro-800w.avif"
+              srcset="/ebook-4-patas/husky-no-ombro-400w.avif 400w, /ebook-4-patas/husky-no-ombro-800w.avif 800w"
+              sizes="(max-width: 1024px) 100vw, 500px"
+              alt="Ayla, a Husky, aproveitando a liberdade na estrada"
               class="w-full max-w-md lg:max-w-none mx-auto rounded-2xl shadow-lg object-cover"
+              width="800"
+              height="1067"
               loading="lazy"
               decoding="async"
             />
@@ -209,10 +225,14 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-            <OptimizedImage
-              src="/EBOOKS/AYLA AVIF/IMG_3185.avif"
-              alt="Liberdade viajando com pet"
+            <img
+              src="/ebook-4-patas/kombi-na-estrada-400w.avif"
+              srcset="/ebook-4-patas/kombi-na-estrada-400w.avif 400w, /ebook-4-patas/kombi-na-estrada-800w.avif 800w"
+              sizes="(max-width: 768px) 100vw, 400px"
+              alt="Liberdade viajando com pet na estrada"
               class="w-full h-40 object-cover rounded-xl mb-5"
+              width="400"
+              height="267"
               loading="lazy"
               decoding="async"
             />
@@ -224,10 +244,14 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
             </p>
           </div>
           <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-            <OptimizedImage
-              src="/EBOOKS/AYLA AVIF/IMG_4789.avif"
-              alt="Roteiros planejados para pets"
+            <img
+              src="/ebook-4-patas/renan-na-montanha-400w.avif"
+              srcset="/ebook-4-patas/renan-na-montanha-400w.avif 400w, /ebook-4-patas/renan-na-montanha-800w.avif 800w"
+              sizes="(max-width: 768px) 100vw, 400px"
+              alt="Roteiros planejados para aventuras com pets"
               class="w-full h-40 object-cover rounded-xl mb-5"
+              width="400"
+              height="267"
               loading="lazy"
               decoding="async"
             />
@@ -239,10 +263,14 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
             </p>
           </div>
           <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-            <OptimizedImage
-              src="/EBOOKS/AYLA AVIF/IMG_4414.avif"
+            <img
+              src="/ebook-4-patas/familia-na-praia-400w.avif"
+              srcset="/ebook-4-patas/familia-na-praia-400w.avif 400w, /ebook-4-patas/familia-na-praia-800w.avif 800w"
+              sizes="(max-width: 768px) 100vw, 400px"
               alt="Segurança em viagens com pets"
               class="w-full h-40 object-cover rounded-xl mb-5"
+              width="400"
+              height="267"
               loading="lazy"
               decoding="async"
             />
@@ -276,10 +304,13 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
 
         <div class="rounded-2xl border border-gray-200 p-8 md:p-10 shadow-sm bg-white">
           <div class="flex justify-center mb-6">
-            <OptimizedImage
-              src="/EBOOKS/AYLA AVIF/Capa_ebook-Vida_na_Estrada_com_Pets.avif"
-              alt="Guia 4 Patas na Estrada"
+            <!-- Ebook cover: using the SVG product cover -->
+            <img
+              src="/products_cover/Vida_na_Estrada_com_Pets.svg"
+              alt="Guia 4 Patas na Estrada — capa do e-book"
               class="w-full max-w-[260px] h-auto drop-shadow-xl rounded-xl"
+              width="260"
+              height="340"
               loading="lazy"
               decoding="async"
             />
@@ -318,11 +349,15 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
     <div class="container mx-auto px-4">
       <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div class="relative">
-          <OptimizedImage
-            src="/EBOOKS/AYLA AVIF/IMG_4005.avif"
-            alt="Renan, Millena e Ayla - a família Naturerota"
+          <img
+            src="/ebook-4-patas/renan-no-por-do-sol-800w.avif"
+            srcset="/ebook-4-patas/renan-no-por-do-sol-400w.avif 400w, /ebook-4-patas/renan-no-por-do-sol-800w.avif 800w"
+            sizes="(max-width: 1024px) 100vw, 500px"
+            alt="Renan contemplando o pôr do sol na praia — a essência do estilo de vida Naturerota"
             class="w-full rounded-2xl shadow-lg object-cover"
             style="max-height: 520px;"
+            width="800"
+            height="1067"
             loading="lazy"
             decoding="async"
           />
@@ -394,10 +429,14 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
     <div class="container mx-auto px-4">
       <div class="max-w-3xl mx-auto text-center">
         <div class="mb-8">
-          <OptimizedImage
-            src="/EBOOKS/AYLA AVIF/IMG_7093.avif"
-            alt="Ayla feliz na estrada"
+          <img
+            src="/ebook-4-patas/familia-na-praia-800w.avif"
+            srcset="/ebook-4-patas/familia-na-praia-400w.avif 400w, /ebook-4-patas/familia-na-praia-800w.avif 800w"
+            sizes="(max-width: 768px) 100vw, 672px"
+            alt="A família Naturerota — pronta para a próxima aventura"
             class="w-full max-w-md mx-auto rounded-2xl shadow-lg object-cover"
+            width="800"
+            height="1067"
             loading="lazy"
             decoding="async"
           />

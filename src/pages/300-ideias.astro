@@ -1,0 +1,186 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const checkoutUrl = "https://pay.hotmart.com/H105338285C?checkoutMode=10";
+---
+
+<Layout
+  title="Elimine o MEDO DA FALTA DE DINHEIRO para viver na estrada"
+  description="Descubra 300 formas reais de ganhar dinheiro viajando. Trabalhos manuais, produtos para vender e profissões remotas — tudo num guia por apenas R$ 19,90 SOMENTE HOJE!."
+  type="product"
+  hideNavigation={true}
+  hideFooter={true}
+  preloadLcpImage="/300-ideias-de-renda/capa-guia-300-ideias.avif"
+>
+  <!-- [BARRA TOPO — fixada, z-50] -->
+  <div class="fixed top-0 left-0 right-0 z-50 py-2 px-4 text-center shadow-lg" style="background-color: #CA7B50; color: white;">
+    <p class="text-sm md:text-base font-bold">
+      🔥 Oferta relâmpago — De R$ 97,90 por R$ 19,90 SÓ HOJE!
+      <span id="timer-300" class="ml-2 font-mono bg-black/30 px-2 py-0.5 rounded">15:00</span>
+    </p>
+  </div>
+
+  <script is:inline>
+    (function() {
+      const KEY = '300ideias-countdown-v1';
+      let t = parseInt(localStorage.getItem(KEY), 10);
+      if (!t || t <= 0) t = 900;
+      function tick() {
+        t--;
+        if (t <= 0) t = 900;
+        localStorage.setItem(KEY, t);
+        const el = document.getElementById('timer-300');
+        if (el) el.innerText = Math.floor(t/60) + ':' + String(t%60).padStart(2,'0');
+      }
+      setInterval(tick, 1000);
+      const el = document.getElementById('timer-300');
+      if (el) el.innerText = Math.floor(t/60) + ':' + String(t%60).padStart(2,'0');
+    })();
+  </script>
+
+  <!-- [DOBRA 1 — HERO] -->
+  <section class="pt-20 pb-16 bg-[#123A2B] text-white overflow-hidden">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center mt-4">
+        <h1 class="text-2xl md:text-4xl font-serif text-white leading-tight mb-6">
+          Elimine o MEDO DA FALTA DE DINHEIRO para viver na estrada
+        </h1>
+        <p class="text-lg md:text-xl text-white/80 mb-10 max-w-3xl mx-auto">
+          Descubra 300 formas reais de ganhar dinheiro viajando. Trabalhos manuais, produtos para vender e profissões remotas — tudo num guia por apenas R$ 19,90 SOMENTE HOJE!.
+        </p>
+
+        <!-- Imagem Principal -->
+        <img 
+          src="/300-ideias-de-renda/capa-guia-300-ideias.avif"
+          sizes="(max-width: 768px) 100vw, 800px"
+          alt="Guia 300 Ideias de Renda na Estrada" 
+          class="w-full max-w-2xl mx-auto mb-12"
+          width="1576"
+          height="1192"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+
+        <!-- 3 bullets visuais -->
+        <div class="space-y-4 mb-12 text-left max-w-2xl mx-auto">
+          <div class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#4A7C5F] flex items-center justify-center text-white font-bold">✓</span>
+            <p class="text-lg text-white/80"><strong>100 profissões manuais</strong> — pra quem quer trabalhar com as mãos</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#4A7C5F] flex items-center justify-center text-white font-bold">✓</span>
+            <p class="text-lg text-white/80"><strong>100 produtos para vender</strong> — do artesanato ao digital</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#4A7C5F] flex items-center justify-center text-white font-bold">✓</span>
+            <p class="text-lg text-white/80"><strong>100 profissões remotas</strong> — do nível iniciante ao avançado</p>
+          </div>
+        </div>
+
+        <!-- Bloco de preço + CTA -->
+        <div class="max-w-md mx-auto mt-12 block">
+          <p class="text-white/60 text-lg line-through mb-1">De R$ 97,90</p>
+          <p class="text-lg mb-1">Por apenas</p>
+          <p class="text-5xl font-black text-[#CA7B50] mb-2">R$ 19,90</p>
+          <p class="text-sm text-white/60 mb-8">Acesso imediato. Pague uma vez.</p>
+
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary inline-flex items-center justify-center text-center w-full py-5 text-xl font-bold rounded-2xl shadow-2xl hover:scale-105 transition-transform"
+            style="background-color: #A85E35; border-color: #A85E35;"
+          >
+            QUERO AS 300 IDEIAS AGORA →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [PROVA SOCIAL / VIDA NA ESTRADA] -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-serif text-[#123A2B] mb-6">A realidade que vivemos na estrada</h2>
+        <p class="text-xl text-gray-700">Com o guia em mãos, você descobre e entende as mesmas ideias que nós e milhares de outros viajantes usam para manter e financiar a vida de van no dia a dia.</p>
+      </div>
+      <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <img src="/300-ideias-de-renda/trabalho-manual.avif" alt="Trabalho manual na estrada" class="w-full h-auto rounded-3xl shadow-xl object-cover hover:scale-[1.02] transition-transform" width="800" height="auto" loading="lazy" decoding="async" />
+        <img src="/300-ideias-de-renda/trabalho-manual-1.avif" alt="Trabalho manual na estrada" class="w-full h-auto rounded-3xl shadow-xl object-cover hover:scale-[1.02] transition-transform" width="800" height="auto" loading="lazy" decoding="async" />
+        <img src="/300-ideias-de-renda/trabalho-remoto.avif" alt="Trabalho remoto na estrada" class="w-full h-auto rounded-3xl shadow-xl object-cover hover:scale-[1.02] transition-transform" width="800" height="auto" loading="lazy" decoding="async" />
+        <img src="/300-ideias-de-renda/trabalho-remoto1.avif" alt="Trabalho remoto na estrada" class="w-full h-auto rounded-3xl shadow-xl object-cover hover:scale-[1.02] transition-transform" width="800" height="auto" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <!-- [DOBRA 2 — OFERTA + GARANTIA + CTA FINAL] -->
+  <section class="py-20 bg-[#FFF8F2]">
+    <div class="container mx-auto px-4">
+      
+      <!-- Texto âncora -->
+      <p class="text-center text-xl text-gray-700 max-w-2xl mx-auto mb-16">
+        Não é um curso. Não tem módulo. Não tem aula.
+        É um guia direto ao ponto — você abre, identifica o que 
+        combina com o seu perfil e já sabe por onde começar.
+      </p>
+
+      <!-- Caixa de oferta -->
+      <div class="bg-[#123A2B] text-white rounded-3xl p-8 max-w-sm mx-auto text-center mb-16 shadow-2xl">
+        <span class="block mb-2 text-white/80 text-lg">De R$ 97,90 por apenas</span>
+        <span class="text-6xl font-black block mb-4">R$ 19,90</span>
+        <span class="block mb-8 text-white/70 text-sm">Acesso imediato · Pagamento único</span>
+        
+        <a
+          href={checkoutUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary inline-flex items-center justify-center text-center w-full py-5 text-lg font-bold rounded-2xl shadow-lg hover:scale-105 transition-transform"
+          style="background-color: #CA7B50; border-color: #CA7B50;"
+        >
+          GARANTIR MEU ACESSO POR R$ 19,90 →
+        </a>
+      </div>
+
+      <div class="max-w-3xl mx-auto text-center mb-16 space-y-4">
+        <h3 class="text-2xl md:text-3xl font-serif text-[#123A2B] leading-tight">
+          Você quer sair na estrada — mas trava quando alguém pergunta: e o dinheiro, como vai ficar?
+        </h3>
+        <p class="text-lg md:text-xl text-gray-700">
+          A maioria das pessoas adia a viagem da vida por não saber como se sustentar. Esse guia resolve isso — com 300 formas reais, testadas por quem já vive assim.
+        </p>
+      </div>
+
+      <!-- Bloco garantia -->
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 bg-[#123A2B] text-white rounded-3xl p-8 max-w-2xl mx-auto mb-16 shadow-xl text-center md:text-left">
+        <div class="flex-shrink-0 w-32 h-32 bg-[#CA7B50] rounded-full border-8 border-white flex flex-col items-center justify-center shadow-lg">
+          <span class="text-5xl font-black leading-none mt-2">30</span>
+          <span class="text-xl font-bold">DIAS</span>
+        </div>
+        <div class="max-w-md">
+          <p class="text-xl md:text-2xl font-bold mb-2">Não gostou por qualquer motivo?</p>
+          <p class="text-white/80 text-lg">100% do seu dinheiro de volta. Sem perguntas.</p>
+        </div>
+      </div>
+
+      <!-- Rodapé mínimo -->
+      <div class="text-center text-gray-400 text-sm max-w-2xl mx-auto">
+        <p class="mb-8">
+          Pagamento 100% seguro via Hotmart.<br/>
+          Acesso liberado imediatamente após confirmação.
+        </p>
+        <img 
+          src="/compra-segura-hotmart.webp" 
+          alt="Compra Segura Hotmart" 
+          class="w-full max-w-2xl h-auto mx-auto"
+          loading="lazy" 
+          decoding="async"
+          width="1000" 
+          height="300" 
+        />
+      </div>
+      
+    </div>
+  </section>
+</Layout>
