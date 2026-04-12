@@ -183,4 +183,33 @@ const checkoutUrl = "https://pay.hotmart.com/H105338285C?checkoutMode=10";
       
     </div>
   </section>
+  <script is:inline src="https://static.hotmart.com/checkout/widget.min.js"></script>
+
+  <script is:inline>
+    (function () {
+      var checkoutLinks = document.querySelectorAll('a[href*="pay.hotmart.com"]');
+      checkoutLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'InitiateCheckout',
+            ecommerce: {
+              currency: 'BRL',
+              value: 19.90,
+              items: [{ item_id: 'H105338285C', item_name: '300 Ideias de Rendas na Estrada', price: 19.90, quantity: 1 }]
+            }
+          });
+          if (typeof fbq === 'function') {
+            fbq('track', 'InitiateCheckout', {
+              currency: 'BRL',
+              value: 19.90,
+              content_ids: ['H105338285C'],
+              content_type: 'product',
+              num_items: 1
+            });
+          }
+        });
+      });
+    })();
+  </script>
 </Layout>
