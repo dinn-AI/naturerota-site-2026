@@ -2,6 +2,10 @@
   "name": "superior-shepherd",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.18.1",
   "scripts": {
     "dev": "astro dev",
     "build": "node scripts/prepare-public.mjs && ASTRO_PUBLIC_BUILD_DIR=.public-build astro build",
