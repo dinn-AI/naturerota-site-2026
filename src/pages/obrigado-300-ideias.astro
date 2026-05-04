@@ -3,7 +3,19 @@ import Layout from "../layouts/Layout.astro";
 
 const cgdvUrl = "/cgdv-300";
 ---
-<script is:inline>window.location.href = "/cgdv-300";</script>
+<script is:inline>
+  // Captura dados do comprador antes do redirect
+  (function() {
+    try {
+      var urlParams = new URLSearchParams(window.location.search);
+      var buyerEmail = urlParams.get('buyer_email') || urlParams.get('email') || '';
+      var buyerPhone = urlParams.get('buyer_phone') || urlParams.get('phone') || '';
+      if (buyerEmail) window.localStorage.setItem('user_email', buyerEmail.toLowerCase().trim());
+      if (buyerPhone) window.localStorage.setItem('user_phone', buyerPhone.replace(/\D/g, ''));
+    } catch(e) {}
+  })();
+  window.location.href = "/cgdv-300";
+</script>
 
 <Layout
   title="Compra confirmada! — Naturerota"

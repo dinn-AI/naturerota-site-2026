@@ -37,22 +37,80 @@ import Layout from "../../layouts/Layout.astro";
 
       var params = new URLSearchParams(window.location.search);
       var transactionId = params.get("transaction_id") || params.get("tid") || "";
+      var buyerEmail = params.get('buyer_email') || params.get('email') || '';
+      var buyerPhone = params.get('buyer_phone') || params.get('phone') || '';
+      var buyerName  = params.get('buyer_name')  || params.get('name')  || '';
+      var purchaseValue = parseFloat(params.get('value') || '47.00');
+
+      // Persiste dados do comprador no localStorage
+      if (buyerEmail) window.localStorage.setItem('user_email', buyerEmail.toLowerCase().trim());
+      if (buyerPhone) window.localStorage.setItem('user_phone', buyerPhone.replace(/\D/g, ''));
 
       // Evita duplicar conversão em refresh (por sessão)
-      var storageKey = "nr_gads_conv_sent_" + sendTo + "_" + (transactionId || "no_tid");
+      var storageKey = "nr_conv_sent_" + (transactionId || "no_tid");
       try {
         if (sessionStorage.getItem(storageKey)) return;
         sessionStorage.setItem(storageKey, "1");
       } catch (e) {}
 
-      if (typeof window.gtag !== "function") return;
+      // ===== Google Ads conversion =====
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "conversion", {
+          send_to: sendTo,
+          value: value,
+          currency: currency,
+          transaction_id: transactionId,
+        });
+      }
 
-      window.gtag("event", "conversion", {
-        send_to: sendTo,
-        value: value,
-        currency: currency,
-        transaction_id: transactionId,
-      });
+      // ===== Meta Pixel Purchase =====
+      function firePurchase() {
+        if (typeof window.fbq !== 'function') return;
+        var matchData = {};
+        var em = window.localStorage.getItem('user_email');
+        var ph = window.localStorage.getItem('user_phone');
+        if (em) matchData.em = em;
+        if (ph) matchData.ph = ph;
+        if (buyerName) {
+          var parts = buyerName.trim().split(' ');
+          if (parts[0]) matchData.fn = parts[0];
+          if (parts.length > 1) matchData.ln = parts[parts.length - 1];
+        }
+
+        var event_id = 'purchase_bonito_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+        window.fbq('init', '1398654025074894', matchData);
+        window.fbq('track', 'Purchase', {
+          value: purchaseValue,
+          currency: 'BRL',
+          event_id: event_id
+        });
+
+        // CAPI server-side
+        var capiUserData = { client_user_agent: navigator.userAgent };
+        if (matchData.em) capiUserData.em = matchData.em;
+        if (matchData.ph) capiUserData.ph = matchData.ph;
+        fetch('/api/fbevents', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_name: 'Purchase',
+            event_id: event_id,
+            event_source_url: window.location.href,
+            custom_data: { value: purchaseValue, currency: 'BRL' },
+            user_data: capiUserData
+          })
+        }).catch(function(err) { console.error('Erro CAPI:', err); });
+      }
+
+      // Aguarda pixel carregar (lazy load do Layout)
+      var attempts = 0;
+      var checkPixel = setInterval(function() {
+        attempts++;
+        if (typeof window.fbq === 'function' || attempts > 60) {
+          clearInterval(checkPixel);
+          if (typeof window.fbq === 'function') firePurchase();
+        }
+      }, 500);
     })();
   </script>
 </Layout>

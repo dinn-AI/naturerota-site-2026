@@ -307,5 +307,22 @@ const checkoutUrl = "https://pay.hotmart.com/T98534013N";
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    (function() {
+      document.querySelectorAll('a[href*="pay.hotmart.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'InitiateCheckout',
+            ecommerce: { currency: 'BRL', value: 19.90, items: [{ item_id: 'T98534013N', item_name: 'Bonito em 4 Dias — Ebook', price: 19.90, quantity: 1 }] }
+          });
+          if (typeof window.fbq === 'function') {
+            window.fbq('track', 'InitiateCheckout', { currency: 'BRL', value: 19.90, content_ids: ['T98534013N'], content_name: 'Bonito em 4 Dias — Ebook', content_type: 'product', num_items: 1 });
+          }
+        });
+      });
+    })();
+  </script>
 </Layout>
 

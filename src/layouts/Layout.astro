@@ -354,14 +354,23 @@ const {
 
         const event_id = 'pageview_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
 
-        fbq('init', '1398654025074894', {
-          em: window.localStorage.getItem('user_email') || '', // Tenta capturar e-mail do localStorage se disponível
-          ph: window.localStorage.getItem('user_phone') || ''  // Tenta capturar telefone do localStorage se disponível
-        });
+        // Correspondência Avançada Manual: só inclui campos quando há valores reais
+        // Campos vazios ('') geram hashes inválidos e prejudicam a correspondência
+        var pixelAdvancedMatch = {};
+        var storedEmail = window.localStorage.getItem('user_email');
+        var storedPhone = window.localStorage.getItem('user_phone');
+        if (storedEmail) pixelAdvancedMatch.em = storedEmail;
+        if (storedPhone) pixelAdvancedMatch.ph = storedPhone;
+
+        fbq('init', '1398654025074894', pixelAdvancedMatch);
         fbq('track', 'PageView', { event_id: event_id });
 
         // Envia para o nosso proxy da API de Conversões (Server-side)
         // Isso garante o envio de IPv6 via Vercel Edge
+        var capiUserData = { client_user_agent: navigator.userAgent };
+        if (storedEmail) capiUserData.em = storedEmail;
+        if (storedPhone) capiUserData.ph = storedPhone;
+
         fetch('/api/fbevents', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -369,12 +378,20 @@ const {
             event_name: 'PageView',
             event_id: event_id,
             event_source_url: window.location.href,
-            user_data: {
-              em: window.localStorage.getItem('user_email') || '',
-              ph: window.localStorage.getItem('user_phone') || ''
-            }
+            user_data: capiUserData
           })
         }).catch(err => console.error('Erro CAPI:', err));
+
+        // Tenta capturar dados do comprador via parâmetros de URL (Hotmart passa buyer_email após compra)
+        (function() {
+          try {
+            var urlParams = new URLSearchParams(window.location.search);
+            var buyerEmail = urlParams.get('buyer_email') || urlParams.get('email');
+            var buyerPhone = urlParams.get('buyer_phone') || urlParams.get('phone');
+            if (buyerEmail) window.localStorage.setItem('user_email', buyerEmail.toLowerCase().trim());
+            if (buyerPhone) window.localStorage.setItem('user_phone', buyerPhone.replace(/\D/g, ''));
+          } catch(e) {}
+        })();
       }
 
       // ===== EXECUTION STRATEGY =====

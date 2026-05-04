@@ -617,4 +617,21 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
       </p>
     </div>
   </footer>
+
+  <script is:inline>
+    (function() {
+      document.querySelectorAll('a[href*="pay.hotmart.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'InitiateCheckout',
+            ecommerce: { currency: 'BRL', value: 57.90, items: [{ item_id: 'U98520938Y', item_name: '20 Dias de Carro pela Patagônia — Ebook', price: 57.90, quantity: 1 }] }
+          });
+          if (typeof window.fbq === 'function') {
+            window.fbq('track', 'InitiateCheckout', { currency: 'BRL', value: 57.90, content_ids: ['U98520938Y'], content_name: '20 Dias de Carro pela Patagônia — Ebook', content_type: 'product', num_items: 1 });
+          }
+        });
+      });
+    })();
+  </script>
 </Layout>

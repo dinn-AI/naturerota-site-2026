@@ -481,4 +481,21 @@ const checkoutUrl = "https://pay.hotmart.com/V104153173W";
       </div>
     </div>
   </footer>
+
+  <script is:inline>
+    (function() {
+      document.querySelectorAll('a[href*="pay.hotmart.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'InitiateCheckout',
+            ecommerce: { currency: 'BRL', value: 19.90, items: [{ item_id: 'V104153173W', item_name: '4 Patas na Estrada — Ebook', price: 19.90, quantity: 1 }] }
+          });
+          if (typeof window.fbq === 'function') {
+            window.fbq('track', 'InitiateCheckout', { currency: 'BRL', value: 19.90, content_ids: ['V104153173W'], content_name: '4 Patas na Estrada — Ebook', content_type: 'product', num_items: 1 });
+          }
+        });
+      });
+    })();
+  </script>
 </Layout>

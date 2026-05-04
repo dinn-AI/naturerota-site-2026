@@ -435,4 +435,21 @@ const checkoutUrl = "https://pay.hotmart.com/U104159298C";
       </div>
     </div>
   </footer>
+
+  <script is:inline>
+    (function() {
+      document.querySelectorAll('a[href*="pay.hotmart.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'InitiateCheckout',
+            ecommerce: { currency: 'BRL', value: 19.90, items: [{ item_id: 'U104159298C', item_name: 'Rota Bahia Motorhome — Ebook', price: 19.90, quantity: 1 }] }
+          });
+          if (typeof window.fbq === 'function') {
+            window.fbq('track', 'InitiateCheckout', { currency: 'BRL', value: 19.90, content_ids: ['U104159298C'], content_name: 'Rota Bahia Motorhome — Ebook', content_type: 'product', num_items: 1 });
+          }
+        });
+      });
+    })();
+  </script>
 </Layout>

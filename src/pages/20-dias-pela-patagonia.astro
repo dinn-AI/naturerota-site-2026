@@ -686,5 +686,36 @@ const checkoutUrl = "https://pay.hotmart.com/U98520938Y?checkoutMode=10";
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    // InitiateCheckout — dispara quando usuário clica em qualquer link de checkout
+    (function() {
+      document.querySelectorAll('a[href*="pay.hotmart.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          // GTM DataLayer
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'InitiateCheckout',
+            ecommerce: {
+              currency: 'BRL',
+              value: 57.90,
+              items: [{ item_id: 'U98520938Y', item_name: '20 Dias pela Patagônia — Ebook', price: 57.90, quantity: 1 }]
+            }
+          });
+          // Meta Pixel
+          if (typeof window.fbq === 'function') {
+            window.fbq('track', 'InitiateCheckout', {
+              currency: 'BRL',
+              value: 57.90,
+              content_ids: ['U98520938Y'],
+              content_name: '20 Dias pela Patagônia — Ebook',
+              content_type: 'product',
+              num_items: 1
+            });
+          }
+        });
+      });
+    })();
+  </script>
 </Layout>
 

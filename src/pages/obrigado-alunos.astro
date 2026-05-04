@@ -85,5 +85,50 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
+  <script is:inline>
+    // Captura dados do comprador da URL (Hotmart passa após compra) e salva para o Meta Pixel
+    (function() {
+      try {
+        var urlParams = new URLSearchParams(window.location.search);
+        // Hotmart pode passar: buyer_email, buyer_name, buyer_phone
+        var buyerEmail = urlParams.get('buyer_email') || urlParams.get('email');
+        var buyerPhone = urlParams.get('buyer_phone') || urlParams.get('phone');
+        var buyerName  = urlParams.get('buyer_name')  || urlParams.get('name');
+
+        if (buyerEmail) window.localStorage.setItem('user_email', buyerEmail.toLowerCase().trim());
+        if (buyerPhone) window.localStorage.setItem('user_phone', buyerPhone.replace(/\D/g, ''));
+
+        // Dispara evento Purchase com correspondência avançada assim que o pixel carregar
+        function firePurchase() {
+          if (typeof window.fbq !== 'function') return;
+          var matchData = {};
+          var em = window.localStorage.getItem('user_email');
+          var ph = window.localStorage.getItem('user_phone');
+          if (em) matchData.em = em;
+          if (ph) matchData.ph = ph;
+          if (buyerName) {
+            var parts = buyerName.trim().split(' ');
+            matchData.fn = parts[0];
+            if (parts.length > 1) matchData.ln = parts[parts.length - 1];
+          }
+          window.fbq('init', '1398654025074894', matchData);
+          window.fbq('track', 'Purchase', {
+            value: 147.00,
+            currency: 'BRL'
+          });
+        }
+
+        // Aguarda o pixel estar disponível (carregado pela estratégia lazy do Layout)
+        var attempts = 0;
+        var checkPixel = setInterval(function() {
+          attempts++;
+          if (typeof window.fbq === 'function' || attempts > 60) {
+            clearInterval(checkPixel);
+            if (typeof window.fbq === 'function') firePurchase();
+          }
+        }, 500);
+      } catch(e) {}
+    })();
+  </script>
 
 </Layout>

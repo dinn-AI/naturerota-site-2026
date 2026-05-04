@@ -17,7 +17,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   try {
     const body = await request.json();
-    const { event_name, event_id, event_source_url, user_data } = body;
+    const { event_name, event_id, event_source_url, user_data, custom_data } = body;
 
     // Captura o IP do cliente (Vercel injeta isso, priorizando IPv6 se disponível)
     const client_ip_address = clientAddress || request.headers.get('x-forwarded-for')?.split(',')[0].trim();
@@ -37,6 +37,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
             client_user_agent: client_user_agent,
             ...user_data,
           },
+          // custom_data é necessário para eventos Purchase (value, currency, etc.)
+          ...(custom_data ? { custom_data } : {}),
         },
       ],
     };
