@@ -251,32 +251,8 @@ export const Carousel = ({
     }
   };
 
-  // Touch handlers for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!carouselRef.current) return;
-    setIsDragging(true);
-    setHasDragged(false);
-    setStartX(e.touches[0].pageX - carouselRef.current.offsetLeft);
-    setScrollLeft(carouselRef.current.scrollLeft);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !carouselRef.current) return;
-    const x = e.touches[0].pageX - carouselRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    
-    // If moved more than 5px, consider it a drag
-    if (Math.abs(walk) > 5) {
-      setHasDragged(true);
-    }
-    
-    carouselRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    setTimeout(() => setHasDragged(false), 100);
-  };
+  // Touch handlers for mobile - removidos para permitir scroll nativo puro no mobile
+  // O CSS com overflow-x-scroll e snap-x vai cuidar disso perfeitamente e mais fluido
 
   return (
     <CarouselContext.Provider
@@ -285,11 +261,13 @@ export const Carousel = ({
       <div className="relative w-full overflow-hidden">
         <div
           className={cn(
-            "flex w-full overflow-x-scroll overscroll-x-auto pt-14 pb-40 [scrollbar-width:none] md:pt-20 md:pb-40 select-none overflow-y-hidden",
+            "flex w-full overflow-x-scroll overscroll-x-auto pt-14 pb-40 [scrollbar-width:none] md:pt-20 md:pb-40 select-none overflow-y-hidden snap-x snap-mandatory",
             !isDragging && "scroll-smooth"
           )}
           style={{
-            cursor: "grab",
+            cursor: isDragging ? "grabbing" : "grab",
+            touchAction: "pan-x pan-y",
+            WebkitOverflowScrolling: "touch",
           }}
           ref={carouselRef}
           onScroll={() => {
@@ -298,16 +276,9 @@ export const Carousel = ({
             handleInfiniteLoop();
           }}
           onMouseDown={handleMouseDown}
-          onMouseUp={() => {
-            handleMouseUp();
-          }}
+          onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={() => {
-            handleTouchEnd();
-          }}
         >
           <div
             className={cn(
@@ -334,7 +305,7 @@ export const Carousel = ({
                 }}
                 key={"card" + index}
                 className={cn(
-                  "relative shrink-0 rounded-3xl transition-all duration-300",
+                  "relative shrink-0 rounded-3xl transition-all duration-300 snap-start",
                   !infinite && "last:mr-[5%] md:last:mr-[33%]",
                   variant === "playlist" &&
                     (isActive ? "scale-100 opacity-100" : "scale-[0.9] opacity-70"),
