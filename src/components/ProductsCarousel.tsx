@@ -68,8 +68,10 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
     }
   }, [currentIndex, products.length, scrollToIndex]);
 
-  // Drag handlers
+  // Drag handlers (apenas para mouse, touch usa scroll nativo)
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.pointerType !== 'mouse') return; // Deixa o touch nativo funcionar no mobile
+    
     // Se o clique foi em um card com href, não iniciar drag
     const target = e.target as HTMLElement;
     const cardElement = target.closest('[data-product-card]');
@@ -88,7 +90,7 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
   }, []);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!isDragging || !carouselRef.current) return;
+    if (e.pointerType !== 'mouse' || !isDragging || !carouselRef.current) return;
     e.preventDefault();
     
     const x = e.pageX - carouselRef.current.offsetLeft;
@@ -102,7 +104,7 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
   }, [isDragging, startX, scrollLeft]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
-    if (!carouselRef.current) return;
+    if (e.pointerType !== 'mouse' || !carouselRef.current) return;
     const wasDragging = hasDragged;
     setIsDragging(false);
     carouselRef.current.style.cursor = "grab";
@@ -179,10 +181,10 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
       {/* Carrossel */}
       <div
         ref={carouselRef}
-        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-10 px-4 md:px-8 pb-8"
+        className="flex overflow-x-scroll scrollbar-hide snap-x snap-mandatory gap-10 px-4 md:px-8 pb-8"
         style={{
           cursor: isDragging ? "grabbing" : "grab",
-          touchAction: "pan-y",
+          touchAction: "pan-x pan-y",
           scrollBehavior: prefersReducedMotion ? "auto" : "smooth",
           WebkitOverflowScrolling: "touch",
         }}
@@ -199,7 +201,7 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
           return (
             <div
               key={product.id}
-              className="flex-shrink-0 snap-center"
+              className="flex-shrink-0 snap-start"
               style={{
                 width: isMobile ? "85%" : "calc((100vw - 160px) / 3.3)",
                 minWidth: isMobile ? "280px" : "300px",
